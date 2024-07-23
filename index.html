@@ -7,10 +7,33 @@
   </head>
   <body>
     <h1>Water Sort</h1>
+<nav>
+  <button type="button" id="settings-button" aria-label="Settings" popovertarget="settings-dialog">⚙️</button>
+  <dialog id="settings-dialog" popover>
+    <header>
+      <h2>Settings</h2>
+      <button type="button" aria-label="Close window" popovertarget="settings-dialog">❌</button>
+    </header>
+
+    <form id="settings-form">
+      <p>
+        <input type="checkbox" switch id="show-numbers" name="show-numbers" value="true" />
+        <label for="show-numbers">Show numbers for each flask section</label>
+      </p>
+
+      <p>
+        <input type="checkbox" switch id="colorblind-mode" name="colorblind-mode" value="true" />
+        <label for="colorblind-mode">Show high contrast patterns for each colour (Colorblind mode)</label>
+      </p>
+    </form>
+  </dialog>
+</nav>
+
     <output id="status" aria-live="polite" class="visually-hidden"></output>
     <div id="flasks">
       <!-- TODO-->
     </div>
+
     <dialog id="game-over" aria-label="You won!">
       <h2>You won!!!</h2>
     </dialog>
