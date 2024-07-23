@@ -1,5 +1,9 @@
 // @ts-check
 
+import { updateStatus, initializeSettings } from './ui.js';
+
+initializeSettings();
+
 /**
  * @typedef {'RED' | 'BLUE'} LiquidColor
  */
@@ -20,32 +24,7 @@ const gameData = [
 ];
 
 const flasksContainer = document.getElementById("flasks");
-const statusContainer = document.getElementById('status');
 
-/**
- *
- * @param {'selected' | 'deselected' | 'pour' | 'failedToPour' | 'reset'} status
- * @param {number} [fromIndex]
- * @param {number} [toIndex]
- */
-function updateStatus(status, fromIndex, toIndex) {
-  switch (status) {
-    case "selected":
-      statusContainer.innerHTML = `Flask ${fromIndex + 1} selected.`;
-      break;
-    case "deselected":
-      statusContainer.innerHTML = `Flask ${fromIndex + 1} deselected.`;
-      break;
-    case "pour":
-      statusContainer.innerHTML = `Poured from Flask ${fromIndex + 1} to Flask ${toIndex + 1}.`;
-      break;
-    case "failedToPour":
-      statusContainer.innerHTML = `Cannot pour from Flask ${fromIndex + 1} to Flask ${toIndex + 1}, select another flask.`;
-      break;
-    default:
-      statusContainer.innerHTML = 'Select a flask.'
-  }
-}
 
 /**
  * @param {Flask} from
@@ -103,6 +82,7 @@ function renderFlask(flaskElement, flask) {
 
     segment.classList.add("segment");
     segment.dataset.color = flask[i];
+    segment.dataset.index = (i + 1).toString();
     segment.ariaLabel = flask[i] ?? 'No color';
 
     list.appendChild(segment);
