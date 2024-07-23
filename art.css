@@ -2,9 +2,9 @@
   --segment-size: 3rem;
   --pattern-stripe-size: 0.15rem;
   --pattern-size: 0.5rem;
-
   --flask-top-size: 0.5rem;
   --border-size: 0.1rem;
+
   --flask-color: white;
   --accent-color: dimgray;
   --border-color: silver;
@@ -105,13 +105,16 @@ body {
   }
 
   .segment {
+    --segment-color: var(--flask-color);
+    --segment-pattern: none;
+
     width: var(--segment-size);
     height: var(--segment-size);
 
     border: var(--border-size) solid var(--border-color);
     border-block-start-color: transparent;
     border-block-start-width: 0;
-    background-color: var(--flask-color);
+    background-color: var(--segment-color);
     background-position: calc(var(--pattern-size) / 3) calc(var(--pattern-size) / 3);
 
     display: flex;
@@ -120,110 +123,89 @@ body {
     justify-content: center;
 
     &[data-color="red" i] {
-      background-color: var(--color-red);
+      --segment-color: var(--color-red);
+      --segment-pattern: repeating-linear-gradient(
+        -45deg,
+        var(--color-red),
+        var(--color-red) var(--pattern-stripe-size),
+        transparent var(--pattern-stripe-size),
+        transparent var(--pattern-size)
+      );
 
-      .colorblind-mode & {
-        background-color: transparent;
-        background-image: repeating-linear-gradient(
-          -45deg,
-          var(--color-red),
-          var(--color-red) var(--pattern-stripe-size),
-          transparent var(--pattern-stripe-size),
-          transparent var(--pattern-size)
-        );
-        background-position: center;
-      }
+      background-position: center;
     }
 
     &[data-color="blue" i] {
-      background-color: var(--color-blue);
-
-      .colorblind-mode & {
-        background-color: transparent;
-        background-image: repeating-linear-gradient(
-          var(--color-blue),
-          var(--color-blue) var(--pattern-stripe-size),
-          transparent var(--pattern-stripe-size),
-          transparent var(--pattern-size)
-        );
-      }
+      --segment-color: var(--color-blue);
+      --segment-pattern: repeating-linear-gradient(
+        var(--color-blue),
+        var(--color-blue) var(--pattern-stripe-size),
+        transparent var(--pattern-stripe-size),
+        transparent var(--pattern-size)
+      );
     }
 
     &[data-color="green" i] {
-      background-color: var(--color-green);
-
-      .colorblind-mode & {
-        background-color: transparent;
-        background-image: repeating-linear-gradient(
-          90deg,
-          var(--color-green),
-          var(--color-green) var(--pattern-stripe-size),
-          transparent var(--pattern-stripe-size),
-          transparent var(--pattern-size)
-        );
-      }
+      --segment-color: var(--color-green);
+      --segment-pattern: repeating-linear-gradient(
+        90deg,
+        var(--color-green),
+        var(--color-green) var(--pattern-stripe-size),
+        transparent var(--pattern-stripe-size),
+        transparent var(--pattern-size)
+      );
     }
 
     &[data-color="purple" i] {
-      background-color: var(--color-purple);
-
-      .colorblind-mode & {
-        background-color: transparent;
-        background-image: repeating-linear-gradient(
+      --segment-color: var(--color-purple);
+      --segment-pattern: repeating-linear-gradient(
           45deg,
           var(--color-purple),
           var(--color-purple) var(--pattern-stripe-size),
           transparent var(--pattern-stripe-size),
           transparent var(--pattern-size)
         );
-        background-position: center;
-      }
+
+      background-position: center;
     }
 
     &[data-color="yellow" i] {
-      background-color: var(--color-yellow);
+      --segment-color: var(--color-yellow);
+      --segment-pattern:
+        repeating-linear-gradient(
+          -45deg,
+          var(--color-yellow),
+          var(--color-yellow) var(--pattern-stripe-size),
+          transparent var(--pattern-stripe-size),
+          transparent var(--pattern-size)
+        ),
+        repeating-linear-gradient(
+          45deg,
+          var(--color-yellow),
+          var(--color-yellow) var(--pattern-stripe-size),
+          transparent var(--pattern-stripe-size),
+          transparent var(--pattern-size)
+        );
 
-      .colorblind-mode & {
-        background-color: transparent;
-        background-image:
-          repeating-linear-gradient(
-            -45deg,
-            var(--color-yellow),
-            var(--color-yellow) var(--pattern-stripe-size),
-            transparent var(--pattern-stripe-size),
-            transparent var(--pattern-size)
-          ),
-          repeating-linear-gradient(
-            45deg,
-            var(--color-yellow),
-            var(--color-yellow) var(--pattern-stripe-size),
-            transparent var(--pattern-stripe-size),
-            transparent var(--pattern-size)
-          );
-        background-position: center;
-      }
+      background-position: center;
     }
 
     &[data-color="aqua" i] {
-      background-color: var(--color-aqua);
-
-      .colorblind-mode & {
-        background-color: transparent;
-        background-image:
-          repeating-linear-gradient(
-            var(--color-aqua),
-            var(--color-aqua) var(--pattern-stripe-size),
-            transparent var(--pattern-stripe-size),
-            transparent var(--pattern-size)
-          ),
-          repeating-linear-gradient(
-            90deg,
-            var(--color-aqua),
-            var(--color-aqua) var(--pattern-stripe-size),
-            transparent var(--pattern-stripe-size),
-            transparent var(--pattern-size)
-          );
-      }
+      --segment-color: var(--color-aqua);
+      --segment-pattern:
+        repeating-linear-gradient(
+          var(--color-aqua),
+          var(--color-aqua) var(--pattern-stripe-size),
+          transparent var(--pattern-stripe-size),
+          transparent var(--pattern-size)
+        ),
+        repeating-linear-gradient(
+          90deg,
+          var(--color-aqua),
+          var(--color-aqua) var(--pattern-stripe-size),
+          transparent var(--pattern-stripe-size),
+          transparent var(--pattern-size)
+        );
     }
 
     &:last-child {
@@ -235,6 +217,11 @@ body {
       content: attr(data-index);
       font-weight: bold;
       font-size: 2em;
+    }
+
+    .colorblind-mode & {
+      background-color: transparent;
+      background-image: var(--segment-pattern);
     }
   }
 
@@ -274,4 +261,71 @@ body {
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(1rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flask {
+    transition: none;
+
+    &:hover {
+      filter: none;
+    }
+
+    &:focus {
+      filter: none;
+      outline: var(--border-size) solid var(--accent-color);
+    }
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --segment-size: 4rem;
+    --border-size: 0.2rem;
+
+    --flask-color: black;
+    --accent-color: goldenrod;
+    --border-color: goldenrod;
+    --bg-color: black;
+    --font-color: yellow;
+
+    /* Segment Colors */
+    --color-red: red;
+    --color-purple: fuchsia;
+    --color-green: lime;
+    --color-yellow: yellow;
+    --color-blue: blue;
+    --color-aqua: aqua;
+
+    color-scheme: dark;
+    accent-color: var(--accent-color);
+  }
+
+  .flask {
+    &:hover {
+      filter: none;
+    }
+
+    &:focus {
+      filter: none;
+      outline: var(--border-size) solid var(--accent-color);
+    }
+
+    .segment {
+      background-color: transparent;
+      background-image: var(--segment-pattern);
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .flask .segment::after {
+    content: attr(data-color);
+  }
+
+  .show-numbers .flask .segment::after {
+    content: attr(data-index) ': ' attr(data-color);
+    font-weight: normal;
+    font-size: 1em;
+  }
 }

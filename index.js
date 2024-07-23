@@ -81,7 +81,7 @@ function renderFlask(flaskElement, flask) {
     const segment = document.createElement("li");
 
     segment.classList.add("segment");
-    segment.dataset.color = flask[i];
+    segment.dataset.color = flask[i] ?? '';
     segment.dataset.index = (i + 1).toString();
     segment.ariaLabel = flask[i] ?? 'No color';
 
