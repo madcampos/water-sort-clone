@@ -70,7 +70,8 @@ nav {
   border: none;
   background: transparent;
   cursor: pointer;
-  padding-block: calc((var(--flask-top-size) * 2) + (var(--border-size) * 3)) var(--border-size);
+  padding-block: calc((var(--flask-top-size) * 2) + (var(--border-size) * 3))
+    var(--border-size);
   padding-inline: calc(var(--flask-top-size) + var(--border-size));
 
   &::before {
@@ -208,6 +209,18 @@ nav {
           transparent var(--pattern-stripe-size),
           transparent var(--pattern-size)
         );
+    }
+
+    &:first-child::before {
+      display: block;
+      content: "";
+      width: calc(100% + (var(--flask-top-size) * 2));
+      height: calc(var(--flask-top-size) * 2);
+      margin-inline-start: calc((var(--flask-top-size) * -1) - var(--border-size));
+      margin-block-start: calc((var(--flask-top-size) * -2) - (var(--border-size) * 2));
+      border-radius: var(--flask-top-size);
+      border: var(--border-size) solid var(--border-color);
+      background: var(--flask-color);
     }
 
     &:last-child {
