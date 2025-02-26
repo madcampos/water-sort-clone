@@ -19,33 +19,26 @@
   --color-blue: navy;
   --color-aqua: teal;
 
+  /* Segment Shades */
+  --shade-red: red;
+  --shade-purple: purple;
+  --shade-green: green;
+  --shade-yellow: goldenrod;
+  --shade-blue: navy;
+  --shade-aqua: teal;
+
   color-scheme: light;
   accent-color: var(--accent-color);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --flask-color: #1f1f1f;
-    --accent-color: silver;
-    --border-color: dimgray;
-    --bg-color: #0c0c0c;
-    --font-color: white;
-
-    /* Segment Colors */
-    --color-red: crimson;
-    --color-purple: fuchsia;
-    --color-green: lime;
-    --color-yellow: goldenrod;
-    --color-blue: dodgerblue;
-    --color-aqua: aqua;
-
-    color-scheme: dark;
-  }
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--font-color);
+}
+
+nav {
+  display: flex;
+  justify-content: end;
 }
 
 .visually-hidden {
@@ -61,6 +54,8 @@ body {
 }
 
 #flasks {
+  margin-inline: auto;
+  width: fit-content;
   display: flex;
   flex-direction: row;
   gap: var(--segment-size);
@@ -106,6 +101,7 @@ body {
 
   .segment {
     --segment-color: var(--flask-color);
+    --segment-shade: var(--shade-flask);
     --segment-pattern: none;
 
     width: var(--segment-size);
@@ -124,6 +120,7 @@ body {
 
     &[data-color="red" i] {
       --segment-color: var(--color-red);
+      --segment-shade: var(--shade-red);
       --segment-pattern: repeating-linear-gradient(
         -45deg,
         var(--color-red),
@@ -137,6 +134,7 @@ body {
 
     &[data-color="blue" i] {
       --segment-color: var(--color-blue);
+      --segment-shade: var(--shade-blue);
       --segment-pattern: repeating-linear-gradient(
         var(--color-blue),
         var(--color-blue) var(--pattern-stripe-size),
@@ -147,6 +145,7 @@ body {
 
     &[data-color="green" i] {
       --segment-color: var(--color-green);
+      --segment-shade: var(--shade-green);
       --segment-pattern: repeating-linear-gradient(
         90deg,
         var(--color-green),
@@ -158,6 +157,7 @@ body {
 
     &[data-color="purple" i] {
       --segment-color: var(--color-purple);
+      --segment-shade: var(--shade-purple);
       --segment-pattern: repeating-linear-gradient(
           45deg,
           var(--color-purple),
@@ -171,6 +171,7 @@ body {
 
     &[data-color="yellow" i] {
       --segment-color: var(--color-yellow);
+      --segment-shade: var(--shade-yellow);
       --segment-pattern:
         repeating-linear-gradient(
           -45deg,
@@ -192,6 +193,7 @@ body {
 
     &[data-color="aqua" i] {
       --segment-color: var(--color-aqua);
+      --segment-shade: var(--shade-aqua);
       --segment-pattern:
         repeating-linear-gradient(
           var(--color-aqua),
@@ -213,25 +215,28 @@ body {
       border-bottom-right-radius: var(--segment-size);
     }
 
-    .show-numbers &::after {
+    body[data-setting-show-numbers="true"] &::after {
       content: attr(data-index);
       font-weight: bold;
       font-size: 2em;
     }
 
-    .colorblind-mode & {
+    body[data-setting-colorblind-mode="pattern"] & {
       background-color: transparent;
       background-image: var(--segment-pattern);
+    }
+
+    body[data-setting-colorblind-mode="shades"] & {
+      background-color: var(--segment-shade);
     }
   }
 
   &:hover {
-    filter: drop-shadow(0 0 calc(var(--border-size) * 3) var(--accent-color));
+    outline: var(--border-size) dotted var(--accent-color);
   }
 
   &:focus {
-    outline: var(--border-size) dotted var(--accent-color);
-    filter: drop-shadow(0 0 calc(var(--border-size) * 3) var(--accent-color));
+    outline: calc(var(--border-size) * 2) solid var(--accent-color);
   }
 }
 
@@ -278,6 +283,35 @@ dialog::backdrop {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --flask-color: #1f1f1f;
+    --accent-color: silver;
+    --border-color: dimgray;
+    --bg-color: #0c0c0c;
+    --font-color: white;
+
+    /* Segment Colors */
+    --color-red: crimson;
+    --color-purple: fuchsia;
+    --color-green: lime;
+    --color-yellow: goldenrod;
+    --color-blue: dodgerblue;
+    --color-aqua: aqua;
+
+    /* Segment Shades */
+    --shade-flask: hsl(0 0 0);
+    --shade-red: hsl(0 50 15);
+    --shade-purple: hsl(320, 50%, 30%);
+    --shade-green: hsl(120, 50%, 45%);
+    --shade-yellow: hsl(60, 50%, 60%);
+    --shade-blue: hsl(240, 50%, 75%);
+    --shade-aqua: hsl(180, 49%, 90%);
+
+    color-scheme: dark;
+  }
+}
+
 @media (prefers-contrast: more) {
   :root {
     --segment-size: 4rem;
@@ -296,6 +330,14 @@ dialog::backdrop {
     --color-yellow: yellow;
     --color-blue: blue;
     --color-aqua: aqua;
+
+    /* Segment Shades */
+    --shade-red: red;
+    --shade-purple: fuchsia;
+    --shade-green: lime;
+    --shade-yellow: yellow;
+    --shade-blue: blue;
+    --shade-aqua: aqua;
 
     color-scheme: dark;
     accent-color: var(--accent-color);
