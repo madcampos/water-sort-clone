@@ -28,36 +28,55 @@ export function updateStatus(status, fromIndex, toIndex) {
 }
 
 /**
- * @param {string} setting
- * @param {boolean} value
- * @param {HTMLInputElement} checkbox
+ * @param {HTMLInputElement} element
  */
-function updateSetting(setting, value, checkbox) {
-	if (value) {
-		localStorage.setItem(setting, "true");
-		checkbox.checked = true;
-		document.body.classList.add(setting);
-	} else {
-		localStorage.setItem(setting, "false");
-		checkbox.checked = false;
-		document.body.classList.remove(setting);
+function updateSetting(element) {
+	switch (element.type) {
+		case 'checkbox':
+		case 'radio':
+			localStorage.setItem(`#${element.id}`, element.checked ? 'true' : 'false');
+			break;
+		default:
+			localStorage.setItem(`#${element.id}`, element.value ?? '');
+	}
+
+	localStorage.setItem(element.name, element.value);
+	document.body.setAttribute(`data-setting-${element.name}`, element.value);
+}
+
+/**
+ * @param {HTMLInputElement} element
+ */
+function loadSettingForElement(element) {
+	const savedElementValue = localStorage.getItem(`#${element.id}`) ?? '';
+	const savedSetting = localStorage.getItem(element.name) ?? '';
+
+	switch (element.type) {
+		case 'checkbox':
+		case 'radio':
+			element.checked = savedElementValue === 'true' || element.checked;
+			break;
+		default:
+			element.value = savedElementValue;
+	}
+
+	if (savedSetting) {
+		document.body.setAttribute(`data-setting-${element.name}`, savedSetting);
 	}
 }
 
 export function initializeSettings() {
-	const settingsForm = /** @type {HTMLFormElement} */ (document.getElementById("settings-form"));
+	const settingsElements = /** @type {NodeListOf<HTMLInputElement>} */ (document.querySelectorAll("#settings-form :is(input)"));
 
-	Array.from(settingsForm.elements).forEach((/** @type {HTMLInputElement} */ checkbox) => {
-		const savedValue = localStorage.getItem(checkbox.name);
-
-		updateSetting(checkbox.name, savedValue === "true", checkbox);
+	settingsElements.forEach((element) => {
+		loadSettingForElement(element);
 	});
 
-	settingsForm.addEventListener('input', (evt) => {
+	document.querySelector('#settings-form')?.addEventListener('change', (evt) => {
 		const target = /** @type {HTMLInputElement} */ (evt.target);
 
 		if (target.matches('input')) {
-			updateSetting(target.name, target.checked, target);
+			updateSetting(target);
 		}
 	});
 }
