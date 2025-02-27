@@ -1,0 +1,147 @@
+#flasks {
+	display: flex;
+	flex-direction: row;
+	gap: var(--segment-size);
+	margin-inline: auto;
+	width: fit-content;
+}
+
+.flask {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	padding-block: calc(var(--flask-top-size) * 2 + var(--border-size) * 3) var(--border-size);
+	padding-inline: calc(var(--flask-top-size) + var(--border-size));
+	transform: rotate(0deg);
+	transition: transform 500ms;
+	user-select: none;
+
+	&::before {
+		background: var(--flask-color);
+		border: var(--border-size) solid var(--border-color);
+		border-radius: var(--flask-top-size);
+		content: '';
+		display: block;
+		height: calc(var(--flask-top-size) * 2);
+		margin-block-start: calc(var(--flask-top-size) * -2 - var(--border-size) * 2);
+		margin-inline-start: calc(var(--flask-top-size) * -1 - var(--border-size));
+		width: calc(100% + var(--flask-top-size) * 2);
+	}
+
+	&[aria-pressed='true'] { transform: rotate(15deg); }
+
+	* { pointer-events: none; }
+
+	ol {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		--segment-text: var(--font-color);
+		--segment-color: var(--flask-color);
+		--segment-shade: var(--shade-flask);
+		--segment-pattern: none;
+		align-items: center;
+		background-color: var(--segment-color);
+		border: var(--border-size) solid var(--border-color);
+		border-block-start-color: transparent;
+		border-block-start-width: 0;
+		color: transparent;
+		display: flex;
+		flex-direction: column;
+		font-size: 0.8rem;
+		height: var(--segment-size);
+		justify-content: center;
+		width: var(--segment-size);
+
+		&[data-color='red' i] {
+			--segment-text: var(--font-color);
+			--segment-color: var(--color-red);
+			--segment-shade: var(--shade-red);
+			--segment-pattern: linear-gradient(-45deg, var(--color-red) 50%, transparent 50%);
+		}
+
+		&[data-color='blue' i] {
+			--segment-text: var(--font-color-dark);
+			--segment-color: var(--color-blue);
+			--segment-shade: var(--shade-blue);
+			--segment-pattern: linear-gradient(var(--color-blue) 50%, transparent 50%);
+		}
+
+		&[data-color='green' i] {
+			--segment-text: var(--font-color-dark);
+			--segment-color: var(--color-green);
+			--segment-shade: var(--shade-green);
+			--segment-pattern: linear-gradient(90deg, var(--color-green) 50%, transparent 50%);
+		}
+
+		&[data-color='purple' i] {
+			--segment-text: var(--font-color-dark);
+			--segment-color: var(--color-purple);
+			--segment-shade: var(--shade-purple);
+			--segment-pattern: linear-gradient(45deg, var(--color-purple) 50%, transparent 50%);
+		}
+
+		&[data-color='yellow' i] {
+			--segment-text: var(--font-color-dark);
+			--segment-color: var(--color-yellow);
+			--segment-shade: var(--shade-yellow);
+			--segment-pattern: linear-gradient(-90deg, var(--color-yellow) 50%, transparent 50%);
+		}
+
+		&[data-color='aqua' i] {
+			--segment-text: var(--font-color-dark);
+			--segment-color: var(--color-aqua);
+			--segment-shade: var(--shade-aqua);
+			--segment-pattern: linear-gradient(360deg, var(--color-aqua) 50%, transparent 50%);
+		}
+
+		&:last-child {
+			border-bottom-left-radius: var(--segment-size);
+			border-bottom-right-radius: var(--segment-size);
+		}
+
+		body[data-setting-show-numbers='true'] &::after {
+			color: var(--segment-text);
+			content: attr(data-index);
+			font-size: 1rem;
+			font-weight: bold;
+		}
+
+		body[data-setting-colorblind-mode='pattern'] & {
+			background-color: transparent;
+			background-image: var(--segment-pattern);
+		}
+
+		body[data-setting-colorblind-mode='shades'] & {
+			background-color: var(--segment-shade);
+			color: var(--segment-text);
+		}
+
+		@media (prefers-contrast: more) {
+			background-color: transparent;
+			background-image: var(--segment-pattern);
+		}
+	}
+
+	&:hover {
+		outline: var(--border-size) dotted var(--accent-color);
+		outline-offset: var(--border-size);
+	}
+
+	&:focus {
+		outline: var(--border-size) solid var(--accent-color);
+		outline-offset: var(--border-size);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+
+		&:focus { outline: var(--border-size) solid var(--accent-color); }
+		&[aria-pressed='true'] { transform: none; }
+	}
+}
