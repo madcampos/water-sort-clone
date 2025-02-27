@@ -1,0 +1,59 @@
+#game-over-screen[open] {
+	align-items: center;
+	background: var(--bg-color);
+	border: var(--border-size) solid var(--border-color);
+	border-radius: 1rem;
+	display: grid;
+	height: 50vmin;
+	min-height: min-content;
+	min-width: min-content;
+	padding: 1rem;
+	text-align: center;
+	width: 50vmin;
+
+	h2 {
+		font-size: 2rem;
+		text-align: center;
+	}
+
+	div {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		overflow: auto;
+		padding-inline-start: 0;
+		text-align: center;
+	}
+
+	button {
+		background: transparent;
+		border: solid var(--border-color) medium;
+		border-radius: 100vmax;
+		font-size: 1rem;
+		padding-block: 0.5rem;
+		padding-inline: 1rem;
+
+		&:hover {
+			background-color: var(--font-color);
+			color: var(--bg-color);
+		}
+
+		&:focus-visible {
+			border-color: var(--font-color);
+			border-style: dotted;
+			outline: none;
+		}
+
+		&:active {
+			background-color: var(--accent-color);
+			color: var(--font-color-dark);
+		}
+	}
+
+	&::backdrop {
+		backdrop-filter: blur(1rem);
+		background-color: rgba(0, 0, 0, 0.5);
+		pointer-events: all;
+	}
+}

@@ -1,0 +1,39 @@
+nav {
+	display: flex;
+	justify-content: end;
+	margin: 1rem;
+
+	button {
+		background: transparent;
+		border: solid var(--border-color) medium;
+		border-radius: 100vmax;
+		display: flex;
+		font-size: 1rem;
+		padding-block: 0.5rem;
+		padding-inline: 0.5rem;
+
+		&:hover {
+			background-color: var(--font-color);
+			color: var(--bg-color);
+		}
+
+		&:focus-visible {
+			border-color: var(--font-color);
+			border-style: dotted;
+			outline: none;
+		}
+
+		&:active {
+			background-color: var(--accent-color);
+			color: var(--font-color-dark);
+		}
+
+		svg {
+			height: 1.5rem;
+			pointer-events: none;
+			width: 1.5rem;
+		}
+	}
+
+	hr { border: none; }
+}

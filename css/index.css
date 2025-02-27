@@ -1,0 +1,26 @@
+@import url('./globals.css');
+@import url('./flasks.css');
+@import url('./game-over.css');
+@import url('./levels.css');
+@import url('./settings.css');
+@import url('./nav.css');
+@import url('./title.css');
+
+*, *::before, *::after {
+	box-sizing: border-box;
+	font-family: inherit;
+}
+
+:is(button, input, select) { font-size: inherit; }
+
+:root {
+	accent-color: var(--accent-color);
+	color-scheme: light dark;
+	font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+	font-size: 1.2rem;
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--font-color);
+}

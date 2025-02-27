@@ -1,0 +1,123 @@
+:root {
+	--segment-size: 4rem;
+	--pattern-stripe-size: 0.15rem;
+	--pattern-size: 0.5rem;
+	--flask-top-size: 0.5rem;
+	--border-size: 0.1rem;
+	--flask-color: white;
+	--accent-color: dimgray;
+	--border-color: silver;
+	--bg-color: snow;
+	--font-color: black;
+	--font-color-dark: white;
+	/* Segment Colors */
+	--color-red: red;
+	--color-purple: purple;
+	--color-green: green;
+	--color-yellow: goldenrod;
+	--color-blue: navy;
+	--color-aqua: teal;
+	/* Segment Shades */
+	--shade-red: red;
+	--shade-purple: purple;
+	--shade-green: green;
+	--shade-yellow: goldenrod;
+	--shade-blue: navy;
+	--shade-aqua: teal;
+}
+
+.visually-hidden {
+	color: transparent;
+	font-size: 1px;
+	height: 1px;
+	overflow: hidden;
+	pointer-events: none;
+	position: absolute;
+	user-select: none;
+	width: 1px;
+	z-index: -1;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--flask-color: #1f1f1f;
+		--accent-color: silver;
+		--border-color: dimgray;
+		--bg-color: #0c0c0c;
+		--font-color: white;
+		--font-color-dark: black;
+		/* Segment Colors */
+		--color-red: crimson;
+		--color-purple: fuchsia;
+		--color-green: lime;
+		--color-yellow: goldenrod;
+		--color-blue: dodgerblue;
+		--color-aqua: aqua;
+		/* Segment Shades */
+		--shade-flask: hsl(0 0 0);
+		--shade-red: hsl(0 50 15);
+		--shade-purple: hsl(320, 50%, 30%);
+		--shade-green: hsl(120, 50%, 45%);
+		--shade-yellow: hsl(60, 50%, 60%);
+		--shade-blue: hsl(240, 50%, 75%);
+		--shade-aqua: hsl(180, 49%, 90%);
+		color-scheme: dark;
+	}
+}
+
+@media (prefers-contrast: more) {
+	:root {
+		--segment-size: 4rem;
+		--border-size: 0.2rem;
+		--flask-color: black;
+		--accent-color: goldenrod;
+		--border-color: goldenrod;
+		--bg-color: black;
+		--font-color: yellow;
+		/* Segment Colors */
+		--color-red: red;
+		--color-purple: fuchsia;
+		--color-green: lime;
+		--color-yellow: yellow;
+		--color-blue: blue;
+		--color-aqua: aqua;
+		/* Segment Shades */
+		--shade-red: red;
+		--shade-purple: fuchsia;
+		--shade-green: lime;
+		--shade-yellow: yellow;
+		--shade-blue: blue;
+		--shade-aqua: aqua;
+		accent-color: var(--accent-color);
+		color-scheme: dark;
+	}
+}
+
+@media (forced-colors: active) {
+	/* TODO: set system colors */
+	:root {
+		--segment-size: 4rem;
+		--border-size: 0.2rem;
+		--flask-color: black;
+		--accent-color: goldenrod;
+		--border-color: goldenrod;
+		--bg-color: black;
+		--font-color: yellow;
+		/* Segment Colors */
+		--color-red: red;
+		--color-purple: fuchsia;
+		--color-green: lime;
+		--color-yellow: yellow;
+		--color-blue: blue;
+		--color-aqua: aqua;
+		/* Segment Shades */
+		--shade-red: red;
+		--shade-purple: fuchsia;
+		--shade-green: lime;
+		--shade-yellow: yellow;
+		--shade-blue: blue;
+		--shade-aqua: aqua;
+		accent-color: var(--accent-color);
+		color-scheme: dark;
+	}
+}

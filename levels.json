@@ -1,0 +1,21 @@
+[
+	{
+		"name": "Red & Blue",
+		"flasks": [
+			["Red", "Blue", "Red", "Blue", "Red"],
+			["Blue", "Red", "Blue", "Red", "Blue"],
+			[]
+		],
+		"flaskSize": 5
+	},
+	{
+		"name": "Red, Green & Blue",
+		"flasks": [
+			["Blue", "Green"],
+			["Green", "Green", "Blue"],
+			["Blue", "Green", "Blue"],
+			[]
+		],
+		"flaskSize": 4
+	}
+]
