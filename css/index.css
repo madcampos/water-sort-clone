@@ -5,6 +5,9 @@
 @import url('./settings.css');
 @import url('./nav.css');
 @import url('./title.css');
+@import url('./help.css');
+@import url('./gamepad.css');
+@import url('./input.css');
 
 *, *::before, *::after {
 	box-sizing: border-box;
@@ -20,7 +23,10 @@
 	font-size: 1.2rem;
 }
 
+html, body { height: 100%; }
+
 body {
 	background-color: var(--bg-color);
 	color: var(--font-color);
+	margin: 0;
 }

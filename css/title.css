@@ -48,5 +48,8 @@
 			background-color: var(--accent-color);
 			color: var(--font-color-dark);
 		}
+
+		[data-controller-icon] { display: none; }
+		body[data-gamepad] &:focus-within [data-controller-icon] { display: revert; }
 	}
 }
