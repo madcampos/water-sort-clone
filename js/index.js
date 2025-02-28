@@ -1,7 +1,7 @@
-// @ts-check
-
 import { resetFlasks } from './flasks.js';
 import { hideGameOverScreen } from './game-over.js';
+import { GamepadHandler } from './gamepad.js';
+import { hideHelpScreen, initializeHelpScreen } from './help.js';
 import { getCurrentLevel, hideLevelSelectScreen, initializeLevelList, loadLevel } from './levels.js';
 import { hideSettingsScreen, initializeSettings } from './settings.js';
 import { hideTitleScreen, initializeTitleScreen } from './title.js';
@@ -25,14 +25,21 @@ export function hideAllScreens() {
 	hideGameOverScreen();
 	hideTitleScreen();
 	hideSettingsScreen();
+	hideHelpScreen();
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
 	const response = await fetch('./levels.json');
 	const levels = /** @type {import('./globals.js').Level[]} */ (await response.json());
 
+	GamepadHandler.init(() => {
+		// TODO: get mapping and use it as default
+		document.body.dataset.gamepad = GamepadHandler.gamepadType;
+	});
+
 	loadLevel(levels, getCurrentLevel());
 	initializeSettings();
+	initializeHelpScreen();
 	initializeTitleScreen();
 	initializeLevelList(levels);
 	resetFlasks();
