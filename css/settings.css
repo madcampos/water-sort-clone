@@ -2,17 +2,26 @@
 	background: var(--bg-color);
 	border: var(--border-size) solid var(--border-color);
 	border-radius: 1rem;
-	height: 50vmin;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	height: 80vmin;
 	min-height: min-content;
 	min-width: min-content;
 	padding: 1rem;
-	width: 50vmin;
+	width: 80vmin;
 
 	header {
 		align-items: center;
 		display: flex;
 		font-size: 2rem;
 		justify-content: start;
+
+		h2 {
+			flex-grow: 1;
+			font-size: 2rem;
+			margin: 0;
+		}
 
 		button {
 			background: transparent;
@@ -29,9 +38,8 @@
 			}
 
 			&:focus-visible {
-				border-color: var(--font-color);
-				border-style: dotted;
-				outline: none;
+				outline: solid var(--font-color) calc(var(--border-size) * 2);
+				outline-offset: calc(var(--border-size) * 4);
 			}
 
 			&:active {

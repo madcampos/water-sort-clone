@@ -4,12 +4,12 @@
 	border: var(--border-size) solid var(--border-color);
 	border-radius: 1rem;
 	display: grid;
-	height: 50vmin;
+	height: 80vmin;
 	min-height: min-content;
 	min-width: min-content;
 	padding: 1rem;
 	text-align: center;
-	width: 50vmin;
+	width: 80vmin;
 
 	h2 {
 		font-size: 2rem;
@@ -40,9 +40,8 @@
 		}
 
 		&:focus-visible {
-			border-color: var(--font-color);
-			border-style: dotted;
-			outline: none;
+			outline: solid var(--font-color) calc(var(--border-size) * 2);
+			outline-offset: calc(var(--border-size) * 4);
 		}
 
 		&:active {

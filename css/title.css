@@ -27,11 +27,12 @@
 
 	button {
 		background: transparent;
-		border: solid var(--border-color) medium;
+		border: solid var(--border-color) var(--border-size);
 		border-radius: 100vmax;
 		font-size: 2rem;
 		padding-block: 0.5rem;
 		padding-inline: 1rem;
+		position: relative;
 
 		&:hover {
 			background-color: var(--font-color);
@@ -39,9 +40,8 @@
 		}
 
 		&:focus-visible {
-			border-color: var(--font-color);
-			border-style: dotted;
-			outline: none;
+			outline: solid var(--font-color) calc(var(--border-size) * 2);
+			outline-offset: calc(var(--border-size) * 4);
 		}
 
 		&:active {

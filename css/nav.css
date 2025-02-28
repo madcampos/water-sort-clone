@@ -18,9 +18,8 @@ nav {
 		}
 
 		&:focus-visible {
-			border-color: var(--font-color);
-			border-style: dotted;
-			outline: none;
+			outline: solid var(--font-color) calc(var(--border-size) * 2);
+			outline-offset: calc(var(--border-size) * 4);
 		}
 
 		&:active {
