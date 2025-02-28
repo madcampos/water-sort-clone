@@ -156,8 +156,10 @@
 
 		<dialog id="settings-screen">
 			<header>
-				<h2>Game Settings</h2>
-				<button type="button" aria-label="Close settings" data-settings="close">
+				<h2 data-translate>Game Settings</h2>
+				<button type="button" data-settings="close">
+					<kbd data-controller-icon="b" role="none">B</kbd>
+					<span class="visually-hidden" data-translate>Close Settings</span>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 						<path
 							fill="currentColor"
@@ -168,28 +170,120 @@
 			</header>
 
 			<form id="settings-form">
-				<p>
-					<input type="checkbox" switch id="show-numbers" name="show-numbers" value="true" /> <label for="show-numbers">Show numbers for each flask section</label>
-				</p>
+				<fieldset>
+					<legend data-translate>Accessibility Settings</legend>
+					<p>
+						<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+						<label for="show-numbers">
+							<input type="checkbox" id="show-numbers" name="show-numbers" value="true" autofocus />
+							<kbd data-controller-icon="a" role="none">A</kbd>
+							<span data-translate>Show numbers for each flask section</span>
+						</label>
+						<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
+					</p>
+					<p>
+						<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+						<label for="show-color-names">
+							<input type="checkbox" id="show-color-names" name="show-color-names" value="true" />
+							<kbd data-controller-icon="a" role="none">A</kbd>
+							<span data-translate>Show colour names on each flask</span>
+						</label>
+						<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
+					</p>
+					<fieldset>
+						<legend data-translate>High contrast colours</legend>
+						<p>
+							<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+							<label for="colorblind-mode">
+								<input type="radio" id="colorblind-mode" name="colorblind-mode" value="none" checked />
+								<kbd data-controller-icon="a" role="none">A</kbd>
+								<span data-translate>Don't change colours</span>
+							</label>
+							<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
+						</p>
+						<p>
+							<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+							<label for="colorblind-mode2">
+								<input type="radio" id="colorblind-mode2" name="colorblind-mode" value="pattern" />
+								<kbd data-controller-icon="a" role="none">A</kbd>
+								<span data-translate>Show different patterns for each colour</span>
+							</label>
+							<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
+						</p>
+						<p>
+							<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+							<label for="colorblind-mode3">
+								<input type="radio" id="colorblind-mode3" name="colorblind-mode" value="shades" />
+								<kbd data-controller-icon="a" role="none">A</kbd>
+								<span data-translate>Show different shades of grey for each colour</span>
+							</label>
+							<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
+						</p>
+					</fieldset>
+				</fieldset>
 
 				<fieldset>
-					<legend>High contrast colours</legend>
-
+					<legend>Audio Settings</legend>
 					<p>
-						<input type="radio" switch id="colorblind-mode" name="colorblind-mode" value="none" checked /> <label for="colorblind-mode">Don't change colours</label>
+						<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+						<label for="play-music">
+							<input type="checkbox" id="play-music" name="play-music" value="true" />
+							<kbd data-controller-icon="a" role="none">A</kbd>
+							<span data-translate>Play game music</span>
+						</label>
+						<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
 					</p>
-
 					<p>
-						<input type="radio" switch id="colorblind-mode2" name="colorblind-mode" value="pattern" />
-						<label for="colorblind-mode2">Show different patterns for each colour</label>
+						<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+						<label for="play-sound-effects">
+							<input type="checkbox" id="play-sound-effects" name="play-sound-effects" value="true" />
+							<kbd data-controller-icon="a" role="none">A</kbd>
+							<span data-translate>Play sound effects</span>
+						</label>
+						<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
 					</p>
+				</fieldset>
 
+				<fieldset>
+					<legend data-translate>Language Settings</legend>
 					<p>
-						<input type="radio" switch id="colorblind-mode3" name="colorblind-mode" value="shades" />
-						<label for="colorblind-mode3">Show different shades of gray for each colour</label>
+						<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+						<label for="game-language">
+							<span data-translate>Game Language</span>
+							<kbd data-controller-icon="dpad-left" role="none">DPad Left</kbd>
+							<select id="game-language" name="game-language">
+								<option value="en-CA" selected data-translate>Canadian English</option>
+								<option value="pt-BR" data-translate>Brazilian Portuguese</option>
+							</select>
+							<kbd data-controller-icon="dpad-right" role="none">DPad Right</kbd>
+						</label>
+						<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
+					</p>
+				</fieldset>
+
+				<fieldset>
+					<legend data-translate>Controller Settings</legend>
+					<p>
+						<kbd data-controller-icon="dpad-up" role="none">DPad Up</kbd>
+						<label for="game-controller-mapping">
+							<span data-translate>Controller Mapping</span>
+							<kbd data-controller-icon="dpad-left" role="none">DPad Left</kbd>
+							<select id="game-controller-mapping" name="game-controller-mapping">
+								<option value="xbox" selected data-translate>Xbox</option>
+								<option value="dualshock" data-translate>DualShock</option>
+								<!-- <option value="joycon-l" data-translate>Joy-Con - Left only</option> -->
+								<!-- <option value="joycon-r" data-translate>Joy-Con - Right only</option> -->
+								<!-- <option value="joycon-lr" data-translate>Joy-Con - Left + Right</option> -->
+							</select>
+							<kbd data-controller-icon="dpad-right" role="none">DPad Right</kbd>
+						</label>
+						<kbd data-controller-icon="dpad-down" role="none">DPad Down</kbd>
 					</p>
 				</fieldset>
 			</form>
+			<footer>
+				<output id="settings-instruction" aria-live="polite"></output>
+			</footer>
 		</dialog>
 
 		<dialog id="game-over-screen" aria-labelledby="game-over-label">
