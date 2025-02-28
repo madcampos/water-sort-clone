@@ -4,7 +4,9 @@
  * @param {number} [toIndex]
  */
 export function updateStatus(status, fromIndex, toIndex) {
-	const statusContainer = /** @type {HTMLSpanElement} */ (document.querySelector('#status'));
+	const statusContainer = /** @type {HTMLOutputElement} */ (document.querySelector('#game-status'));
+
+	// TODO: translate strings
 
 	switch (status) {
 		case 'selected':
