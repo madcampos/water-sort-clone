@@ -81,6 +81,9 @@ function renderFlask(flaskContainer, index) {
 
 		description.classList.add('visually-hidden');
 
+		// TODO: fix accessibility issues with list to show as a list
+		list.role = 'list';
+
 		button.appendChild(description);
 		button.appendChild(list);
 
@@ -88,6 +91,7 @@ function renderFlask(flaskContainer, index) {
 	}
 
 	list.replaceChildren();
+	// TODO: translate text
 	description.innerHTML = `Flask ${index + 1}.`;
 
 	for (let i = getGameState().flaskSize - 1; i >= 0; i--) {
@@ -96,6 +100,9 @@ function renderFlask(flaskContainer, index) {
 		segment.classList.add('segment');
 		segment.dataset.color = flask[i] ?? '';
 		segment.dataset.index = (i + 1).toString();
+		segment.dataset.translate = '';
+
+		// TODO: translate text
 		segment.textContent = flask[i] ?? 'No color';
 
 		list.appendChild(segment);
@@ -144,14 +151,14 @@ function selectFlaskHandler(evt) {
 }
 
 export function resetFlasks() {
-	let flasksContainer = /** @type {HTMLDivElement | null} */ (document.querySelector('#flasks'));
+	let flasksContainer = /** @type {HTMLElement | null} */ (document.querySelector('#flasks'));
 
 	if (!flasksContainer) {
-		flasksContainer = document.createElement('div');
+		flasksContainer = document.createElement('main');
 		flasksContainer.id = 'flasks';
 		flasksContainer.addEventListener('click', (evt) => selectFlaskHandler(evt));
 
-		document.querySelector('#game-screen')?.append(flasksContainer);
+		document.querySelector('#game-screen nav')?.insertAdjacentElement('afterend', flasksContainer);
 	}
 
 	flasksContainer.innerHTML = '';
@@ -163,4 +170,8 @@ export function resetFlasks() {
 	}
 
 	updateStatus('reset');
+}
+
+export function initializeFlasksKeyboardInteraction() {
+	// TODO: init roving tab index for keyboard navigation
 }
