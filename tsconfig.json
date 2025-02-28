@@ -5,5 +5,5 @@
 		"lib": ["ES2023", "DOM", "DOM.Iterable"],
 		"checkJs": true
 	},
-	"include": ["./src/**/*.js", "src/**/*.d.ts"]
+	"include": ["**/*.js", "**/*.d.ts"]
 }
