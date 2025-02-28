@@ -1,25 +1,44 @@
 import { resetFlasks } from './flasks.js';
 import { hideAllScreens, setGameState } from './index.js';
 
-export function getCurrentLevel() {
-	return Number.parseInt(localStorage.getItem('currentLevel') ?? '0');
-}
-
-function getMaxLevel() {
+function getMaxAllowedLevel() {
 	return Number.parseInt(localStorage.getItem('maxLevel') ?? '0');
 }
 
 /**
  * @param {number} level
  */
-function setNewMaxLevel(level) {
+function setMaxAllowedLevel(level) {
 	localStorage.setItem('maxLevel', level.toString());
+}
 
-	document.querySelectorAll('#level-select-screen button').forEach((/** @type {HTMLButtonElement} */ button) => {
+export function getCurrentLevel() {
+	return Number.parseInt(localStorage.getItem('currentLevel') ?? '0');
+}
+
+function getMaxPlayerLevel() {
+	return Number.parseInt(localStorage.getItem('maxPlayerLevel') ?? '0');
+}
+
+/**
+ * @param {number} level
+ */
+function setNewMaxPlayerLevel(level) {
+	localStorage.setItem('maxPlayerLevel', level.toString());
+
+	(/** @type {NodeListOf<HTMLButtonElement>} */ (document.querySelectorAll('#level-select-screen button'))).forEach((button) => {
 		const buttonLevel = Number.parseInt(button.dataset.levelSelect ?? '0');
 
 		button.ariaDisabled = buttonLevel > level ? 'true' : 'false';
 	});
+}
+
+export function enableNextLevel() {
+	const nextLevel = getCurrentLevel() + 1;
+
+	if (nextLevel <= getMaxAllowedLevel()) {
+		setNewMaxPlayerLevel(nextLevel);
+	}
 }
 
 /**
@@ -29,10 +48,10 @@ function setNewMaxLevel(level) {
 export function loadLevel(levels, index) {
 	localStorage.setItem('currentLevel', index.toString());
 
-	const currentMaxLevel = getMaxLevel();
+	const currentMaxLevel = getMaxPlayerLevel();
 
-	if (currentMaxLevel < index) {
-		setNewMaxLevel(index);
+	if (currentMaxLevel <= index) {
+		setNewMaxPlayerLevel(index);
 	}
 
 	setGameState(structuredClone(levels[index]));
@@ -78,6 +97,15 @@ function handleLevelSelect(evt, levels) {
 		nextLevel = getCurrentLevel();
 	}
 
+	if (target.dataset.levelSelect === 'reset') {
+		// TODO: translate message
+		if (!window.confirm('Do you want to reset the current level?')) {
+			return;
+		}
+
+		nextLevel = getCurrentLevel();
+	}
+
 	if (nextLevel >= levels.length) {
 		return;
 	}
@@ -92,7 +120,9 @@ function handleLevelSelect(evt, levels) {
  */
 export function initializeLevelList(levels) {
 	const levelList = document.createElement('ol');
-	const currentMaxLevel = getMaxLevel();
+	const currentMaxLevel = getMaxPlayerLevel();
+
+	setMaxAllowedLevel(levels.length - 1);
 
 	document.addEventListener('click', (evt) => handleLevelSelect(evt, levels));
 

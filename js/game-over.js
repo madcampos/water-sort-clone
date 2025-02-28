@@ -1,4 +1,5 @@
 import { getGameState, hideAllScreens } from './index.js';
+import { enableNextLevel } from './levels.js';
 
 function isGameOver() {
 	const gameState = getGameState();
@@ -20,6 +21,7 @@ function isGameOver() {
 		return false;
 	}
 
+	enableNextLevel();
 	return true;
 }
 
