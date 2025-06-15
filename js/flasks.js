@@ -71,7 +71,7 @@ function renderFlask(flaskContainer, index) {
 
 	let button = /** @type {HTMLButtonElement | null} */ (flaskContainer.querySelector(`button[data-index="${index}"]`));
 	const list = button?.querySelector('ol') ?? document.createElement('ol');
-	const description = button?.querySelector('span') ?? document.createElement('span');
+	const label = button?.querySelector('span') ?? document.createElement('span');
 
 	// First time setup
 	if (!button) {
@@ -79,12 +79,12 @@ function renderFlask(flaskContainer, index) {
 		button.classList.add('flask');
 		button.dataset.index = index.toString();
 
-		description.classList.add('visually-hidden');
+		label.classList.add('visually-hidden');
 
 		// TODO: fix accessibility issues with list to show as a list
 		list.role = 'list';
 
-		button.appendChild(description);
+		button.appendChild(label);
 		button.appendChild(list);
 
 		deselectFlask(button);
@@ -92,7 +92,7 @@ function renderFlask(flaskContainer, index) {
 
 	list.replaceChildren();
 	// TODO: translate text
-	description.innerHTML = `Flask ${index + 1}.`;
+	label.innerHTML = `Flask ${index + 1}. ${getGameState().flasks[index].length} colors of ${getGameState().flaskSize}.`;
 
 	for (let i = getGameState().flaskSize - 1; i >= 0; i--) {
 		const segment = document.createElement('li');
@@ -103,7 +103,7 @@ function renderFlask(flaskContainer, index) {
 		segment.dataset.translate = '';
 
 		// TODO: translate text
-		segment.textContent = flask[i] ?? 'No color';
+		segment.textContent = flask[i] ?? '';
 
 		list.appendChild(segment);
 	}
