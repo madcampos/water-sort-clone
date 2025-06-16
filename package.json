@@ -1,0 +1,38 @@
+{
+	"name": "water-sort-clone",
+	"private": true,
+	"version": "1.0.0",
+	"description": "Clone of https://apps.apple.com/us/app/water-sort-puzzle/id1514542157",
+	"type": "module",
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"volta": {
+		"node": "22.14.0"
+	},
+	"scripts": {
+		"start": "vite dev",
+		"typecheck": "tsc --noEmit",
+		"lint:js": "eslint --fix",
+		"lint": "npm run typecheck && npm run lint:js",
+		"format": "dprint fmt",
+		"prepreview": "npm run build",
+		"preview": "vite preview --port 3000",
+		"build": "vite build"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "24.0.3",
+		"@typescript-eslint/eslint-plugin": "8.34.1",
+		"@typescript-eslint/parser": "8.34.1",
+		"dprint": "0.50.0",
+		"eslint": "9.29.0",
+		"globals": "16.2.0",
+		"typescript": "5.8.3",
+		"vite": "6.3.5",
+		"wrangler": "4.20.0"
+	},
+	"dependencies": {
+		"lit": "3.3.0"
+	}
+}

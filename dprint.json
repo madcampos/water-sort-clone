@@ -78,10 +78,12 @@
 		"blockSelectorLinebreak": "consistent",
 		"omitNumberLeadingZero": false,
 		"trailingComma": false,
-		"padComments": true,
+		"formatComments": false,
+		"alignComments": true,
 		"linebreakInPseudoParens": false,
 		"declarationOrder": "alphabetical",
 		"singleLineBlockThreshold": 1,
+		"attrValueQuotes": "always",
 		"ignoreCommentDirective": "dprint-ignore"
 	},
 	"markdown": {
@@ -95,11 +97,9 @@
 	},
 	"markup": {
 		"printWidth": 180,
-		"useTabs": true,
-		"indentWidth": 4,
 		"lineBreak": "lf",
 		"quotes": "double",
-		"formatComments": true,
+		"formatComments": false,
 		"scriptIndent": true,
 		"styleIndent": true,
 		"closingBracketSameLine": false,
@@ -119,9 +119,7 @@
 		"vForDelimiterStyle": "of",
 		"vSlotStyle": "short",
 		"vBindSameNameShortHand": false,
-		"astroAttrShorthand": true,
-		"ignoreCommentDirective": "dprint-ignore",
-		"ignoreFileCommentDirective": "dprint-ignore-file"
+		"astroAttrShorthand": true
 	},
 	"yaml": {
 		"printWidth": 180,
@@ -138,31 +136,24 @@
 		"trimTrailingZero": false,
 		"ignoreCommentDirective": "dprint-ignore"
 	},
-	"exec": {
-		"cwd": "${configDir}",
-		"lineWidth": 180,
+	"toml": {
 		"indentWidth": 4,
 		"useTabs": true,
-		"cacheKey": "1",
-		"timeout": 30,
-
-		"commands": []
+		"newLineKind": "lf",
+		"comment.forceLeadingSpace": true
 	},
 	"excludes": [
 		"dist/**",
 		"**/node_modules",
-		"**/*-lock.json",
-		"**/.obsidian/**"
+		"**/*-lock.json"
 	],
 	"plugins": [
-		"https://plugins.dprint.dev/typescript-0.93.3.wasm",
-		"https://plugins.dprint.dev/json-0.19.4.wasm",
-		"https://plugins.dprint.dev/markdown-0.17.8.wasm",
-		"https://plugins.dprint.dev/toml-0.6.4.wasm",
-		"https://plugins.dprint.dev/dockerfile-0.3.2.wasm",
-		"https://plugins.dprint.dev/g-plane/malva-v0.11.1.wasm",
-		"https://plugins.dprint.dev/g-plane/markup_fmt-v0.18.0.wasm",
-		"https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.0.wasm",
-		"https://plugins.dprint.dev/exec-0.5.1.json@492414e39dea4dccc07b4af796d2f4efdb89e84bae2bd4e1e924c0cc050855bf"
+		"https://plugins.dprint.dev/typescript-0.95.7.wasm",
+		"https://plugins.dprint.dev/json-0.20.0.wasm",
+		"https://plugins.dprint.dev/g-plane/malva-v0.12.1.wasm",
+		"https://plugins.dprint.dev/g-plane/markup_fmt-v0.20.0.wasm",
+		"https://plugins.dprint.dev/markdown-0.18.0.wasm",
+		"https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm",
+		"https://plugins.dprint.dev/toml-0.7.0.wasm"
 	]
 }
