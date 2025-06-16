@@ -1,6 +1,6 @@
 // @ts-check
 
-import { GamepadHandler } from './gamepad.js';
+import { GamepadHandler } from './gamepad.ts';
 
 /**
  * @param {HTMLInputElement} element

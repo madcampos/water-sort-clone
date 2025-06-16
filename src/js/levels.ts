@@ -1,5 +1,5 @@
-import { resetFlasks } from './flasks.js';
-import { hideAllScreens, setGameState } from './index.js';
+import { resetFlasks } from './flasks.ts';
+import { hideAllScreens, setGameState } from './index.ts';
 
 function getMaxAllowedLevel() {
 	return Number.parseInt(localStorage.getItem('maxLevel') ?? '0');

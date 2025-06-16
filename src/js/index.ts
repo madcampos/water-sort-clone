@@ -1,7 +1,7 @@
-import { resetFlasks } from './flasks.js';
-import { hideGameOverScreen } from './game-over.js';
-import { GamepadHandler } from './gamepad.js';
-import { hideHelpScreen, initializeHelpScreen } from './help.js';
+import { resetFlasks } from './flasks.ts';
+import { hideGameOverScreen } from './game-over.ts';
+import { GamepadHandler } from './gamepad.ts';
+import { hideHelpScreen, initializeHelpScreen } from './help.ts';
 import { getCurrentLevel, hideLevelSelectScreen, initializeLevelList, loadLevel } from './levels.js';
 import { hideSettingsScreen, initializeSettings } from './settings.js';
 import { hideTitleScreen, initializeTitleScreen } from './title.js';

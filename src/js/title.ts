@@ -1,4 +1,4 @@
-import { hideAllScreens } from './index.js';
+import { hideAllScreens } from './index.ts';
 
 function showTitleScreen() {
 	hideAllScreens();
