@@ -1,47 +1,173 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers, @typescript-eslint/naming-convention */
 
-type GamepadTypes = 'dualshock' | 'joycon-l' | 'joycon-lr' | 'joycon-r' | 'unknown' | 'xbox';
-type ButtonNames =
-	| 'a'
-	| 'b'
-	| 'down'
-	| 'left'
-	| 'leftBumper'
-	| 'leftStick'
-	| 'leftTrigger'
-	| 'logo'
-	| 'right'
-	| 'rightBumper'
-	| 'rightStick'
-	| 'rightTrigger'
-	| 'select'
-	| 'share'
-	| 'start'
-	| 'up'
-	| 'x'
-	| 'y';
+export type GamepadTypes = 'dualshock' | 'joycon-l' | 'joycon-lr' | 'joycon-r' | 'unknown' | 'xbox';
+export const BUTTON_NAMES = [
+	'a',
+	'b',
+	'down',
+	'left',
+	'leftBumper',
+	'leftStick',
+	'leftTrigger',
+	'logo',
+	'right',
+	'rightBumper',
+	'rightStick',
+	'rightTrigger',
+	'select',
+	'share',
+	'start',
+	'up',
+	'x',
+	'y'
+] as const;
+
+export type GamepadButtonNames = typeof BUTTON_NAMES[number];
+
+export const BUTTON_MAP: Record<GamepadTypes, Record<GamepadButtonNames, string>> = {
+	'xbox': {
+		a: 'A',
+		b: 'B',
+		x: 'X',
+		y: 'Y',
+		leftBumper: 'LB',
+		rightBumper: 'RB',
+		leftTrigger: 'LT',
+		rightTrigger: 'RT',
+		select: 'View',
+		start: 'Menu',
+		leftStick: 'LS',
+		rightStick: 'RS',
+		up: 'DPad Up',
+		down: 'DPad Down',
+		left: 'DPad Left',
+		right: 'DPad Right',
+		logo: 'Xbox',
+		share: 'Share'
+	},
+	'dualshock': {
+		a: 'Cross',
+		b: 'Circle',
+		x: 'Square',
+		y: 'Triangle',
+		leftBumper: 'L1',
+		rightBumper: 'R1',
+		leftTrigger: 'L2',
+		rightTrigger: 'R2',
+		select: 'Share',
+		start: 'Options',
+		leftStick: 'L3',
+		rightStick: 'R3',
+		up: 'DPad Up',
+		down: 'DPad Down',
+		left: 'DPad Left',
+		right: 'DPad Right',
+		logo: 'PS',
+		share: 'Touchpad'
+	},
+	'joycon-l': {
+		a: 'Left',
+		b: 'Down',
+		x: 'Up',
+		y: 'Right',
+		leftBumper: 'L',
+		rightBumper: 'SL',
+		leftTrigger: 'ZL',
+		rightTrigger: 'SR',
+		select: 'Minus',
+		start: 'Capture',
+		leftStick: 'Stick',
+		rightStick: 'N/A',
+		up: 'DPad Up',
+		down: 'DPad Down',
+		left: 'DPad Left',
+		right: 'DPad Right',
+		logo: 'Home',
+		share: 'N/A'
+	},
+	'joycon-r': {
+		a: 'A',
+		b: 'B',
+		x: 'X',
+		y: 'Y',
+		leftBumper: 'SR',
+		rightBumper: 'R',
+		leftTrigger: 'SL',
+		rightTrigger: 'ZR',
+		select: 'Capture',
+		start: 'Plus',
+		leftStick: 'N/A',
+		rightStick: 'Stick',
+		up: 'DPad Up',
+		down: 'DPad Down',
+		left: 'DPad Left',
+		right: 'DPad Right',
+		logo: 'Home',
+		share: 'N/A'
+	},
+	'joycon-lr': {
+		a: 'A',
+		b: 'B',
+		x: 'X',
+		y: 'Y',
+		leftBumper: 'L',
+		rightBumper: 'R',
+		leftTrigger: 'ZL',
+		rightTrigger: 'ZR',
+		select: 'Minus',
+		start: 'Plus',
+		leftStick: 'Left Stick',
+		rightStick: 'Right Stick',
+		up: 'DPad Up',
+		down: 'DPad Down',
+		left: 'DPad Left',
+		right: 'DPad Right',
+		logo: 'Home',
+		share: 'Capture'
+	},
+	'unknown': {
+		a: 'A',
+		b: 'B',
+		x: 'X',
+		y: 'Y',
+		leftBumper: 'LB',
+		rightBumper: 'RB',
+		leftTrigger: 'LT',
+		rightTrigger: 'RT',
+		select: 'Select',
+		start: 'Start',
+		leftStick: 'LS',
+		rightStick: 'RS',
+		up: 'DPad Up',
+		down: 'DPad Down',
+		left: 'DPad Left',
+		right: 'DPad Right',
+		logo: 'Logo',
+		share: 'Share'
+	}
+} as const;
 
 interface GamepadButtonEventDetails {
-	button: ButtonNames;
+	button: GamepadButtonNames;
 }
 
-type DirectionVertical = 'down' | 'up';
-type DirectionHorizontal = 'left' | 'right';
+type GamepadDirectionVertical = 'down' | 'up';
+type GamepadDirectionHorizontal = 'left' | 'right';
 
-type StickSide = 'left' | 'right';
+type GamepadStickSide = 'left' | 'right';
 
 interface GamepadStickEventDetail {
-	stick: StickSide;
-	directionX?: DirectionHorizontal;
-	directionY?: DirectionVertical;
+	stick: GamepadStickSide;
+	directionX?: GamepadDirectionHorizontal;
+	directionY?: GamepadDirectionVertical;
 	deltaX: number;
 	deltaY: number;
 }
 
 interface GamepadStickActionEventDetail {
-	stick: StickSide;
-	directionX?: DirectionHorizontal;
-	directionY?: DirectionVertical;
+	stick: GamepadStickSide;
+	directionX?: GamepadDirectionHorizontal;
+	directionY?: GamepadDirectionVertical;
 }
 
 declare global {
@@ -55,7 +181,7 @@ declare global {
 }
 
 export class GamepadHandler extends EventTarget {
-	static #buttonsPressed: Record<ButtonNames, boolean> = {
+	static #buttonsPressed: Record<GamepadButtonNames, boolean> = {
 		a: false,
 		b: false,
 		x: false,
@@ -110,7 +236,7 @@ export class GamepadHandler extends EventTarget {
 
 		const isDualshock = gamepad.id.includes('054c') && !gamepad.id.includes('0ce6');
 		if (isDualshock) {
-			this.#gamepadType = 'dualshock';
+			GamepadHandler.#gamepadType = 'dualshock';
 		}
 
 		const isXbox = gamepad.id.includes('Xbox One') ||
@@ -118,23 +244,25 @@ export class GamepadHandler extends EventTarget {
 			gamepad.id.includes('xinput') ||
 			(gamepad.id.includes('045e') && !gamepad.id.includes('Surface Dock'));
 		if (isXbox) {
-			this.#gamepadType = 'xbox';
+			GamepadHandler.#gamepadType = 'xbox';
 		}
 
 		const isJoyconL = gamepad.id.includes('057e') && gamepad.id.includes('2006');
 		if (isJoyconL) {
-			this.#gamepadType = 'joycon-l';
+			GamepadHandler.#gamepadType = 'joycon-l';
 		}
 
 		const isJoyconR = gamepad.id.includes('057e') && gamepad.id.includes('2007');
 		if (isJoyconR) {
-			this.#gamepadType = 'joycon-r';
+			GamepadHandler.#gamepadType = 'joycon-r';
 		}
 
 		const isJoyconLR = gamepad.id.includes('Joy-Con L+R');
 		if (isJoyconLR) {
-			this.#gamepadType = 'joycon-lr';
+			GamepadHandler.#gamepadType = 'joycon-lr';
 		}
+
+		document.body.dataset['gamepad'] = GamepadHandler.#gamepadType;
 	}
 
 	static #updateLoop() {
@@ -145,7 +273,7 @@ export class GamepadHandler extends EventTarget {
 		});
 	}
 
-	static #triggerStickEvents(stick: StickSide, x: number, y: number) {
+	static #triggerStickEvents(stick: GamepadStickSide, x: number, y: number) {
 		window.dispatchEvent(
 			new CustomEvent('gamepadstickmove', {
 				bubbles: true,
@@ -164,7 +292,7 @@ export class GamepadHandler extends EventTarget {
 		);
 	}
 
-	static #triggerStickAction(stick: StickSide, x: number, y: number) {
+	static #triggerStickAction(stick: GamepadStickSide, x: number, y: number) {
 		window.dispatchEvent(
 			new CustomEvent('gamepadstickaction', {
 				bubbles: true,
@@ -181,7 +309,7 @@ export class GamepadHandler extends EventTarget {
 		);
 	}
 
-	static #triggerButtonEvents(buttonName: ButtonNames, isButtonDown: boolean) {
+	static #triggerButtonEvents(buttonName: GamepadButtonNames, isButtonDown: boolean) {
 		const wasButtonDown = GamepadHandler.#buttonsPressed[buttonName];
 
 		if (isButtonDown) {
@@ -243,7 +371,7 @@ export class GamepadHandler extends EventTarget {
 			Object.keys(GamepadHandler.#buttonsPressed).forEach((buttonName, i) => {
 				const isButtonDown = gamepad.buttons[i]?.pressed ?? false;
 
-				GamepadHandler.#triggerButtonEvents(buttonName as ButtonNames, isButtonDown);
+				GamepadHandler.#triggerButtonEvents(buttonName as GamepadButtonNames, isButtonDown);
 			});
 		}
 
