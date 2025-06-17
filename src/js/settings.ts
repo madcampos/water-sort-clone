@@ -2,10 +2,7 @@
 
 import { GamepadHandler } from './gamepad.ts';
 
-/**
- * @param {HTMLInputElement} element
- */
-function updateSetting(element) {
+function updateSetting(element: HTMLInputElement) {
 	let elementValue = element.value;
 	let settingValue = element.value;
 
@@ -15,7 +12,7 @@ function updateSetting(element) {
 	}
 
 	if (element.type === 'radio') {
-		(/** @type {NodeListOf<HTMLInputElement>} */ (document.querySelectorAll(`[name=${element.name}]:not(#${element.id})`))).forEach((radio) => {
+		document.querySelectorAll<HTMLInputElement>(`[name=${element.name}]:not(#${element.id})`).forEach((radio) => {
 			radio.checked = false;
 			localStorage.setItem(`#${radio.id}`, 'false');
 		});
@@ -29,10 +26,7 @@ function updateSetting(element) {
 	document.body.setAttribute(`data-setting-${element.name}`, settingValue);
 }
 
-/**
- * @param {HTMLInputElement | HTMLSelectElement} element
- */
-function loadSettingForElement(element) {
+function loadSettingForElement(element: HTMLInputElement | HTMLSelectElement) {
 	const savedElementValue = localStorage.getItem(`#${element.id}`) ?? '';
 	const savedSetting = localStorage.getItem(element.name) ?? '';
 
@@ -50,11 +44,8 @@ function loadSettingForElement(element) {
 	}
 }
 
-/**
- * @param {'select' | 'radio' | 'checkbox' | 'general'} instructions
- */
-function updateSettingsGamepadInstructions(instructions) {
-	const settingsInstructions = /** @type {HTMLOutputElement} */ (document.querySelector('#settings-instruction'));
+function updateSettingsGamepadInstructions(instructions: 'checkbox' | 'general' | 'radio' | 'select') {
+	const settingsInstructions = document.querySelector('#settings-instruction') as HTMLOutputElement;
 
 	if (!GamepadHandler.isGamepadConnected) {
 		settingsInstructions.innerHTML = '';
@@ -75,6 +66,7 @@ function updateSettingsGamepadInstructions(instructions) {
 			settingsInstructions.innerHTML =
 				`Press <kbd data-controller-icon="a">A</kbd> to select. Press <kbd data-controller-icon="dpad-up">DPad Up</kbd> and <kbd data-controller-icon="dpad-down">DPad Down</kbd> to move to other options and settings.`;
 			break;
+		case 'general':
 		default:
 			settingsInstructions.innerHTML =
 				`Press <kbd data-controller-icon="dpad-up">DPad Up</kbd> and <kbd data-controller-icon="dpad-down">DPad Down</kbd> to move between settings.`;
@@ -83,24 +75,21 @@ function updateSettingsGamepadInstructions(instructions) {
 }
 
 function showSettingsScreen() {
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#settings-screen')))?.showModal();
+	document.querySelector<HTMLDialogElement>('#settings-screen')?.showModal();
 }
 
 export function hideSettingsScreen() {
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#settings-screen')))?.close();
+	document.querySelector<HTMLDialogElement>('#settings-screen')?.close();
 }
 
-/**
- * @param {Event} evt
- */
-function handleSettingsScreen(evt) {
-	const target = /** @type {HTMLElement} */ (evt.target);
+function handleSettingsScreen(evt: Event) {
+	const target = evt.target as HTMLElement;
 
 	if (!target.matches('[data-settings]')) {
 		return;
 	}
 
-	if (target.dataset.settings === 'close') {
+	if (target.dataset['settings'] === 'close') {
 		hideSettingsScreen();
 	} else {
 		showSettingsScreen();
@@ -109,27 +98,32 @@ function handleSettingsScreen(evt) {
 
 function initializeGamepadEvents() {
 	window.addEventListener('gamepadbuttonpress', (evt) => {
-		const isSettingSelected = !!document.activeElement?.closest('#settings-screen');
+		const isSettingSelected = Boolean(document.activeElement?.closest('#settings-screen'));
 
 		if (!isSettingSelected) {
 			return;
 		}
 
-		const { detail: { button } } = /** @type {CustomEvent<import('./gamepad.js').GamepadButtonEventDetail>} */ (evt);
-		const settingElements = /** @type {(HTMLInputElement | HTMLSelectElement)[]} */ ([...document.querySelectorAll('#settings-screen :is(input, select)')]);
-		const currentSetting = document.activeElement;
+		const { detail: { button } } = evt;
+		const settingElements = [...document.querySelectorAll('#settings-screen :is(input, select)')];
+		const currentSetting = document.activeElement as HTMLInputElement | HTMLSelectElement | null;
 		const currentSettingIndex = settingElements.findIndex((element) => element === currentSetting);
 
+		if (!currentSetting) {
+			return;
+		}
+
+		// eslint-disable-next-line default-case, @typescript-eslint/switch-exhaustiveness-check
 		switch (button) {
 			case 'a':
 				if (currentSetting.matches('[type="radio"]')) {
-					(/** @type {HTMLInputElement} */ (currentSetting)).checked = true;
-					updateSetting(/** @type {HTMLInputElement} */ (currentSetting));
+					(currentSetting as HTMLInputElement).checked = true;
+					updateSetting(currentSetting as HTMLInputElement);
 				}
 
 				if (currentSetting.matches('[type="checkbox"]')) {
-					(/** @type {HTMLInputElement} */ (currentSetting)).checked = !(/** @type {HTMLInputElement} */ (currentSetting)).checked;
-					updateSetting(/** @type {HTMLInputElement} */ (currentSetting));
+					(currentSetting as HTMLInputElement).checked = !(currentSetting as HTMLInputElement).checked;
+					updateSetting(currentSetting as HTMLInputElement);
 				}
 				break;
 			case 'b':
@@ -137,16 +131,22 @@ function initializeGamepadEvents() {
 				break;
 			case 'left':
 				if (currentSetting.matches('select')) {
-					const { options, selectedIndex } = /** @type {HTMLSelectElement} */ (currentSetting);
+					const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+					const newSelectedOption = [...options].at(selectedIndex - 1);
 
-					[...options].at(selectedIndex - 1).selected = true;
+					if (newSelectedOption) {
+						newSelectedOption.selected = true;
+					}
 				}
 				break;
 			case 'right':
 				if (currentSetting.matches('select')) {
-					const { options, selectedIndex } = /** @type {HTMLSelectElement} */ (currentSetting);
+					const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+					const newSelectedOption = [...options].at((selectedIndex + 1) % options.length);
 
-					[...options].at((selectedIndex + 1) % options.length).selected = true;
+					if (newSelectedOption) {
+						newSelectedOption.selected = true;
+					}
 				}
 				break;
 			case 'up':
@@ -159,35 +159,46 @@ function initializeGamepadEvents() {
 	});
 
 	window.addEventListener('gamepadstickaction', (evt) => {
-		const isSettingSelected = !!document.activeElement?.closest('#settings-screen');
+		const isSettingSelected = Boolean(document.activeElement?.closest('#settings-screen'));
 
 		if (!isSettingSelected) {
 			return;
 		}
 
-		const { detail: { directionX, directionY, stick } } = /** @type {CustomEvent<import('./gamepad.js').GamepadStickEventDetail>} */ (evt);
+		const { detail: { directionX, directionY, stick } } = evt;
 
 		if (stick === 'right') {
 			return;
 		}
 
-		const settingElements = /** @type {(HTMLInputElement | HTMLSelectElement)[]} */ ([...document.querySelectorAll('#settings-screen :is(input, select)')]);
-		const currentSetting = document.activeElement;
+		const settingElements = [...document.querySelectorAll('#settings-screen :is(input, select)')];
+		const currentSetting = document.activeElement as HTMLInputElement | HTMLSelectElement | null;
 		const currentSettingIndex = settingElements.findIndex((element) => element === currentSetting);
 
+		if (!currentSetting) {
+			return;
+		}
+
+		// eslint-disable-next-line default-case, @typescript-eslint/switch-exhaustiveness-check
 		switch (directionX) {
 			case 'left':
 				if (currentSetting.matches('select')) {
-					const { options, selectedIndex } = /** @type {HTMLSelectElement} */ (currentSetting);
+					const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+					const newSelectedOption = [...options].at(selectedIndex - 1);
 
-					[...options].at(selectedIndex - 1).selected = true;
+					if (newSelectedOption) {
+						newSelectedOption.selected = true;
+					}
 				}
 				break;
 			case 'right':
 				if (currentSetting.matches('select')) {
-					const { options, selectedIndex } = /** @type {HTMLSelectElement} */ (currentSetting);
+					const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+					const newSelectedOption = [...options].at((selectedIndex + 1) % options.length);
 
-					[...options].at((selectedIndex + 1) % options.length).selected = true;
+					if (newSelectedOption) {
+						newSelectedOption.selected = true;
+					}
 				}
 				break;
 		}
@@ -199,12 +210,14 @@ function initializeGamepadEvents() {
 			case 'down':
 				settingElements.at((currentSettingIndex + 1) % settingElements.length)?.focus();
 				break;
+			case undefined:
+			default:
 		}
 	});
 }
 
 export function initializeSettings() {
-	const settingsElements = /** @type {NodeListOf<HTMLInputElement | HTMLSelectElement>} */ (document.querySelectorAll('#settings-form :is(input, select)'));
+	const settingsElements = document.querySelectorAll('#settings-form :is(input, select)');
 
 	settingsElements.forEach((element) => {
 		loadSettingForElement(element);
@@ -213,10 +226,10 @@ export function initializeSettings() {
 	initializeGamepadEvents();
 
 	document.querySelector('#settings-form')?.addEventListener('focus', (evt) => {
-		const target = /** @type {HTMLElement} */ (evt.target);
+		const target = evt.target as HTMLElement;
 
 		if (target instanceof HTMLInputElement) {
-			const inputType = /** @type {'checkbox' | 'radio'} */ (target.type);
+			const inputType = target.type as 'checkbox' | 'radio';
 			updateSettingsGamepadInstructions(inputType);
 		} else if (target instanceof HTMLSelectElement) {
 			updateSettingsGamepadInstructions('select');
@@ -226,7 +239,7 @@ export function initializeSettings() {
 	}, { capture: true });
 
 	document.querySelector('#settings-form')?.addEventListener('change', (evt) => {
-		const target = /** @type {HTMLInputElement} */ (evt.target);
+		const target = evt.target as HTMLInputElement;
 
 		if (target.matches(':is(input, select)')) {
 			updateSetting(target);

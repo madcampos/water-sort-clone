@@ -1,3 +1,4 @@
+import type { Level } from '../data/levels.js';
 import { resetFlasks } from './flasks.ts';
 import { hideAllScreens, setGameState } from './index.ts';
 
@@ -5,10 +6,7 @@ function getMaxAllowedLevel() {
 	return Number.parseInt(localStorage.getItem('maxLevel') ?? '0');
 }
 
-/**
- * @param {number} level
- */
-function setMaxAllowedLevel(level) {
+function setMaxAllowedLevel(level: number) {
 	localStorage.setItem('maxLevel', level.toString());
 }
 
@@ -20,14 +18,11 @@ function getMaxPlayerLevel() {
 	return Number.parseInt(localStorage.getItem('maxPlayerLevel') ?? '0');
 }
 
-/**
- * @param {number} level
- */
-function setNewMaxPlayerLevel(level) {
+function setNewMaxPlayerLevel(level: number) {
 	localStorage.setItem('maxPlayerLevel', level.toString());
 
-	(/** @type {NodeListOf<HTMLButtonElement>} */ (document.querySelectorAll('#level-select-screen button'))).forEach((button) => {
-		const buttonLevel = Number.parseInt(button.dataset.levelSelect ?? '0');
+	document.querySelectorAll<HTMLButtonElement>('#level-select-screen button').forEach((button) => {
+		const buttonLevel = Number.parseInt(button.dataset['levelSelect'] ?? '0');
 
 		button.ariaDisabled = buttonLevel > level ? 'true' : 'false';
 	});
@@ -41,11 +36,7 @@ export function enableNextLevel() {
 	}
 }
 
-/**
- * @param {import('./globals.js').Level[]} levels
- * @param {number} index
- */
-export function loadLevel(levels, index) {
+export function loadLevel(levels: Level[], index: number) {
 	localStorage.setItem('currentLevel', index.toString());
 
 	const currentMaxLevel = getMaxPlayerLevel();
@@ -54,24 +45,20 @@ export function loadLevel(levels, index) {
 		setNewMaxPlayerLevel(index);
 	}
 
-	setGameState(structuredClone(levels[index]));
+	setGameState(structuredClone(levels[index]) as Level);
 }
 
 function showLevelSelectScreen() {
 	hideAllScreens();
-	(/** @type {HTMLDialogElement | null} */ (document.querySelector('#level-select-screen')))?.showModal();
+	document.querySelector<HTMLDialogElement>('#level-select-screen')?.showModal();
 }
 
 export function hideLevelSelectScreen() {
-	(/** @type {HTMLDialogElement | null} */ (document.querySelector('#level-select-screen')))?.close();
+	document.querySelector<HTMLDialogElement>('#level-select-screen')?.close();
 }
 
-/**
- * @param {Event} evt
- * @param {import('./globals.js').Level[]} levels
- */
-function handleLevelSelect(evt, levels) {
-	const target = /** @type {HTMLElement} */ (evt.target);
+function handleLevelSelect(evt: Event, levels: Level[]) {
+	const target = evt.target as HTMLElement;
 
 	if (!target.matches('[data-level-select]')) {
 		return;
@@ -81,24 +68,25 @@ function handleLevelSelect(evt, levels) {
 		return;
 	}
 
-	if (target.dataset.levelSelect === 'screen') {
+	if (target.dataset['levelSelect'] === 'screen') {
 		showLevelSelectScreen();
 
 		return;
 	}
 
-	let nextLevel = Number.parseInt(target.dataset.levelSelect ?? '0');
+	let nextLevel = Number.parseInt(target.dataset['levelSelect'] ?? '0');
 
-	if (target.dataset.levelSelect === 'next') {
+	if (target.dataset['levelSelect'] === 'next') {
 		nextLevel = getCurrentLevel() + 1;
 	}
 
-	if (target.dataset.levelSelect === 'current') {
+	if (target.dataset['levelSelect'] === 'current') {
 		nextLevel = getCurrentLevel();
 	}
 
-	if (target.dataset.levelSelect === 'reset') {
+	if (target.dataset['levelSelect'] === 'reset') {
 		// TODO: translate message
+		// eslint-disable-next-line no-alert
 		if (!window.confirm('Do you want to reset the current level?')) {
 			return;
 		}
@@ -115,10 +103,7 @@ function handleLevelSelect(evt, levels) {
 	hideAllScreens();
 }
 
-/**
- * @param {import('./globals.js').Level[]} levels
- */
-export function initializeLevelList(levels) {
+export function initializeLevelList(levels: Level[]) {
 	const levelList = document.createElement('ol');
 	const currentMaxLevel = getMaxPlayerLevel();
 
@@ -130,7 +115,7 @@ export function initializeLevelList(levels) {
 		const li = document.createElement('li');
 		const button = document.createElement('button');
 		button.innerHTML = `Level ${index}: ${name}`;
-		button.dataset.levelSelect = index.toString();
+		button.dataset['levelSelect'] = index.toString();
 		button.ariaDisabled = index > currentMaxLevel ? 'true' : 'false';
 		li.appendChild(button);
 		levelList.appendChild(li);

@@ -27,11 +27,11 @@ function isGameOver() {
 
 function showGameOverScreen() {
 	hideAllScreens();
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#game-over-screen')))?.showModal();
+	document.querySelector<HTMLDialogElement>('#game-over-screen')?.showModal();
 }
 
 export function hideGameOverScreen() {
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#game-over-screen')))?.close();
+	document.querySelector<HTMLDialogElement>('#game-over-screen')?.close();
 }
 
 export function handleGameOver() {

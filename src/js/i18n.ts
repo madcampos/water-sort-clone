@@ -1,9 +1,8 @@
-/**
- * @param {string} string
- */
-export function getTranslatedString(string) {}
+export function getTranslatedString(string: string) {
+	return string;
+}
 
-function translateDocument() {
+export function translateDocument() {
 	// TODO: find all elements and translate them
 }
 

@@ -2,11 +2,11 @@ import { hideAllScreens } from './index.ts';
 
 function showTitleScreen() {
 	hideAllScreens();
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#title-screen')))?.showModal();
+	document.querySelector<HTMLDialogElement>('#title-screen')?.showModal();
 }
 
 export function hideTitleScreen() {
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#title-screen')))?.close();
+	document.querySelector<HTMLDialogElement>('#title-screen')?.close();
 }
 export function initializeTitleScreen() {
 	showTitleScreen();

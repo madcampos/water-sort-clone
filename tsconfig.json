@@ -42,6 +42,6 @@
 		"useDefineForClassFields": true,
 		"useUnknownInCatchVariables": false,
 		"verbatimModuleSyntax": true,
-		"types": ["vite/client"]
+		"types": ["vite/client", "typed-query-selector/strict", "./src/globals.d.ts"]
 	}
 }

@@ -1,3 +1,4 @@
+import type { Level } from '../data/levels.js';
 import { resetFlasks } from './flasks.ts';
 import { hideGameOverScreen } from './game-over.ts';
 import { GamepadHandler } from './gamepad.ts';
@@ -6,17 +7,13 @@ import { getCurrentLevel, hideLevelSelectScreen, initializeLevelList, loadLevel 
 import { hideSettingsScreen, initializeSettings } from './settings.js';
 import { hideTitleScreen, initializeTitleScreen } from './title.js';
 
-/** @type {import('./globals.js').Level} */
-let gameState;
+let gameState: Level;
 
 export function getGameState() {
 	return gameState;
 }
 
-/**
- * @param {import('./globals.js').Level} newState
- */
-export function setGameState(newState) {
+export function setGameState(newState: Level) {
 	gameState = newState;
 }
 
@@ -30,11 +27,11 @@ export function hideAllScreens() {
 
 document.addEventListener('DOMContentLoaded', async () => {
 	const response = await fetch('./levels.json');
-	const levels = /** @type {import('./globals.js').Level[]} */ (await response.json());
+	const levels = await response.json() as Level[];
 
 	GamepadHandler.init(() => {
 		// TODO: get mapping and use it as default
-		document.body.dataset.gamepad = GamepadHandler.gamepadType;
+		document.body.dataset['gamepad'] = GamepadHandler.gamepadType;
 	});
 
 	loadLevel(levels, getCurrentLevel());

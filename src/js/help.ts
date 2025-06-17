@@ -1,22 +1,19 @@
 function showHelpScreen() {
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#help-screen')))?.showModal();
+	document.querySelector<HTMLDialogElement>('#help-screen')?.showModal();
 }
 
 export function hideHelpScreen() {
-	(/** @type {HTMLDialogElement} */ (document.querySelector('#help-screen')))?.close();
+	document.querySelector<HTMLDialogElement>('#help-screen')?.close();
 }
 
-/**
- * @param {Event} evt
- */
-function handleHelpScreen(evt) {
-	const target = /** @type {HTMLElement} */ (evt.target);
+function handleHelpScreen(evt: Event) {
+	const target = evt.target as HTMLElement;
 
 	if (!target.matches('[data-help]')) {
 		return;
 	}
 
-	if (target.dataset.help === 'close') {
+	if (target.dataset['help'] === 'close') {
 		hideHelpScreen();
 	} else {
 		showHelpScreen();

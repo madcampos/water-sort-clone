@@ -1,35 +1,61 @@
-/**
- * @typedef {'xbox' | 'dualshock' | 'joycon-l' | 'joycon-r' | 'joycon-lr' | 'unknown'} GamepadTypes
- */
+/* eslint-disable @typescript-eslint/no-magic-numbers, @typescript-eslint/naming-convention */
 
-/**
- * @typedef {'a' | 'b' | 'down' | 'left' | 'leftBumper' | 'leftStick' | 'leftTrigger' | 'logo' | 'right' | 'rightBumper' | 'rightStick' | 'rightTrigger' | 'select' | 'share' | 'start' | 'up' | 'x' | 'y'} ButtonNames
- */
+type GamepadTypes = 'dualshock' | 'joycon-l' | 'joycon-lr' | 'joycon-r' | 'unknown' | 'xbox';
+type ButtonNames =
+	| 'a'
+	| 'b'
+	| 'down'
+	| 'left'
+	| 'leftBumper'
+	| 'leftStick'
+	| 'leftTrigger'
+	| 'logo'
+	| 'right'
+	| 'rightBumper'
+	| 'rightStick'
+	| 'rightTrigger'
+	| 'select'
+	| 'share'
+	| 'start'
+	| 'up'
+	| 'x'
+	| 'y';
 
-/**
- * @typedef {Object} GamepadButtonEventDetail
- * @prop {ButtonNames} button
- */
+interface GamepadButtonEventDetails {
+	button: ButtonNames;
+}
 
-/**
- * @typedef {Object} GamepadStickEventDetail
- * @prop {'left' | 'right'} stick
- * @prop {'left' | 'right'} [directionX]
- * @prop {'down' | 'up'} [directionY]
- * @prop {number} deltaX
- * @prop {number} deltaY
- */
+type DirectionVertical = 'down' | 'up';
+type DirectionHorizontal = 'left' | 'right';
 
-/**
- * @typedef {Object} GamepadStickActionEventDetail
- * @prop {'left' | 'right'} stick
- * @prop {'left' | 'right'} [directionX]
- * @prop {'down' | 'up'} [directionY]
- */
+type StickSide = 'left' | 'right';
+
+interface GamepadStickEventDetail {
+	stick: StickSide;
+	directionX?: DirectionHorizontal;
+	directionY?: DirectionVertical;
+	deltaX: number;
+	deltaY: number;
+}
+
+interface GamepadStickActionEventDetail {
+	stick: StickSide;
+	directionX?: DirectionHorizontal;
+	directionY?: DirectionVertical;
+}
+
+declare global {
+	interface WindowEventHandlersEventMap {
+		gamepadstickmove: CustomEvent<GamepadStickEventDetail>;
+		gamepadstickaction: CustomEvent<GamepadStickActionEventDetail>;
+		gamepadbuttondown: CustomEvent<GamepadButtonEventDetails>;
+		gamepadbuttonup: CustomEvent<GamepadButtonEventDetails>;
+		gamepadbuttonpress: CustomEvent<GamepadButtonEventDetails>;
+	}
+}
 
 export class GamepadHandler extends EventTarget {
-	/** @type {Record<ButtonNames, boolean>} */
-	static #buttonsPressed = {
+	static #buttonsPressed: Record<ButtonNames, boolean> = {
 		a: false,
 		b: false,
 		x: false,
@@ -61,16 +87,13 @@ export class GamepadHandler extends EventTarget {
 	static #ACTIVATION_WEAK_VIBRATE = 0.8;
 	static #ACTIVATION_STRONG_VIBRATE = 0.2;
 
-	/** @type {GamepadTypes} */
-	static #gamepadType = 'unknown';
+	static #gamepadType: GamepadTypes = 'unknown';
 
 	static #isGamepadConnected = false;
 
-	/**
-	 * @param {() => void} [callback]
-	 */
-	static init(callback) {
+	static init(callback?: () => void) {
 		window.addEventListener('gamepadconnected', () => {
+			// eslint-disable-next-line no-console
 			console.info('[🎮] Gamepad connected.');
 
 			GamepadHandler.#detectionTimestamp = performance.now();
@@ -82,10 +105,7 @@ export class GamepadHandler extends EventTarget {
 		});
 	}
 
-	/**
-	 * @param {Gamepad} gamepad
-	 */
-	static #detectGamepadType(gamepad) {
+	static #detectGamepadType(gamepad: Gamepad) {
 		// Ref: https://github.com/BabylonJS/Babylon.js/blob/4b8b9c60c46695cdb57b074371c65a57b2bbf838/packages/dev/core/src/Gamepads/gamepadManager.ts#L170-L187
 
 		const isDualshock = gamepad.id.includes('054c') && !gamepad.id.includes('0ce6');
@@ -125,53 +145,43 @@ export class GamepadHandler extends EventTarget {
 		});
 	}
 
-	/**
-	 * @param {'left' | 'right'} stick
-	 * @param {number} x
-	 * @param {number} y
-	 */
-	static #triggerStickEvents(stick, x, y) {
+	static #triggerStickEvents(stick: StickSide, x: number, y: number) {
 		window.dispatchEvent(
 			new CustomEvent('gamepadstickmove', {
 				bubbles: true,
 				composed: true,
 				cancelable: true,
-				detail: /** @type {GamepadStickEventDetail} */ ({
+				detail: {
+					// eslint-disable-next-line no-nested-ternary
 					directionX: x > GamepadHandler.#DEADZONE_THRESHOLD ? 'right' : x < -GamepadHandler.#DEADZONE_THRESHOLD ? 'left' : undefined,
+					// eslint-disable-next-line no-nested-ternary
 					directionY: y > GamepadHandler.#DEADZONE_THRESHOLD ? 'down' : y < -GamepadHandler.#DEADZONE_THRESHOLD ? 'up' : undefined,
 					deltaX: x,
 					deltaY: y,
 					stick
-				})
+				} satisfies GamepadStickEventDetail
 			})
 		);
 	}
 
-	/**
-	 * @param {'left' | 'right'} stick
-	 * @param {number} x
-	 * @param {number} y
-	 */
-	static #triggerStickAction(stick, x, y) {
+	static #triggerStickAction(stick: StickSide, x: number, y: number) {
 		window.dispatchEvent(
 			new CustomEvent('gamepadstickaction', {
 				bubbles: true,
 				composed: true,
 				cancelable: true,
-				detail: /** @type {GamepadStickActionEventDetail} */ ({
+				detail: {
+					// eslint-disable-next-line no-nested-ternary
 					directionX: x > GamepadHandler.#ACTION_THRESHOLD ? 'right' : x < -GamepadHandler.#ACTION_THRESHOLD ? 'left' : undefined,
+					// eslint-disable-next-line no-nested-ternary
 					directionY: y > GamepadHandler.#ACTION_THRESHOLD ? 'down' : y < -GamepadHandler.#ACTION_THRESHOLD ? 'up' : undefined,
 					stick
-				})
+				} satisfies GamepadStickActionEventDetail
 			})
 		);
 	}
 
-	/**
-	 * @param {ButtonNames} buttonName
-	 * @param {boolean} isButtonDown
-	 */
-	static #triggerButtonEvents(buttonName, isButtonDown) {
+	static #triggerButtonEvents(buttonName: ButtonNames, isButtonDown: boolean) {
 		const wasButtonDown = GamepadHandler.#buttonsPressed[buttonName];
 
 		if (isButtonDown) {
@@ -182,7 +192,7 @@ export class GamepadHandler extends EventTarget {
 					bubbles: true,
 					composed: true,
 					cancelable: true,
-					detail: /** @type {GamepadButtonEventDetail} */ ({ button: buttonName })
+					detail: { button: buttonName } satisfies GamepadButtonEventDetails
 				})
 			);
 		}
@@ -195,7 +205,7 @@ export class GamepadHandler extends EventTarget {
 					bubbles: true,
 					composed: true,
 					cancelable: true,
-					detail: /** @type {GamepadButtonEventDetail} */ ({ button: buttonName })
+					detail: { button: buttonName } satisfies GamepadButtonEventDetails
 				})
 			);
 
@@ -204,14 +214,14 @@ export class GamepadHandler extends EventTarget {
 					bubbles: true,
 					composed: true,
 					cancelable: true,
-					detail: /** @type {GamepadButtonEventDetail} */ ({ button: buttonName })
+					detail: { button: buttonName } satisfies GamepadButtonEventDetails
 				})
 			);
 		}
 	}
 
 	static #triggerEvents() {
-		const [gamepad] = [...navigator.getGamepads()].filter((gamepad) => !gamepad?.id?.includes('Surface Dock'));
+		const [gamepad] = [...navigator.getGamepads()].filter((currentGamepad) => !currentGamepad?.id?.includes('Surface Dock'));
 
 		if (!gamepad) {
 			GamepadHandler.#isGamepadConnected = false;
@@ -230,10 +240,10 @@ export class GamepadHandler extends EventTarget {
 			GamepadHandler.#triggerStickEvents('left', leftX, leftY);
 			GamepadHandler.#triggerStickEvents('right', rightX, rightY);
 
-			(/** @type {ButtonNames[]} */ (Object.keys(GamepadHandler.#buttonsPressed))).forEach((buttonName, i) => {
+			Object.keys(GamepadHandler.#buttonsPressed).forEach((buttonName, i) => {
 				const isButtonDown = gamepad.buttons[i]?.pressed ?? false;
 
-				GamepadHandler.#triggerButtonEvents(buttonName, isButtonDown);
+				GamepadHandler.#triggerButtonEvents(buttonName as ButtonNames, isButtonDown);
 			});
 		}
 
