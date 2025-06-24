@@ -22,7 +22,7 @@ export class LevelSelect extends GameScreen {
 		return html`
 			<dialog aria-labelledby="level-select-label">
 				<header>
-					<h2 id="level-select-label" data-translate>Select Level</h2>
+					<h2 id="level-select-label">Select Level</h2>
 				</header>
 
 				<ol>

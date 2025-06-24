@@ -215,9 +215,9 @@ export class SettingsScreen extends GameScreen {
 		return html`
 			<dialog id="settings-screen">
 				<header>
-					<h2 data-translate>Game Settings</h2>
+					<h2>Game Settings</h2>
 					<button type="button" data-settings="close">
-						<span class="visually-hidden" data-translate>Close Settings</span>
+						<span class="visually-hidden">Close Settings</span>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 							<path
 								fill="currentColor"
@@ -229,37 +229,37 @@ export class SettingsScreen extends GameScreen {
 
 				<form id="settings-form" @change=${this.#handleSettingChange}>
 					<fieldset>
-						<legend data-translate>Accessibility Settings</legend>
+						<legend>Accessibility Settings</legend>
 						<p>
 							<label for="show-numbers">
 								<input type="checkbox" id="show-numbers" name="showNumbers" .checked=${this.#settings.showNumbers === 'true'} autofocus />
-								<span data-translate>Show numbers for each flask section</span>
+								<span>Show numbers for each flask section</span>
 							</label>
 						</p>
 						<p>
 							<label for="show-color-names">
 								<input type="checkbox" id="show-color-names" name="showColors" .checked=${this.#settings.showColors === 'true'} />
-								<span data-translate>Show colour names on each flask</span>
+								<span>Show colour names on each flask</span>
 							</label>
 						</p>
 						<fieldset>
-							<legend data-translate>High contrast colours</legend>
+							<legend>High contrast colours</legend>
 							<p>
 								<label for="colorblind-mode">
 									<input type="radio" id="colorblind-mode" name="colorblindMode" value="none" .checked=${this.#settings.colorblindMode === 'none'} />
-									<span data-translate>Don't change colours</span>
+									<span>Don't change colours</span>
 								</label>
 							</p>
 							<p>
 								<label for="colorblind-mode2">
 									<input type="radio" id="colorblind-mode2" name="colorblindMode" .checked=${this.#settings.colorblindMode === 'pattern'} />
-									<span data-translate>Show different patterns for each colour</span>
+									<span>Show different patterns for each colour</span>
 								</label>
 							</p>
 							<p>
 								<label for="colorblind-mode3">
 									<input type="radio" id="colorblind-mode3" name="colorblindMode" .checked=${this.#settings.colorblindMode === 'shades'} />
-									<span data-translate>Show different shades of grey for each colour</span>
+									<span>Show different shades of grey for each colour</span>
 								</label>
 							</p>
 						</fieldset>
@@ -270,41 +270,41 @@ export class SettingsScreen extends GameScreen {
 						<p>
 							<label for="play-music">
 								<input type="checkbox" id="play-music" name="playMusic" .checked=${this.#settings.playMusic === 'true'} />
-								<span data-translate>Play game music</span>
+								<span>Play game music</span>
 							</label>
 						</p>
 						<p>
 							<label for="play-sound-effects">
 								<input type="checkbox" id="play-sound-effects" name="playSoundEffects" .checked=${this.#settings.playSoundEffects === 'true'} />
-								<span data-translate>Play sound effects</span>
+								<span>Play sound effects</span>
 							</label>
 						</p>
 					</fieldset>
 
 					<fieldset>
-						<legend data-translate>Language Settings</legend>
+						<legend>Language Settings</legend>
 						<p>
 							<label for="game-language">
-								<span data-translate>Game Language</span>
+								<span>Game Language</span>
 								<select id="game-language" name="language">
-									<option value="en-CA" data-translate .selected=${this.#settings.language === 'en-CA'}>Canadian English</option>
-									<option value="pt-BR" data-translate .selected=${this.#settings.language === 'en-CA'}>Brazilian Portuguese</option>
+									<option value="en-CA" .selected=${this.#settings.language === 'en-CA'}>Canadian English</option>
+									<option value="pt-BR" .selected=${this.#settings.language === 'en-CA'}>Brazilian Portuguese</option>
 								</select>
 							</label>
 						</p>
 					</fieldset>
 
 					<fieldset>
-						<legend data-translate>Controller Settings</legend>
+						<legend>Controller Settings</legend>
 						<p>
 							<label for="game-controller-mapping">
-								<span data-translate>Controller Mapping</span>
+								<span>Controller Mapping</span>
 								<select id="game-controller-mapping" name="controllerMapping">
-									<option value="xbox" data-translate .selected=${this.#settings.controllerMapping === 'xbox'}>Xbox</option>
-									<option value="dualshock" data-translate .selected=${this.#settings.controllerMapping === 'dualshock'}>DualShock</option>
-									<!-- <option value="joycon-l" data-translate .selected=${this.#settings.controllerMapping === 'joycon-l'}>Joy-Con - Left only</option> -->
-									<!-- <option value="joycon-r" data-translate .selected=${this.#settings.controllerMapping === 'joycon-r'}>Joy-Con - Right only</option> -->
-									<!-- <option value="joycon-lr" data-translate .selected=${this.#settings.controllerMapping === 'joycon-lr'}>Joy-Con - Left + Right</option> -->
+									<option value="xbox" .selected=${this.#settings.controllerMapping === 'xbox'}>Xbox</option>
+									<option value="dualshock" .selected=${this.#settings.controllerMapping === 'dualshock'}>DualShock</option>
+									<!-- <option value="joycon-l" .selected=${this.#settings.controllerMapping === 'joycon-l'}>Joy-Con - Left only</option> -->
+									<!-- <option value="joycon-r" .selected=${this.#settings.controllerMapping === 'joycon-r'}>Joy-Con - Right only</option> -->
+									<!-- <option value="joycon-lr" .selected=${this.#settings.controllerMapping === 'joycon-lr'}>Joy-Con - Left + Right</option> -->
 								</select>
 							</label>
 						</p>

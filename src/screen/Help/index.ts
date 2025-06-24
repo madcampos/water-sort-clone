@@ -10,9 +10,10 @@ export class HelpScreen extends GameScreen {
 		return html`
 			<dialog>
 				<header>
-					<h2 data-translate>Game Help</h2>
+					<h2>Game Help</h2>
 					<button type="button" data-help="close">
-						<span class="visually-hidden" data-translate>Close Help</span>
+						<span class="visually-hidden">Close Help</span>
+
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 							<path
 								fill="currentColor"
@@ -23,8 +24,8 @@ export class HelpScreen extends GameScreen {
 				</header>
 				<div>
 					<details open>
-						<summary data-translate>How to play the game?</summary>
-						<p data-translate>
+						<summary>How to play the game?</summary>
+						<p>
 							<span>In this game you are a chemist, mixing diferent liquids to sort them out by colour.</span>
 							<br />
 							<span>Your objective is to have a single coloured liquid per flask. It is okay to leave empty flaks.</span>
@@ -37,8 +38,8 @@ export class HelpScreen extends GameScreen {
 							<span>Below are instructions for specific input interactions.</span>
 						</p>
 
-						<p data-translate><strong>Notes:</strong></p>
-						<ul data-translate>
+						<p><strong>Notes:</strong></p>
+						<ul>
 							<li>You may only pour to another flask if the colour of the liquid on top of both match.</li>
 							<li>Any colour can be poured in a fully empty flask.</li>
 							<li>If there are multiple parts of the same coloured liquid, they are all moved together.</li>
@@ -49,71 +50,71 @@ export class HelpScreen extends GameScreen {
 						</ul>
 					</details>
 					<details>
-						<summary data-translate>Mouse and Touch</summary>
+						<summary>Mouse and Touch</summary>
 
 						<ul>
-							<li data-translate>
+							<li>
 								To select a flask <kbd data-input-icon="click">click</kbd> or <kbd data-input-icon="tap">tap</kbd> it.
 							</li>
-							<li data-translate>
+							<li>
 								Then <kbd data-input-icon="click">click</kbd> or <kbd data-input-icon="tap">tap</kbd> another flask to pour the liquid into it.
 							</li>
-							<li data-translate>
+							<li>
 								<kbd data-input-icon="click">Clicking</kbd> or <kbd data-input-icon="tap">tapping</kbd> the same flask again deselect it.
 							</li>
 						</ul>
 					</details>
 					<details>
-						<summary data-translate>Keyboard</summary>
+						<summary>Keyboard</summary>
 
 						<ul>
-							<li data-translate>
+							<li>
 								To select a flask press <kbd data-keyboard-icon="space">space</kbd> or <kbd data-keyboard-icon="enter">enter</kbd>.
 							</li>
-							<li data-translate>
+							<li>
 								To deselect a flask press <kbd data-keyboard-icon="space">space</kbd> or <kbd data-keyboard-icon="enter">enter</kbd> on a <em>selected flask</em>.
 							</li>
-							<li data-translate>
+							<li>
 								Move to the <em>next</em> flask by pessing <kbd data-keyboard-icon="right-arrow">Right Arrow</kbd> or <kbd data-keyboard-icon="down-arrow"
 								>Down Arrow</kbd>.
 							</li>
-							<li data-translate>
+							<li>
 								Move to the <em>previous</em> flask by pessing <kbd data-keyboard-icon="left-arrow">Left Arrow</kbd> or <kbd data-keyboard-icon="up-arrow"
 								>Up Arrow</kbd>.
 							</li>
-							<li data-translate>
+							<li>
 								Press <kbd data-keyboard-icon="esc">Esc</kbd> to deselect <em>all</em> flasks.
 							</li>
 						</ul>
 					</details>
 					<details>
-						<summary data-translate>Controller</summary>
+						<summary>Controller</summary>
 
-						<h3 data-translate>Game Controls</h3>
+						<h3>Game Controls</h3>
 
 						<ul>
-							<li data-translate>
+							<li>
 								To select a flask press <controller-badge icon="a"></controller-badge>.
 							</li>
-							<li data-translate>
+							<li>
 								To deselect a flask press <controller-badge icon="a"></controller-badge> on a <em>selected flask</em>.
 							</li>
-							<li data-translate>
+							<li>
 								Move to the <em>next</em> flask by pessing <controller-badge icon="dpad-right"></controller-badge>, or by moving the <controller-badge icon="right-thumb"></controller-badge> right.
 							</li>
-							<li data-translate>
+							<li>
 								Move to the <em>previous</em> flask by pessing <controller-badge icon="dpad-left"></controller-badge>, or by moving the <controller-badge icon="left-thumb"></controller-badge> left.
 							</li>
-							<li data-translate>
+							<li>
 								Press <controller-badge icon="b"></controller-badge> to deselect <em>all</em> flasks.
 							</li>
-							<li data-translate>
+							<li>
 								Press <controller-badge icon="select"></controller-badge> to <em>reset the level</em>.
 							</li>
-							<li data-translate>
+							<li>
 								Press <controller-badge icon="start"></controller-badge> to <em>go open the settings menu</em>.
 							</li>
-							<li data-translate>
+							<li>
 								Press <controller-badge icon="y"></controller-badge> to <em>open this help</em>.
 							</li>
 						</ul>
