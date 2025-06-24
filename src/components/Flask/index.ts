@@ -48,6 +48,7 @@ export class LiquidFlask extends LitElement {
 		return this.flaskData.at(-1);
 	}
 
+	// TODO: move pour logic back to main screen
 	canPour(destination: LiquidFlask) {
 		const hasAvailableSpace = destination.hasSpace;
 		const isEmptyFlask = destination.length === 0;
