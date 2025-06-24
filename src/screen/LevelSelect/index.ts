@@ -1,12 +1,12 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { GameScreen } from '../../components/GameScreen/index.ts';
-import { availableLevels, getMaxAllowedLevel } from '../../js/levels.ts';
+import { availableLevels, getMaxLevel } from '../../js/levels.ts';
 
 @customElement('level-select-screen')
 export class LevelSelect extends GameScreen {
 	override render() {
-		const currentMaxLevel = getMaxAllowedLevel();
+		const currentMaxLevel = getMaxLevel();
 		const levels = availableLevels.map(({ name }, index) =>
 			html`
 				<li>

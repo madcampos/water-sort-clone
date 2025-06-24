@@ -1,81 +1,41 @@
 import { html, LitElement } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import type { Flask, Level } from '../../data/levels.js';
-import { getGameState } from '../../js/index.ts';
-import { updateStatus } from '../../js/status.ts';
-import type { SettingsScreen } from '../Settings/index.ts';
-
-function selectFlask(flaskElement: HTMLElement) {
-	flaskElement.setAttribute('aria-pressed', 'true');
-	updateStatus('selected', Number.parseInt(flaskElement.dataset['index'] ?? '0'));
-}
-
-function deselectFlask(flaskElement: HTMLElement) {
-	flaskElement.setAttribute('aria-pressed', 'false');
-	updateStatus('deselected', Number.parseInt(flaskElement.dataset['index'] ?? '0'));
-}
-
-function deleslectAllFlasks(flasksContainer: HTMLElement) {
-	flasksContainer.querySelectorAll('.flask').forEach((flaskElement) => {
-		flaskElement.setAttribute('aria-pressed', 'false');
-	});
-}
+import { enableNextLevel } from '../../js/levels.ts';
 
 @customElement('main-screen')
 export class MainScreen extends LitElement {
 	@state()
-	accessor #currentLevel: Flask[] = [];
+	accessor #currentLevel = 0;
 
-	#initializeFlasksKeyboardInteraction() {
-		// TODO: init roving tab index for keyboard navigation
+	constructor() {
+		super();
+
+		document.addEventListener('flask-pourend', this.#checkGameOver);
 	}
+
+	// TODO: add roving tab index for keyboard navigation
 
 	#openSettings() {
-		document.querySelector<SettingsScreen>('settings-screen')?.open();
+		document.querySelector('settings-screen')?.open();
 	}
 
-	loadLevel(level: Level) {
+	loadLevel(level: number | 'current' | 'next') {
 		// TODO: implement
 	}
 
 	#resetLevel() {
-		// TODO: implement
+		this.loadLevel(this.#currentLevel);
 	}
 
-	#selectFlaskHandler(evt: Event) {
-		const flaskElement = evt.target as HTMLElement;
+	#checkGameOver() {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const gameOverScreen = document.querySelector('game-over-screen')!;
+		const isGameOver = gameOverScreen.isGameOver();
 
-		if (!flaskElement.matches('#flasks button')) {
-			return;
+		if (isGameOver) {
+			gameOverScreen.open();
+			enableNextLevel();
 		}
-
-		const gameState = getGameState();
-		const flasksContainer = flaskElement.parentElement as HTMLDivElement;
-		const fromFlaskElement = flasksContainer.querySelector<HTMLElement>('[aria-pressed="true"]');
-
-		if (!fromFlaskElement) {
-			// No flask is selected, select one
-			selectFlask(flaskElement);
-		} else if (fromFlaskElement === flaskElement) {
-			// The same flask is selected, deselect it
-			deselectFlask(flaskElement);
-		} else {
-			// A different flask is selected, atempt to pour...
-			const fromIndex = Number.parseInt(fromFlaskElement.dataset['index'] ?? '0');
-			const toIndex = Number.parseInt(flaskElement.dataset['index'] ?? '0');
-
-			if (canPour(gameState.flasks[fromIndex] as Flask, gameState.flasks[toIndex] as Flask, gameState.flaskSize)) {
-				updateStatus('pour', fromIndex, toIndex);
-				pour(gameState.flasks[fromIndex] as Flask, gameState.flasks[toIndex] as Flask, gameState.flaskSize);
-			} else {
-				updateStatus('failedToPour', fromIndex, toIndex);
-			}
-
-			deleslectAllFlasks(flasksContainer);
-			updateFlasks(flasksContainer);
-		}
-
-		handleGameOver();
 	}
 
 	override render() {
@@ -83,7 +43,7 @@ export class MainScreen extends LitElement {
 			<div>
 				<nav>
 					<button type="button" @click=${() => this.#resetLevel()}>
-						<span class="visually-hidden" data-translate>Reset Level</span>
+						<span class="visually-hidden">Reset Level</span>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="presentation">
 							<path
 								fill="currentColor"
@@ -93,7 +53,7 @@ export class MainScreen extends LitElement {
 					</button>
 					<hr />
 					<button type="button" @click=${() => this.#openSettings()}>
-						<span class="visually-hidden" data-translate>Open Settings</span>
+						<span class="visually-hidden">Open Settings</span>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" role="presentation">
 							<path
 								fill="currentColor"
@@ -102,11 +62,10 @@ export class MainScreen extends LitElement {
 						</svg>
 					</button>
 				</nav>
-				<main id="flasks" @click=${this.#selectFlaskHandler}>
+				<main id="flasks">
 
 				</main>
 				<footer>
-					<output id="game-status" aria-live="polite"></output>
 					<output id="game-instructions">
 						<!-- TODO: add instructions -->
 					</output>

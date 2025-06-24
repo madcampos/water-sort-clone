@@ -5,13 +5,11 @@ import { GameScreen } from '../../components/GameScreen/index.ts';
 @customElement('game-over-screen')
 export class GameOverScreen extends GameScreen {
 	isGameOver() {
-		const gameState = getGameState();
-
-		const flasksWithColors = gameState.flasks.filter(({ length }) => length !== 0);
+		const flasksWithColors = [...document.querySelectorAll('liquid-flask')].filter((flask) => flask.length);
 		const colorFlasks = [];
 
 		for (const [index, flask] of flasksWithColors.entries()) {
-			const flaskColors = new Set(flask);
+			const flaskColors = new Set(flask.flaskData);
 
 			if (flaskColors.size > 1) {
 				return false;
@@ -24,20 +22,27 @@ export class GameOverScreen extends GameScreen {
 			return false;
 		}
 
-		enableNextLevel();
 		return true;
+	}
+
+	#handleNextLevel() {
+		document.querySelector('main-screen')?.loadLevel('next');
+	}
+
+	#handleSelectLevel() {
+		document.querySelector('level-select-screen')?.open();
 	}
 
 	override render() {
 		return html`
 			<dialog aria-labelledby="game-over-label">
 				<header>
-					<h2 id="game-over-label" data-translate>Level complete!</h2>
+					<h2 id="game-over-label">Level complete!</h2>
 				</header>
 
 				<div>
-					<button type="button" data-level-select="next" data-translate>Next Level</button>
-					<button type="button" data-level-select="screen" data-translate>Select Level</button>
+					<button type="button" @click="${this.#handleNextLevel}">Next Level</button>
+					<button type="button" @click="${this.#handleSelectLevel}">Select Level</button>
 				</div>
 			</dialog>
 		`;

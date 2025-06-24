@@ -4,29 +4,41 @@ import { GameScreen } from '../../components/GameScreen/index.ts';
 
 @customElement('title-screen')
 export class TitleScreen extends GameScreen {
+	#handlePlay() {
+		document.querySelector('main-screen')?.loadLevel('current');
+	}
+
+	#handleHelp() {
+		document.querySelector('help-screen')?.open();
+	}
+
+	#handleLevelSelect() {
+		document.querySelector('level-select-screen')?.open();
+	}
+
+	#handleSettings() {
+		document.querySelector('settings-screen')?.open();
+	}
+
 	override render() {
 		return html`
 			<dialog aria-labelledby="title-label">
 				<header>
-					<h1 id="title-label" data-translate>Water Sort</h1>
+					<h1 id="title-label">Water Sort</h1>
 				</header>
 
 				<div>
-					<button type="button" data-level-select="current" autofocus>
-						<controller-badge icon="a"></controller-badge>
-						<span data-translate>Play</span>
+					<button type="button" @click="${this.#handlePlay}" autofocus>
+						<span>Play</span>
 					</button>
-					<button type="button" data-help>
-						<controller-badge icon="a"></controller-badge>
-						<span data-translate>How to Play</span>
+					<button type="button" @click="${this.#handleHelp}">
+						<span>How to Play</span>
 					</button>
-					<button type="button" data-level-select="screen">
-						<controller-badge icon="a"></controller-badge>
-						<span data-translate>Select Level</span>
+					<button type="button" @click="${this.#handleLevelSelect}">
+						<span>Select Level</span>
 					</button>
-					<button type="button" data-settings>
-						<controller-badge icon="a"></controller-badge>
-						<span data-translate>Game Settings</span>
+					<button type="button" @click="${this.#handleSettings}">
+						<span>Game Settings</span>
 					</button>
 				</div>
 			</dialog>
