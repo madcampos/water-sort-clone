@@ -6,6 +6,7 @@ import { GameScreen } from '../../components/GameScreen/index.ts';
 export class TitleScreen extends GameScreen {
 	#handlePlay() {
 		document.querySelector('main-screen')?.loadLevel('current');
+		this.close();
 	}
 
 	#handleHelp() {

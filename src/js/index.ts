@@ -6,5 +6,5 @@ import { GamepadHandler } from './gamepad.ts';
 document.addEventListener('DOMContentLoaded', () => {
 	GamepadHandler.init();
 
-	// TODO: load first level
+	document.querySelector('title-screen')?.open();
 });

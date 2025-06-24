@@ -25,6 +25,14 @@ export function getCurrentLevel() {
 	return Number.parseInt(localStorage.getItem('currentLevel') ?? '0');
 }
 
+export function setCurrentLevel(level: number) {
+	if (level < getMaxLevel()) {
+		localStorage.setItem('currentLevel', level.toString());
+	} else {
+		localStorage.setItem('currentLevel', getMaxLevel().toString());
+	}
+}
+
 export function enableNextLevel() {
 	const nextLevel = getCurrentLevel() + 1;
 
@@ -33,8 +41,8 @@ export function enableNextLevel() {
 	}
 }
 
-export function loadLevel(levels: Level[], index: number) {
+export function loadLevel(index: number) {
 	localStorage.setItem('currentLevel', index.toString());
 
-	setGameState(structuredClone(levels[index]) as Level);
+	setGameState(structuredClone(availableLevels[index]) as Level);
 }

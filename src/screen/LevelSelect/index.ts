@@ -5,6 +5,10 @@ import { availableLevels, getMaxLevel } from '../../js/levels.ts';
 
 @customElement('level-select-screen')
 export class LevelSelect extends GameScreen {
+	#handleLevelSelect() {
+		// TODO: implement
+	}
+
 	override render() {
 		const currentMaxLevel = getMaxLevel();
 		const levels = availableLevels.map(({ name }, index) =>
@@ -12,7 +16,7 @@ export class LevelSelect extends GameScreen {
 				<li>
 					<button
 						type="button"
-						data-level-select=${index}
+						data-level=${index}
 						aria-disabled=${currentMaxLevel <= index ? 'true' : 'false'}
 					>Level ${index}: ${name}</button>
 				</li>
@@ -25,7 +29,7 @@ export class LevelSelect extends GameScreen {
 					<h2 id="level-select-label">Select Level</h2>
 				</header>
 
-				<ol>
+				<ol @click="${this.#handleLevelSelect}">
 					${levels}
 				</ol>
 			</dialog>

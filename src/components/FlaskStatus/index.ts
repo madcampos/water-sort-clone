@@ -6,7 +6,7 @@ type AvailableFlaskStatus = 'deselected' | 'failedToPour' | 'pour' | 'reset' | '
 @customElement('flask-status')
 export class FlaskStatus extends LitElement {
 	@state()
-	accessor #currentStatus = '';
+	accessor #currentStatus = 'Select a flask.';
 
 	updateStatus(status: AvailableFlaskStatus, sourceIndex?: number, destIndex?: number) {
 		switch (status) {

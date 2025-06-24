@@ -216,7 +216,7 @@ export class SettingsScreen extends GameScreen {
 			<dialog id="settings-screen">
 				<header>
 					<h2>Game Settings</h2>
-					<button type="button" data-settings="close">
+					<button type="button" @click="${() => this.close()}">
 						<span class="visually-hidden">Close Settings</span>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 							<path

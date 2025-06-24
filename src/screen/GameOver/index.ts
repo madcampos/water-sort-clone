@@ -5,7 +5,7 @@ import { GameScreen } from '../../components/GameScreen/index.ts';
 @customElement('game-over-screen')
 export class GameOverScreen extends GameScreen {
 	isGameOver() {
-		const flasksWithColors = [...document.querySelectorAll('liquid-flask')].filter((flask) => flask.length);
+		const flasksWithColors = [...(document.querySelector('main-screen')?.flasks ?? [])].filter((flask) => flask.length);
 		const colorFlasks = [];
 
 		for (const [index, flask] of flasksWithColors.entries()) {
