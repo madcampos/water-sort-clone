@@ -11,7 +11,7 @@ export class HelpScreen extends GameScreen {
 			<dialog>
 				<header>
 					<h2>Game Help</h2>
-					<button type="button" data-help="close">
+					<button type="button" @click="${() => this.close()}">
 						<span class="visually-hidden">Close Help</span>
 
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

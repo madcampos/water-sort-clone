@@ -1,7 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { LiquidColor } from '../../data/levels.js';
-import { getGameState } from '../../js/levels.ts';
 
 declare global {
 	interface DocumentEventMap {
@@ -20,7 +19,7 @@ export class LiquidFlask extends LitElement {
 	@property({ reflect: true, type: Boolean })
 	accessor selected = false;
 
-	@property({ attribute: false })
+	@property({ attribute: false, type: Array })
 	accessor flaskData: LiquidColor[] = [];
 
 	constructor(flaskData?: LiquidColor[]) {
@@ -38,7 +37,7 @@ export class LiquidFlask extends LitElement {
 	}
 
 	get hasSpace() {
-		return this.length < getGameState().flaskSize;
+		return this.length < this.flaskSize;
 	}
 
 	get colors() {
@@ -49,13 +48,7 @@ export class LiquidFlask extends LitElement {
 		return this.flaskData.at(-1);
 	}
 
-	pourColor(color?: LiquidColor) {
-		if (color) {
-			this.flaskData.push(color);
-		}
-	}
-
-	#canPour(destination: LiquidFlask) {
+	canPour(destination: LiquidFlask) {
 		const hasAvailableSpace = destination.hasSpace;
 		const isEmptyFlask = destination.length === 0;
 		const isSameColorOnTop = this.topColor === destination.topColor;
@@ -63,9 +56,13 @@ export class LiquidFlask extends LitElement {
 		return hasAvailableSpace && (isEmptyFlask || isSameColorOnTop);
 	}
 
-	#pour(destination: LiquidFlask) {
-		while (this.#canPour(destination)) {
-			destination.pourColor(this.flaskData.pop());
+	pour(source: LiquidFlask) {
+		while (source.canPour(this)) {
+			const color = source.flaskData.pop();
+
+			if (color) {
+				this.flaskData.push(color);
+			}
 		}
 	}
 
@@ -74,20 +71,23 @@ export class LiquidFlask extends LitElement {
 			// The same flask is selected, deselect it
 			this.selected = false;
 		} else {
-			const selectedFlask = document.querySelector('liquid-flask[selected="true"]');
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			const mainScreen = document.querySelector('main-screen')!;
+			// eslint-disable-next-line @typescript-eslint/prefer-destructuring
+			const selectedFlask = mainScreen.selectedFlask;
 
 			if (!selectedFlask) {
 				// No flask selected, select it
 				this.selected = true;
-			} else if (this.#canPour(selectedFlask)) {
+			} else if (selectedFlask.canPour(this)) {
 				// A different flask is selected, atempt to pour...
-				this.#pour(selectedFlask);
-				document.querySelector('flask-status')?.updateStatus('pour', this.index, selectedFlask.index);
+				this.pour(selectedFlask);
+				mainScreen.flaskStatus?.updateStatus('pour', this.index, selectedFlask.index);
 
 				document.dispatchEvent(new CustomEvent('flask-pourend'));
 			} else {
 				// Failed to pour
-				document.querySelector('flask-status')?.updateStatus('failedToPour');
+				mainScreen.flaskStatus?.updateStatus('failedToPour', this.index, selectedFlask.index);
 
 				document.dispatchEvent(new CustomEvent('flask-pourend'));
 			}
@@ -112,7 +112,7 @@ export class LiquidFlask extends LitElement {
 		return html`
 			<button type="button" ?aria-pressed="${this.selected}" @click="${this.handleFlaskSelect}">
 				<span class="visually-hidden">
-					Flask ${this.index + 1}. ${this.length} colors of ${getGameState().flaskSize}.
+					Flask ${this.index + 1}. ${this.length} colors of ${this.flaskSize}.
 				</span>
 				<ol role="list">
 					${flasklist}

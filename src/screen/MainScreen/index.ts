@@ -1,11 +1,23 @@
 import { html, LitElement } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
-import { enableNextLevel } from '../../js/levels.ts';
+import { customElement, query, queryAll, state } from 'lit/decorators.js';
+import type { LiquidFlask } from '../../components/Flask/index.ts';
+import type { FlaskStatus } from '../../components/FlaskStatus/index.ts';
+import type { Level } from '../../data/levels.js';
+import { enableNextLevel, getCurrentLevel, getGameState, loadLevel, setCurrentLevel } from '../../js/levels.ts';
 
 @customElement('main-screen')
 export class MainScreen extends LitElement {
 	@state()
-	accessor #currentLevel = 0;
+	accessor #levelState: Level | undefined = undefined;
+
+	@query('flask-status')
+	accessor flaskStatus: FlaskStatus | null = null;
+
+	@query('liquid-flask[selected]')
+	accessor selectedFlask: LiquidFlask | null = null;
+
+	@queryAll('liquid-flask')
+	accessor flasks!: NodeListOf<LiquidFlask>;
 
 	constructor() {
 		super();
@@ -20,11 +32,21 @@ export class MainScreen extends LitElement {
 	}
 
 	loadLevel(level: number | 'current' | 'next') {
-		// TODO: implement
+		if (level === 'next') {
+			setCurrentLevel(getCurrentLevel() + 1);
+		}
+
+		if (typeof level === 'number') {
+			setCurrentLevel(level);
+		}
+
+		loadLevel(getCurrentLevel());
+
+		this.#levelState = getGameState();
 	}
 
 	#resetLevel() {
-		this.loadLevel(this.#currentLevel);
+		this.loadLevel('current');
 	}
 
 	#checkGameOver() {
@@ -39,6 +61,17 @@ export class MainScreen extends LitElement {
 	}
 
 	override render() {
+		const flasks = this.#levelState?.flasks
+			.map((flask, index) =>
+				html`
+					<liquid-flask
+						index="${index}"
+						.flaskSize="${this.#levelState?.flaskSize ?? 0}"
+						.flaskData="${flask}"
+					></liquid-flask>
+			`
+			);
+
 		return html`
 			<div>
 				<nav>
@@ -63,14 +96,20 @@ export class MainScreen extends LitElement {
 					</button>
 				</nav>
 				<main id="flasks">
-
+					${flasks}
 				</main>
 				<footer>
+					<flask-status></flask-status>
 					<output id="game-instructions">
 						<!-- TODO: add instructions -->
 					</output>
 				</footer>
 			</div>
 		`;
+	}
+
+	override connectedCallback() {
+		super.connectedCallback();
+		this.loadLevel('current');
 	}
 }
