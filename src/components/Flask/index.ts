@@ -1,42 +1,101 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { getGameState } from '../../js/index.ts';
+import type { LiquidColor } from '../../data/levels.js';
+import { getGameState } from '../../js/levels.ts';
 
-@customElement('flask-el')
-export class Flask extends LitElement {
-	@property({ type: Number })
+declare global {
+	interface DocumentEventMap {
+		'flask-pourend': CustomEvent;
+	}
+}
+
+@customElement('liquid-flask')
+export class LiquidFlask extends LitElement {
+	@property({ reflect: true, type: Number })
 	accessor index = -1;
 
-	select() {
-		// TODO: implement
+	@property({ reflect: true, type: Number })
+	accessor flaskSize = -1;
+
+	@property({ reflect: true, type: Boolean })
+	accessor selected = false;
+
+	@property({ attribute: false })
+	accessor flaskData: LiquidColor[] = [];
+
+	constructor(flaskData?: LiquidColor[]) {
+		super();
+
+		this.flaskData = flaskData ?? [];
+
+		document.addEventListener('flask-pourend', () => {
+			this.selected = false;
+		});
 	}
 
-	deselect() {
-		// TODO: implement
+	get length() {
+		return this.flaskData.length;
 	}
 
-	canPour(from: Flask, to: Flask, flaskSize: number) {
-		const hasAvailableSpace = to.length < flaskSize;
-		const isEmptyFlask = to.length === 0;
-		const isSameColorOnTop = from.at(-1) === to.at(-1);
+	get hasSpace() {
+		return this.length < getGameState().flaskSize;
+	}
+
+	get colors() {
+		return [...this.flaskData];
+	}
+
+	get topColor() {
+		return this.flaskData.at(-1);
+	}
+
+	pourColor(color?: LiquidColor) {
+		if (color) {
+			this.flaskData.push(color);
+		}
+	}
+
+	#canPour(destination: LiquidFlask) {
+		const hasAvailableSpace = destination.hasSpace;
+		const isEmptyFlask = destination.length === 0;
+		const isSameColorOnTop = this.topColor === destination.topColor;
 
 		return hasAvailableSpace && (isEmptyFlask || isSameColorOnTop);
 	}
 
-	pour(from: Flask, to: Flask, flaskSize: number) {
-		while (canPour(from, to, flaskSize)) {
-			const color = from.pop();
+	#pour(destination: LiquidFlask) {
+		while (this.#canPour(destination)) {
+			destination.pourColor(this.flaskData.pop());
+		}
+	}
 
-			if (color) {
-				to.push(color);
+	handleFlaskSelect() {
+		if (this.selected) {
+			// The same flask is selected, deselect it
+			this.selected = false;
+		} else {
+			const selectedFlask = document.querySelector('liquid-flask[selected="true"]');
+
+			if (!selectedFlask) {
+				// No flask selected, select it
+				this.selected = true;
+			} else if (this.#canPour(selectedFlask)) {
+				// A different flask is selected, atempt to pour...
+				this.#pour(selectedFlask);
+				document.querySelector('flask-status')?.updateStatus('pour', this.index, selectedFlask.index);
+
+				document.dispatchEvent(new CustomEvent('flask-pourend'));
+			} else {
+				// Failed to pour
+				document.querySelector('flask-status')?.updateStatus('failedToPour');
+
+				document.dispatchEvent(new CustomEvent('flask-pourend'));
 			}
 		}
 	}
 
 	override render() {
-		const gameState = getGameState();
-		const flask = gameState.flasks[this.index];
-		const flasklist = [...(flask ?? [])]
+		const flasklist = this.flaskData
 			?.reverse()
 			?.map((color, index) =>
 				html`
@@ -44,7 +103,6 @@ export class Flask extends LitElement {
 						class="segment"
 						data-color=${color}
 						data-index=${index}
-						data-translate
 					>
 						${color ?? ''}
 					</li>
@@ -52,9 +110,9 @@ export class Flask extends LitElement {
 			);
 
 		return html`
-			<button type="button" aria-pressed="false">
-				<span class="visually-hidden" data-translate>
-					Flask ${this.index + 1}. ${flask?.length ?? 0} colors of ${gameState.flaskSize}.
+			<button type="button" ?aria-pressed="${this.selected}" @click="${this.handleFlaskSelect}">
+				<span class="visually-hidden">
+					Flask ${this.index + 1}. ${this.length} colors of ${getGameState().flaskSize}.
 				</span>
 				<ol role="list">
 					${flasklist}
