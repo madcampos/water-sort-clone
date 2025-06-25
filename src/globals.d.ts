@@ -1,6 +1,7 @@
 import type { ControllerBadge } from './components/ControllerBadge/index.ts';
 import type { LiquidFlask } from './components/Flask/index.ts';
 import type { FlaskStatus } from './components/FlaskStatus/index.ts';
+import type { SvgIcon } from './components/SvgIcon/index.ts';
 import type { GameOverScreen } from './screen/GameOver/index.ts';
 import type { HelpScreen } from './screen/Help/index.ts';
 import type { LevelSelect } from './screen/LevelSelect/index.ts';
@@ -14,6 +15,7 @@ declare global {
 		'controller-badge': ControllerBadge;
 		'liquid-flask': LiquidFlask;
 		'flask-status': FlaskStatus;
+		'svg-icon': SvgIcon;
 
 		// Screens
 		'game-over-screen': GameOverScreen;
