@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { GameScreen } from '../../components/GameScreen/index.ts';
+import { getCurrentLevel, getMaxLevel } from '../../js/levels.ts';
 
 @customElement('game-over-screen')
 export class GameOverScreen extends GameScreen {
@@ -25,8 +26,15 @@ export class GameOverScreen extends GameScreen {
 		return true;
 	}
 
-	#handleNextLevel() {
+	#handleNextLevel(evt: MouseEvent) {
+		const target = evt.target as HTMLButtonElement;
+
+		if (target.ariaDisabled) {
+			return;
+		}
+
 		document.querySelector('main-screen')?.loadLevel('next');
+		this.close();
 	}
 
 	#handleSelectLevel() {
@@ -41,7 +49,7 @@ export class GameOverScreen extends GameScreen {
 				</header>
 
 				<div>
-					<button type="button" @click="${this.#handleNextLevel}">Next Level</button>
+					<button type="button" @click="${this.#handleNextLevel}" ?aria-disabled="${getCurrentLevel() === getMaxLevel()}">Next Level</button>
 					<button type="button" @click="${this.#handleSelectLevel}">Select Level</button>
 				</div>
 			</dialog>
