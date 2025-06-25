@@ -28,7 +28,7 @@ export class LevelSelect extends GameScreen {
 					<button
 						type="button"
 						data-level=${index}
-						aria-disabled=${currentMaxLevel <= index ? 'true' : 'false'}
+						?aria-disabled=${currentMaxLevel <= index}
 					>Level ${index}: ${name}</button>
 				</li>
 			`
