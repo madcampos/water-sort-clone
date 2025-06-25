@@ -48,21 +48,20 @@ export class LiquidFlask extends LitElement {
 		return this.flaskData.at(-1);
 	}
 
-	// TODO: move pour logic back to main screen
-	canPour(destination: LiquidFlask) {
-		const hasAvailableSpace = destination.hasSpace;
-		const isEmptyFlask = destination.length === 0;
-		const isSameColorOnTop = this.topColor === destination.topColor;
+	canBePoured(incomingColor?: LiquidColor) {
+		const isEmptyFlask = this.length === 0;
+		const isSameColorOnTop = this.topColor === incomingColor;
 
-		return hasAvailableSpace && (isEmptyFlask || isSameColorOnTop);
+		return this.hasSpace && (isEmptyFlask || isSameColorOnTop);
 	}
 
-	pour(source: LiquidFlask) {
-		while (source.canPour(this)) {
-			const color = source.flaskData.pop();
+	pourFrom(source: LiquidFlask) {
+		while (this.canBePoured(source.topColor)) {
+			const color = source.flaskData.at(-1);
 
 			if (color) {
-				this.flaskData.push(color);
+				source.flaskData = [...source.flaskData.toSpliced(-1, 1)];
+				this.flaskData = [...this.flaskData, color];
 			}
 		}
 	}
@@ -80,15 +79,15 @@ export class LiquidFlask extends LitElement {
 			if (!selectedFlask) {
 				// No flask selected, select it
 				this.selected = true;
-			} else if (selectedFlask.canPour(this)) {
+			} else if (this.canBePoured(selectedFlask.topColor)) {
 				// A different flask is selected, atempt to pour...
-				this.pour(selectedFlask);
-				mainScreen.flaskStatus?.updateStatus('pour', this.index, selectedFlask.index);
+				this.pourFrom(selectedFlask);
+				mainScreen.flaskStatus?.updateStatus('pour', selectedFlask.index, this.index);
 
 				document.dispatchEvent(new CustomEvent('flask-pourend'));
 			} else {
 				// Failed to pour
-				mainScreen.flaskStatus?.updateStatus('failedToPour', this.index, selectedFlask.index);
+				mainScreen.flaskStatus?.updateStatus('failedToPour', selectedFlask.index, this.index);
 
 				document.dispatchEvent(new CustomEvent('flask-pourend'));
 			}
@@ -97,7 +96,7 @@ export class LiquidFlask extends LitElement {
 
 	override render() {
 		const flasklist = this.flaskData
-			?.reverse()
+			?.toReversed()
 			?.map((color, index) =>
 				html`
 					<li
