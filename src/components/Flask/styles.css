@@ -1,4 +1,82 @@
-div {
-	display: inline-grid;
+#flask {
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: auto;
+	grid-template-areas: 'flask';
 	place-items: center;
+
+	& > * {
+		grid-area: 1 / -1 / 1 / -1;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	& > svg {
+		width: auto;
+		height: 50vh;
+		pointer-events: none;
+	}
+
+	& > ol {
+		opacity: 0;
+		width: 1px;
+		height: 1px;
+		overflow: clip;
+		pointer-events: none;
+		user-select: none;
+	}
+
+	& > button {
+		border: none;
+		background: transparent;
+		padding: 0;
+		color: transparent;
+
+		&[aria-pressed='true'] ~ svg { transform: rotate(5deg) translateY(-10%); }
+	}
+
+	#liquid-colors > [data-color=''] + :not([data-color='']),
+	#liquid-colors > :first-child:not([data-color='']) { mask: url(#liquid-top-mask); }
+
+	.liquid-color {
+		rect { fill: var(--liquid-color); }
+
+		&[data-color=''] {
+			--liquid-color: transparent;
+			--liquid-text-color: transparent;
+		}
+
+		&[data-color='Red'] {
+			--liquid-color: tomato;
+			--liquid-text-color: black;
+		}
+
+		&[data-color='Blue'] {
+			--liquid-color: dodgerblue;
+			--liquid-text-color: white;
+		}
+
+		&[data-color='Green'] {
+			--liquid-color: seagreen;
+			--liquid-text-color: black;
+		}
+	}
+
+	text {
+		dominand-baseline: middle;
+		text-anchor: start;
+		font-weight: bold;
+		font-size: 0.7rem;
+		fill: var(--liquid-text-color);
+	}
+
+	.color-index { visibility: hidden; }
+	.color-name { visibility: hidden; }
+}
+
+:host {
+	@container style(--setting-showNumbers: true) { #flask .color-index { visibility: visible; } }
+	@container style(--setting-showColors: true) { #flask .color-name { visibility: visible; } }
 }

@@ -3,7 +3,6 @@
 import { html, LitElement, svg, type TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { LiquidColor } from '../../data/levels.js';
-
 import styles from './styles.css?raw';
 
 declare global {
@@ -200,7 +199,7 @@ export class LiquidFlask extends LitElement {
 		}
 
 		return html`
-		<div>
+		<div id="flask">
 			<button
 				type="button"
 				id="flask-button"
@@ -241,7 +240,7 @@ export class LiquidFlask extends LitElement {
 					<path d="M 0,0.5 Q0.25,0.75,0.5,0.5 Q0.75,0.25,1,0.5 Q1.25,0.75,1.5,0.5 Q1.75,0.25,2,0.5 V1 H0 Z" fill="white" />
 				</mask>
 
-				<g id="color-graphics">
+				<g id="liquid-colors" mask="url(#flask-mask)">
 					${flaskGraphics}
 				</g>
 
@@ -252,6 +251,7 @@ export class LiquidFlask extends LitElement {
 					d="${this.#flaskMarkings}"
 					stroke="white"
 					stroke-width="2"
+					stroke-linecap="round"
 					mask="url(#flask-mask)"
 				/>
 
