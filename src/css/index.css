@@ -19,14 +19,24 @@
 :root {
 	accent-color: var(--accent-color);
 	color-scheme: light dark;
-	font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
 	font-size: 1.2rem;
+	font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
 }
 
 html, body { height: 100%; }
 
 body {
+	margin: 0;
 	background-color: var(--bg-color);
 	color: var(--font-color);
-	margin: 0;
+}
+
+#icon-defs {
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	z-index: -1;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
 }
