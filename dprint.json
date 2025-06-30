@@ -81,7 +81,7 @@
 		"formatComments": false,
 		"alignComments": true,
 		"linebreakInPseudoParens": false,
-		"declarationOrder": "alphabetical",
+		"declarationOrder": "concentric",
 		"singleLineBlockThreshold": 1,
 		"attrValueQuotes": "always",
 		"ignoreCommentDirective": "dprint-ignore"
