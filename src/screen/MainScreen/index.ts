@@ -1,12 +1,15 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, unsafeCSS } from 'lit';
 import { customElement, query, queryAll, state } from 'lit/decorators.js';
 import type { LiquidFlask } from '../../components/Flask/index.ts';
 import type { FlaskStatus } from '../../components/FlaskStatus/index.ts';
 import type { Level } from '../../data/levels.js';
 import { enableNextLevel, getCurrentLevel, getGameState, loadLevel, setCurrentLevel } from '../../js/levels.ts';
+import styles from './styles.css?raw';
 
 @customElement('main-screen')
 export class MainScreen extends LitElement {
+	static override styles = unsafeCSS(styles);
+
 	@state()
 	accessor #levelState: Level | undefined = undefined;
 
@@ -73,7 +76,7 @@ export class MainScreen extends LitElement {
 			);
 
 		return html`
-			<div>
+			<div id="game-screen">
 				<nav>
 					<button type="button" @click=${() => this.#resetLevel()}>
 						<span class="visually-hidden">Reset Level</span>
