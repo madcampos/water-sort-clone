@@ -1,0 +1,41 @@
+@property --setting-showNumbers {
+	syntax: 'true | false';
+	inherits: true;
+	initial-value: false;
+}
+
+@property --setting-showColors {
+	syntax: 'true | false';
+	inherits: true;
+	initial-value: false;
+}
+
+@property --setting-colorblindMode {
+	syntax: 'none | pattern | shades';
+	inherits: true;
+	initial-value: false;
+}
+
+@property --setting-playMusic {
+	syntax: 'true | false';
+	inherits: true;
+	initial-value: false;
+}
+
+@property --setting-playSoundEffects {
+	syntax: 'true | false';
+	inherits: true;
+	initial-value: false;
+}
+
+@property --setting-language {
+	syntax: 'en-CA | pt-BR';
+	inherits: true;
+	initial-value: false;
+}
+
+@property --setting-controllerMapping {
+	syntax: 'xbox | dualshock | joycon-l | joycon-r | joycon-lr';
+	inherits: true;
+	initial-value: false;
+}

@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { GameScreen } from '../../components/GameScreen/index.ts';
 import { GamepadHandler, type GamepadTypes } from '../../js/gamepad.ts';
+import settingsStyle from './settings.css?raw';
 
 interface SettingsObject {
 	showNumbers: 'false' | 'true';
@@ -37,8 +38,16 @@ export class SettingsScreen extends GameScreen {
 				this.#settings[setting] = savedSetting;
 			}
 
-			document.body.setAttribute(`data-setting-${setting}`, savedSetting ?? this.#settings[setting]);
+			document.body.setAttribute(`data-setting-${setting}`, this.#settings[setting]);
+			document.body.style.setProperty(`--setting-${setting}`, this.#settings[setting]);
 		});
+
+		if ('adoptedStyleSheets' in document) {
+			const sheet = new CSSStyleSheet();
+			sheet.replaceSync(settingsStyle);
+
+			document.adoptedStyleSheets.push(sheet);
+		}
 	}
 
 	#handleSettingChange(evt: Event) {
@@ -54,6 +63,7 @@ export class SettingsScreen extends GameScreen {
 			localStorage.setItem(`setting-${target.name}`, settingValue);
 
 			document.body.setAttribute(`data-setting-${target.name}`, settingValue);
+			document.body.style.setProperty(`--setting-${target.name}`, settingValue);
 		}
 	}
 
