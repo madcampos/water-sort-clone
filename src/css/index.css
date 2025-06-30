@@ -1,13 +1,4 @@
 @import url('./globals.css');
-@import url('./flasks.css');
-@import url('./game-over.css');
-@import url('./levels.css');
-@import url('./settings.css');
-@import url('./nav.css');
-@import url('./title.css');
-@import url('./help.css');
-@import url('./gamepad.css');
-@import url('./input.css');
 
 *, *::before, *::after {
 	box-sizing: border-box;
