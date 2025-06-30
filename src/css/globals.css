@@ -27,15 +27,15 @@
 }
 
 .visually-hidden {
-	color: transparent;
-	font-size: 1px;
+	position: absolute;
+	z-index: -1;
+	width: 1px;
 	height: 1px;
 	overflow: hidden;
 	pointer-events: none;
-	position: absolute;
+	color: transparent;
+	font-size: 1px;
 	user-select: none;
-	width: 1px;
-	z-index: -1;
 }
 
 @media (prefers-color-scheme: dark) {

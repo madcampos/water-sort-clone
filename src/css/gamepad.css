@@ -39,21 +39,21 @@
 body[data-gamepad] [data-controller-icon] { display: revert; }
 
 [data-controller-icon] {
-	background: transparent;
-	background-image: none;
-	background-repeat: no-repeat;
-	background-size: contain;
-	color: transparent;
 	display: none;
-	font-size: 1px;
-	height: var(--icon-size);
+	position: absolute;
 	inset-block-start: calc(var(--icon-size) * -0.5);
 	inset-inline-end: calc(var(--icon-size) * -0.5);
+	background: transparent;
+	background-image: none;
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: var(--icon-size);
+	height: var(--icon-size);
 	overflow: hidden;
 	pointer-events: none;
-	position: absolute;
+	color: transparent;
+	font-size: 1px;
 	user-select: none;
-	width: var(--icon-size);
 }
 
 [data-controller-icon='a'] { background-image: var(--xbox-a); }

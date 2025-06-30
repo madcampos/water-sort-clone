@@ -4,13 +4,13 @@ nav {
 	margin: 1rem;
 
 	button {
-		background: transparent;
+		display: flex;
 		border: solid var(--border-color) medium;
 		border-radius: 100vmax;
-		display: flex;
-		font-size: 1rem;
-		padding-block: 0.5rem;
+		background: transparent;
 		padding-inline: 0.5rem;
+		padding-block: 0.5rem;
+		font-size: 1rem;
 
 		&:hover {
 			background-color: var(--font-color);
@@ -28,9 +28,9 @@ nav {
 		}
 
 		svg {
+			width: 1.5rem;
 			height: 1.5rem;
 			pointer-events: none;
-			width: 1.5rem;
 		}
 	}
 
