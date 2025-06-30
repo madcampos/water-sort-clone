@@ -226,18 +226,19 @@ export class LiquidFlask extends LitElement {
 				<mask id="flask-mask">
 					<path d="${this.#flaskMask}" fill="white" />
 				</mask>
-				<mask id="liquid-top-mask">
-					<path d="M25,71c4.422,3.222 7.633,14.082 12,2c5,-13.833 11,6.698 21,12c7.691,-2.573 8.757,-18 -2,-18c0,-12.878 17.342,-1.592 18,6c0.78,8.992 12.033,6.615 9,-4c-2,-7 7.17,4 12,-8l0,54l-70,0l0,-44Z" fill="white" />
-					<circle cx="34" cy="64" r="3" fill="white" />
-					<circle cx="41" cy="52" r="1.5" fill="white" />
-					<circle cx="35" cy="43" r="1.5" fill="white" />
-					<circle cx="76" cy="58" r="3" fill="white" />
-					<circle cx="52" cy="44" r="1.5" fill="white" />
-					<circle cx="82" cy="42" r="1" fill="white" />
-					<circle cx="45" cy="46" r="1.5" fill="white" />
-					<circle cx="76" cy="47" r="1" fill="white" />
-					<circle cx="67" cy="47" r="2.5" fill="white" />
-					<circle cx="50" cy="66" r="2" fill="white" />
+				<!-- TODO: add animation to the mask -->
+				<mask id="liquid-top-mask" maskContentUnits="objectBoundingBox">
+					<circle cx="0.1" cy="0.1" r="0.01" fill="white" />
+					<circle cx="0.2" cy="0.2" r="0.03" fill="white" />
+					<circle cx="0.25" cy="0.4" r="0.05" fill="white" />
+					<circle cx="0.3" cy="0.3" r="0.02" fill="white" />
+					<circle cx="0.4" cy="0.5" r="0.05" fill="white" />
+					<circle cx="0.5" cy="0.4" r="0.03" fill="white" />
+					<circle cx="0.6" cy="0.2" r="0.02" fill="white" />
+					<circle cx="0.7" cy="0.3" r="0.03" fill="white" />
+					<circle cx="0.8" cy="0.2" r="0.01" fill="white" />
+					<circle cx="0.85" cy="0.3" r="0.01" fill="white" />
+					<path d="M 0,0.5 Q0.25,0.75,0.5,0.5 Q0.75,0.25,1,0.5 Q1.25,0.75,1.5,0.5 Q1.75,0.25,2,0.5 V1 H0 Z" fill="white" />
 				</mask>
 
 				<g id="color-graphics">
