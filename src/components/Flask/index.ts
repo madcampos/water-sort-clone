@@ -173,28 +173,29 @@ export class LiquidFlask extends LitElement {
 			const color = this.flaskData[index];
 
 			if (color) {
-				flasklist.push(html`
-					<li
-						data-color="${color}"
-						data-index="${index}"
-					>
-						${color}
-					</li>
-				`);
+				flasklist.push(html`<li>${color}</li>`);
 			}
 
 			const sectionY = this.#svgHeight - (LiquidFlask.#SECTION_HEIGHT * (index + 1)) - LiquidFlask.#SECTION_DIFFERENCE_Y;
+			const textY = sectionY + LiquidFlask.#SECTION_HEIGHT;
 
+			// TODO: fix index number
 			flaskGraphics.push(svg`
-				<rect
-					class="liquid-color"
-					x="${LiquidFlask.#SECTION_X}"
-					y="${sectionY}"
-					width="${LiquidFlask.#SECTION_WIDTH}"
-					height="${LiquidFlask.#SECTION_HEIGHT}"
-					fill="${color ?? 'transparent'}"
-					mask="url(#flask-mask)"
-				/>
+				<g class="liquid-color" data-color="${color ?? ''}">
+					<rect
+						x="${LiquidFlask.#SECTION_X}"
+						y="${sectionY}"
+						width="${LiquidFlask.#SECTION_WIDTH}"
+						height="${LiquidFlask.#SECTION_HEIGHT}"
+					/>
+					<text
+						x="${LiquidFlask.#MARKINGS_X}"
+						y="${textY}"
+					>
+						<tspan class="color-index" dy="-0.5rem">${this.flaskSize - index}</tspan>
+						<tspan class="color-name">${color ?? 'No color'}</tspan>
+					</text>
+				</g>
 			`);
 		}
 
@@ -215,7 +216,7 @@ export class LiquidFlask extends LitElement {
 			<ol id="flask-colors" aria-labelledby="flask-button">
 				${flasklist}
 			</ol>
-			<svg width="120" height="${this.#svgHeight}">
+			<svg width="120" height="${this.#svgHeight}" viewBox="0 0 120 ${this.#svgHeight}" aria-hidden="true">
 				<defs>
 					<filter id="blur">
 						<feBlend mode="lighten" in="BackgroundImage" in2="SourceGraphic" />
