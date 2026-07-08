@@ -1,5 +1,6 @@
-/* eslint-env node */
-/* eslint-disable camelcase */
+/* oxlint-env node */
+/// <reference types="vite/client" />
+/// <reference types="@types/node" />
 
 import { readFileSync } from 'node:fs';
 import type { ServerOptions } from 'node:https';

@@ -1,0 +1,12 @@
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+trustPolicy: "no-downgrade"
+preferFrozenLockfile: true
+ignoreScripts: true
+ignoreDepScripts: true
+strictDepBuilds: true
+engineStrict: false
+ignorePnpmfile: true
+blockExoticSubdeps: true
+allowBuilds:
+  dprint: true
