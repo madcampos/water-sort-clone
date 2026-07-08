@@ -25,7 +25,7 @@ export class MainScreen extends LitElement {
 	constructor() {
 		super();
 
-		document.addEventListener('flask-pourend', this.#checkGameOver);
+		document.addEventListener('--flask-pourend', this.#checkGameOver);
 	}
 
 	// TODO: add roving tab index for keyboard navigation
@@ -76,28 +76,26 @@ export class MainScreen extends LitElement {
 			);
 
 		return html`
-			<div id="game-screen">
-				<nav>
-					<button type="button" @click=${() => this.#resetLevel()}>
-						<span class="visually-hidden">Reset Level</span>
-						<iconify-icon mdi:refresh"></iconify-icon>
-					</button>
-					<hr />
-					<button type="button" @click=${() => this.#openSettings()}>
-						<span class="visually-hidden">Open Settings</span>
-						<iconify-icon icon="mdi:gear"></iconify-icon>
-					</button>
-				</nav>
-				<main id="flasks">
-					${flasks}
-				</main>
-				<footer>
-					<flask-status></flask-status>
-					<output id="game-instructions">
-						<!-- TODO: add instructions -->
-					</output>
-				</footer>
-			</div>
+			<nav>
+				<button type="button" @click=${() => this.#resetLevel()}>
+					<sr-only>Reset Level</sr-only>
+					<iconify-icon mdi:refresh"></iconify-icon>
+				</button>
+				<hr />
+				<button type="button" @click=${() => this.#openSettings()}>
+					<sr-only>Open Settings</sr-only>
+					<iconify-icon icon="mdi:gear"></iconify-icon>
+				</button>
+			</nav>
+			<main id="flasks">
+				${flasks}
+			</main>
+			<footer>
+				<flask-status></flask-status>
+				<output id="game-instructions">
+					<!-- TODO: add instructions -->
+				</output>
+			</footer>
 		`;
 	}
 

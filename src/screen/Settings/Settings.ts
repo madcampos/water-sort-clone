@@ -240,7 +240,7 @@ export class SettingsScreen extends GameScreen {
 				<header>
 					<h2>Game Settings</h2>
 					<button type="button" @click="${() => this.close()}">
-						<span class="visually-hidden">Close Settings</span>
+						<sr-only>Close Settings</sr-only>
 
 						<iconify-icon icon="mdi:close"></iconify-icon>
 					</button>

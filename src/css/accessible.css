@@ -1,0 +1,58 @@
+@layer accessible {
+	@media (prefers-contrast: more) {
+		:root {
+			--segment-size: 4rem;
+			--border-size: 0.2rem;
+			--flask-color: black;
+			--accent-color: goldenrod;
+			--border-color: goldenrod;
+			--bg-color: black;
+			--font-color: yellow;
+			/* Segment Colors */
+			--color-red: red;
+			--color-purple: fuchsia;
+			--color-green: lime;
+			--color-yellow: yellow;
+			--color-blue: blue;
+			--color-aqua: aqua;
+			/* Segment Shades */
+			--shade-red: red;
+			--shade-purple: fuchsia;
+			--shade-green: lime;
+			--shade-yellow: yellow;
+			--shade-blue: blue;
+			--shade-aqua: aqua;
+			accent-color: var(--accent-color);
+			color-scheme: dark;
+		}
+	}
+
+	@media (forced-colors: active) {
+		/* TODO: set system colors */
+		:root {
+			--segment-size: 4rem;
+			--border-size: 0.2rem;
+			--flask-color: black;
+			--accent-color: goldenrod;
+			--border-color: goldenrod;
+			--bg-color: black;
+			--font-color: yellow;
+			/* Segment Colors */
+			--color-red: red;
+			--color-purple: fuchsia;
+			--color-green: lime;
+			--color-yellow: yellow;
+			--color-blue: blue;
+			--color-aqua: aqua;
+			/* Segment Shades */
+			--shade-red: red;
+			--shade-purple: fuchsia;
+			--shade-green: lime;
+			--shade-yellow: yellow;
+			--shade-blue: blue;
+			--shade-aqua: aqua;
+			accent-color: var(--accent-color);
+			color-scheme: dark;
+		}
+	}
+}

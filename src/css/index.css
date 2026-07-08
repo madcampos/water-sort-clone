@@ -1,33 +1,9 @@
-@import url('./globals.css');
+@layer openprops, vars, base, components, screens, accessible;
 
-*, *::before, *::after {
-	box-sizing: border-box;
-	font-family: inherit;
-}
+@import 'open-props/style' layer(openprops);
 
-:is(button, input, select) { font-size: inherit; }
-
-:root {
-	accent-color: var(--accent-color);
-	color-scheme: light dark;
-	font-size: 1.2rem;
-	font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
-}
-
-html, body { height: 100%; }
-
-body {
-	margin: 0;
-	background-color: var(--bg-color);
-	color: var(--font-color);
-}
-
-#icon-defs {
-	position: absolute;
-	top: -1px;
-	left: -1px;
-	z-index: -1;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-}
+@import url('./vars.css');
+@import url('./base/index.css');
+@import url('./components.css');
+@import url('./screens.css');
+@import url('./accessible.css');

@@ -1,16 +1,16 @@
-import type { GameOverScreen } from './GameOver/index.ts';
-import type { HelpScreen } from './Help/index.ts';
-import type { LevelSelect } from './LevelSelect/index.ts';
-import type { MainScreen } from './MainScreen/index.ts';
-import type { SettingsScreen } from './Settings/index.ts';
-import type { TitleScreen } from './Title/index.ts';
+import type { GameOverScreen } from './GameOver/GameOver.ts';
+import type { HelpScreen } from './Help/Help.ts';
+import type { LevelSelect } from './LevelSelect/LevelSelect.ts';
+import type { MainScreen } from './Main/Main.ts';
+import type { SettingsScreen } from './Settings/Settings.ts';
+import type { TitleScreen } from './Title/Title.ts';
 
-import './GameOver/index.ts';
-import './Help/index.ts';
-import './LevelSelect/index.ts';
-import './MainScreen/index.ts';
-import './Settings/index.ts';
-import './Title/index.ts';
+import './GameOver/GameOver.ts';
+import './Help/Help.ts';
+import './LevelSelect/LevelSelect.ts';
+import './Main/Main.ts';
+import './Settings/Settings.ts';
+import './Title/Title.ts';
 
 declare global {
 	interface HTMLElementTagNameMap {

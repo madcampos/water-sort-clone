@@ -12,7 +12,7 @@ export class HelpScreen extends GameScreen {
 				<header>
 					<h2>Game Help</h2>
 					<button type="button" @click="${() => this.close()}">
-						<span class="visually-hidden">Close Help</span>
+						<sr-only>Close Help</sr-only>
 
 						<iconify-icon icon="mdi:close"></iconify-icon>
 					</button>

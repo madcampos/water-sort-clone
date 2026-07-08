@@ -12,8 +12,14 @@ declare global {
 	interface HTMLElementTagNameMap {
 		'iconify-icon': IconifyIconHTMLElement;
 
+		// #region HTML Only components
+		'sr-only': HTMLElement;
+		// #endregion
+
+		// #region JS Components
 		'controller-badge': ControllerBadge;
 		'liquid-flask': LiquidFlask;
 		'flask-status': FlaskStatus;
+		// #endregion
 	}
 }

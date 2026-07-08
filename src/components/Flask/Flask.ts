@@ -1,20 +1,29 @@
 // oxlint-disable no-magic-numbers
 
-import { type TemplateResult, html, LitElement, svg, unsafeCSS } from 'lit';
+import { type TemplateResult, html, LitElement, svg } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { LiquidColor } from '../../data/levels.js';
-import styles from './flask.css?raw';
+
+export class FlaskPouredEvent extends Event {
+	// oxlint-disable-next-line no-use-before-define
+	flask: LiquidFlask;
+
+	// oxlint-disable-next-line no-use-before-define
+	constructor(flask: LiquidFlask) {
+		super('--flask-poured');
+
+		this.flask = flask;
+	}
+}
 
 declare global {
 	interface DocumentEventMap {
-		'flask-pourend': CustomEvent;
+		'--flask-pourend': FlaskPouredEvent;
 	}
 }
 
 @customElement('liquid-flask')
 export class LiquidFlask extends LitElement {
-	static override styles = unsafeCSS(styles);
-
 	private static FLASK_WIDTH = 120;
 
 	private static PADDING_X = 10;
@@ -49,9 +58,13 @@ export class LiquidFlask extends LitElement {
 
 		this.flaskData = flaskData ?? [];
 
-		document.addEventListener('flask-pourend', () => {
+		document.addEventListener('--flask-pourend', () => {
 			this.selected = false;
 		});
+	}
+
+	protected override createRenderRoot() {
+		return this;
 	}
 
 	get length() {
@@ -105,12 +118,12 @@ export class LiquidFlask extends LitElement {
 				this.pourFrom(selectedFlask);
 				mainScreen.flaskStatus?.updateStatus('pour', selectedFlask.index, this.index);
 
-				document.dispatchEvent(new CustomEvent('flask-pourend'));
+				document.dispatchEvent(new FlaskPouredEvent(this));
 			} else {
 				// Failed to pour
 				mainScreen.flaskStatus?.updateStatus('failedToPour', selectedFlask.index, this.index);
 
-				document.dispatchEvent(new CustomEvent('flask-pourend'));
+				document.dispatchEvent(new FlaskPouredEvent(this));
 			}
 		}
 	}
@@ -204,9 +217,9 @@ export class LiquidFlask extends LitElement {
 				aria-describedby="flask-colors"
 				@click="${this.handleFlaskSelect}"
 			>
-				<span class="visually-hidden">
+				<sr-only>
 					Flask ${this.index + 1}. ${this.length} of ${this.flaskSize} colors.
-				</span>
+				</sr-only>
 			</button>
 
 			<ol id="flask-colors" aria-labelledby="flask-button">

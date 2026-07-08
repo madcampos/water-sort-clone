@@ -1,0 +1,23 @@
+@layer base {
+	*, *::before, *::after {
+		box-sizing: border-box;
+		font-family: inherit;
+	}
+
+	:is(button, input, select) { font-size: inherit; }
+
+	:root {
+		accent-color: var(--accent-color);
+		color-scheme: light dark;
+		font-size: 1.2rem;
+		font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+	}
+
+	html, body { height: 100%; }
+
+	body {
+		margin: 0;
+		background-color: var(--bg-color);
+		color: var(--font-color);
+	}
+}

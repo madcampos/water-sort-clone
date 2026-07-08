@@ -8,6 +8,10 @@ export class FlaskStatus extends LitElement {
 	@state()
 	private currentStatus = 'Select a flask.';
 
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	updateStatus(status: AvailableFlaskStatus, sourceIndex?: number, destIndex?: number) {
 		switch (status) {
 			case 'selected':

@@ -7,6 +7,10 @@ export class ControllerBadge extends LitElement {
 	@property()
 	icon: GamepadButtonNames | undefined = undefined;
 
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	override render() {
 		let iconName = '';
 
@@ -15,7 +19,7 @@ export class ControllerBadge extends LitElement {
 		}
 
 		return html`
-			<kbd data-controller-icon="${this.icon ?? ''}" role="none">
+			<kbd data-controller-icon="${this.icon ?? ''}">
 				${iconName}
 			</kbd>
 		`;

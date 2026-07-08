@@ -1,0 +1,94 @@
+@layer vars {
+	:root {
+		--segment-size: 4rem;
+		--pattern-stripe-size: 0.15rem;
+		--pattern-size: 0.5rem;
+		--flask-top-size: 0.5rem;
+		--border-size: 0.1rem;
+		--flask-color: white;
+		--accent-color: dimgray;
+		--border-color: silver;
+		--bg-color: snow;
+		--font-color: black;
+		--font-color-dark: white;
+
+		/* Segment Colors */
+		--color-red: red;
+		--color-purple: purple;
+		--color-green: green;
+		--color-yellow: goldenrod;
+		--color-blue: navy;
+		--color-aqua: teal;
+
+		/* Segment Shades */
+		--shade-red: red;
+		--shade-purple: purple;
+		--shade-green: green;
+		--shade-yellow: goldenrod;
+		--shade-blue: navy;
+		--shade-aqua: teal;
+
+		/* Gamepad icons */
+
+		--icon-size: 2.5rem;
+
+		--xbox-a: url('/images/xbox-buttons/a.svg');
+		--xbox-b: url('/images/xbox-buttons/b.svg');
+		--xbox-x: url('/images/xbox-buttons/x.svg');
+		--xbox-y: url('/images/xbox-buttons/y.svg');
+		--xbox-lt: url('/images/xbox-buttons/lt.svg');
+		--xbox-rt: url('/images/xbox-buttons/rt.svg');
+		--xbox-lb: url('/images/xbox-buttons/lb.svg');
+		--xbox-rb: url('/images/xbox-buttons/rb.svg');
+		--xbox-select: url('/images/xbox-buttons/select.svg');
+		--xbox-start: url('/images/xbox-buttons/start.svg');
+		--xbox-dpad-left: url('/images/xbox-buttons/dpad-left.svg');
+		--xbox-dpad-up: url('/images/xbox-buttons/dpad-up.svg');
+		--xbox-dpad-down: url('/images/xbox-buttons/dpad-down.svg');
+		--xbox-dpad-right: url('/images/xbox-buttons/dpad-right.svg');
+		--xbox-left-thumb: url('/images/xbox-buttons/left-thumb.svg');
+		--xbox-right-thumb: url('/images/xbox-buttons/right-thumb.svg');
+
+		--dualshock-a: url('/images/dualshock-buttons/a.svg');
+		--dualshock-b: url('/images/dualshock-buttons/b.svg');
+		--dualshock-x: url('/images/dualshock-buttons/x.svg');
+		--dualshock-y: url('/images/dualshock-buttons/y.svg');
+		--dualshock-lt: url('/images/dualshock-buttons/lt.svg');
+		--dualshock-rt: url('/images/dualshock-buttons/rt.svg');
+		--dualshock-lb: url('/images/dualshock-buttons/lb.svg');
+		--dualshock-rb: url('/images/dualshock-buttons/rb.svg');
+		--dualshock-select: url('/images/dualshock-buttons/select.svg');
+		--dualshock-start: url('/images/dualshock-buttons/start.svg');
+		--dualshock-dpad-left: url('/images/dualshock-buttons/dpad-left.svg');
+		--dualshock-dpad-up: url('/images/dualshock-buttons/dpad-up.svg');
+		--dualshock-dpad-down: url('/images/dualshock-buttons/dpad-down.svg');
+		--dualshock-dpad-right: url('/images/dualshock-buttons/dpad-right.svg');
+		--dualshock-left-thumb: url('/images/dualshock-buttons/left-thumb.svg');
+		--dualshock-right-thumb: url('/images/dualshock-buttons/right-thumb.svg');
+
+		@media (prefers-color-scheme: dark) {
+			--flask-color: #1f1f1f;
+			--accent-color: silver;
+			--border-color: dimgray;
+			--bg-color: #0c0c0c;
+			--font-color: white;
+			--font-color-dark: black;
+			/* Segment Colors */
+			--color-red: crimson;
+			--color-purple: fuchsia;
+			--color-green: lime;
+			--color-yellow: goldenrod;
+			--color-blue: dodgerblue;
+			--color-aqua: aqua;
+			/* Segment Shades */
+			--shade-flask: hsl(0 0 0);
+			--shade-red: hsl(0 50 15);
+			--shade-purple: hsl(320, 50%, 30%);
+			--shade-green: hsl(120, 50%, 45%);
+			--shade-yellow: hsl(60, 50%, 60%);
+			--shade-blue: hsl(240, 50%, 75%);
+			--shade-aqua: hsl(180, 49%, 90%);
+			color-scheme: dark;
+		}
+	}
+}

@@ -1,0 +1,69 @@
+@layer screens {
+	level-select-screen {
+		display: contents;
+
+		dialog[open] {
+			display: grid;
+			margin: 0;
+			border: none;
+			padding: 2rem;
+			width: 100vw;
+			max-width: 100vw;
+			height: 100vh;
+			max-height: 100vh;
+			text-align: center;
+
+			h2 {
+				font-size: 2rem;
+				text-align: center;
+			}
+
+			ol {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 1rem;
+				padding-inline-start: 0;
+				overflow: auto;
+				text-align: center;
+			}
+
+			li {
+				width: fit-content;
+				list-style: none;
+			}
+
+			button {
+				border: solid var(--border-color) medium;
+				border-radius: 100vmax;
+				background: transparent;
+				padding-inline: 1rem;
+				padding-block: 0.5rem;
+				font-size: 1rem;
+
+				&[aria-disabled='true'] {
+					opacity: 0.6;
+					text-decoration: line-through;
+
+					@media (prefers-contrast: more) { opacity: 1; }
+					@media (forced-colors: active) { opacity: 1; }
+				}
+
+				&:hover {
+					background-color: var(--font-color);
+					color: var(--bg-color);
+				}
+
+				&:focus-visible {
+					outline: solid var(--font-color) calc(var(--border-size) * 2);
+					outline-offset: calc(var(--border-size) * 4);
+				}
+
+				&:active {
+					background-color: var(--accent-color);
+					color: var(--font-color-dark);
+				}
+			}
+		}
+	}
+}
