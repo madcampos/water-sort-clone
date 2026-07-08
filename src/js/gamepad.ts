@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers, @typescript-eslint/naming-convention */
+// oxlint-disable no-magic-numbers
 
 export type GamepadTypes = 'dualshock' | 'joycon-l' | 'joycon-lr' | 'joycon-r' | 'unknown' | 'xbox';
 export const BUTTON_NAMES = [
@@ -219,7 +219,7 @@ export class GamepadHandler extends EventTarget {
 
 	static init(callback?: () => void) {
 		window.addEventListener('gamepadconnected', () => {
-			// eslint-disable-next-line no-console
+			// oxlint-disable-next-line no-console
 			console.info('[🎮] Gamepad connected.');
 
 			GamepadHandler.#detectionTimestamp = performance.now();
@@ -280,9 +280,9 @@ export class GamepadHandler extends EventTarget {
 				composed: true,
 				cancelable: true,
 				detail: {
-					// eslint-disable-next-line no-nested-ternary
+					// oxlint-disable-next-line no-nested-ternary
 					directionX: x > GamepadHandler.#DEADZONE_THRESHOLD ? 'right' : x < -GamepadHandler.#DEADZONE_THRESHOLD ? 'left' : undefined,
-					// eslint-disable-next-line no-nested-ternary
+					// oxlint-disable-next-line no-nested-ternary
 					directionY: y > GamepadHandler.#DEADZONE_THRESHOLD ? 'down' : y < -GamepadHandler.#DEADZONE_THRESHOLD ? 'up' : undefined,
 					deltaX: x,
 					deltaY: y,
@@ -299,9 +299,9 @@ export class GamepadHandler extends EventTarget {
 				composed: true,
 				cancelable: true,
 				detail: {
-					// eslint-disable-next-line no-nested-ternary
+					// oxlint-disable-next-line no-nested-ternary
 					directionX: x > GamepadHandler.#ACTION_THRESHOLD ? 'right' : x < -GamepadHandler.#ACTION_THRESHOLD ? 'left' : undefined,
-					// eslint-disable-next-line no-nested-ternary
+					// oxlint-disable-next-line no-nested-ternary
 					directionY: y > GamepadHandler.#ACTION_THRESHOLD ? 'down' : y < -GamepadHandler.#ACTION_THRESHOLD ? 'up' : undefined,
 					stick
 				} satisfies GamepadStickActionEventDetail
@@ -349,7 +349,7 @@ export class GamepadHandler extends EventTarget {
 	}
 
 	static #triggerEvents() {
-		const [gamepad] = [...navigator.getGamepads()].filter((currentGamepad) => !currentGamepad?.id?.includes('Surface Dock'));
+		const [gamepad] = [...navigator.getGamepads()].filter((currentGamepad) => !currentGamepad?.id.includes('Surface Dock'));
 
 		if (!gamepad) {
 			GamepadHandler.#isGamepadConnected = false;
@@ -371,6 +371,7 @@ export class GamepadHandler extends EventTarget {
 			Object.keys(GamepadHandler.#buttonsPressed).forEach((buttonName, i) => {
 				const isButtonDown = gamepad.buttons[i]?.pressed ?? false;
 
+				// oxlint-disable-next-line typescript/consistent-type-assertions typescript/no-unsafe-type-assertion
 				GamepadHandler.#triggerButtonEvents(buttonName as GamepadButtonNames, isButtonDown);
 			});
 		}
@@ -398,7 +399,7 @@ export class GamepadHandler extends EventTarget {
 	static vibrate(time = 100, weakIntensity = 0.4, strongIntentisy = 0) {
 		const [gamepad] = navigator.getGamepads();
 
-		void gamepad?.vibrationActuator?.playEffect('dual-rumble', {
+		void gamepad?.vibrationActuator.playEffect('dual-rumble', {
 			startDelay: 0,
 			duration: time,
 			weakMagnitude: weakIntensity,

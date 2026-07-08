@@ -6,14 +6,18 @@ import { availableLevels, getMaxLevel } from '../../js/levels.ts';
 @customElement('level-select-screen')
 export class LevelSelect extends GameScreen {
 	#handleLevelSelect(evt: MouseEvent) {
-		const target = evt.target as HTMLButtonElement;
+		const target = evt.target;
+
+		if (!(target instanceof HTMLButtonElement)) {
+			return;
+		}
 
 		if (target.matches('button')) {
 			if (target.ariaDisabled) {
 				return;
 			}
 
-			const level = Number.parseInt(target.dataset['level'] ?? '0');
+			const level = Number.parseInt(target.dataset['level'] ?? '0', 10);
 
 			document.querySelector('main-screen')?.loadLevel(level);
 			this.close();

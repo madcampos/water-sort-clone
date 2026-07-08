@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { GameScreen } from '../../components/GameScreen/index.ts';
-import { GamepadHandler, type GamepadTypes } from '../../js/gamepad.ts';
+import { type GamepadTypes, GamepadHandler } from '../../js/gamepad.ts';
 import settingsStyle from './settings.css?raw';
 
 interface SettingsObject {
@@ -17,7 +17,7 @@ interface SettingsObject {
 @customElement('settings-screen')
 export class SettingsScreen extends GameScreen {
 	@state()
-	accessor #settings: SettingsObject = {
+	private settings: SettingsObject = {
 		showNumbers: 'false',
 		showColors: 'false',
 		colorblindMode: 'none',
@@ -30,16 +30,17 @@ export class SettingsScreen extends GameScreen {
 	constructor() {
 		super();
 
-		(Object.keys(this.#settings) as (keyof SettingsObject)[]).forEach((setting) => {
+		// oxlint-disable-next-line typescript/consistent-type-assertions typescript/no-unsafe-type-assertion
+		(Object.keys(this.settings) as (keyof SettingsObject)[]).forEach((setting) => {
 			const savedSetting = localStorage.getItem(`setting-${setting}`);
 
 			if (savedSetting) {
 				// @ts-expect-error
-				this.#settings[setting] = savedSetting;
+				this.settings[setting] = savedSetting;
 			}
 
-			document.body.setAttribute(`data-setting-${setting}`, this.#settings[setting]);
-			document.body.style.setProperty(`--setting-${setting}`, this.#settings[setting]);
+			document.body.setAttribute(`data-setting-${setting}`, this.settings[setting]);
+			document.body.style.setProperty(`--setting-${setting}`, this.settings[setting]);
 		});
 
 		if ('adoptedStyleSheets' in document) {
@@ -51,7 +52,11 @@ export class SettingsScreen extends GameScreen {
 	}
 
 	#handleSettingChange(evt: Event) {
-		const target = evt.target as HTMLInputElement | HTMLSelectElement;
+		const target = evt.target;
+
+		if (!(target instanceof HTMLInputElement) && !(target instanceof HTMLSelectElement)) {
+			return;
+		}
 
 		if (target.matches(':is(input, select)')) {
 			let settingValue = target.value;
@@ -68,9 +73,13 @@ export class SettingsScreen extends GameScreen {
 	}
 
 	// @ts-expect-error
-	// eslint-disable-next-line no-unused-private-class-members
+	// oxlint-disable-next-line no-unused-private-class-members
 	#updateSettingsGamepadInstructions(instructions: 'checkbox' | 'general' | 'radio' | 'select') {
-		const settingsInstructions = document.querySelector('#settings-instruction') as HTMLOutputElement;
+		const settingsInstructions = document.querySelector('output#settings-instruction');
+
+		if (!settingsInstructions) {
+			return;
+		}
 
 		if (!GamepadHandler.isGamepadConnected) {
 			settingsInstructions.innerHTML = '';
@@ -100,7 +109,7 @@ export class SettingsScreen extends GameScreen {
 	}
 
 	// @ts-expect-error
-	// eslint-disable-next-line no-unused-private-class-members
+	// oxlint-disable-next-line no-unused-private-class-members
 	#initializeGamepadEvents() {
 		window.addEventListener('gamepadbuttonpress', (evt) => {
 			const isSettingSelected = Boolean(document.activeElement?.closest('#settings-screen'));
@@ -111,6 +120,7 @@ export class SettingsScreen extends GameScreen {
 
 			const { detail: { button } } = evt;
 			const settingElements = [...document.querySelectorAll('#settings-screen :is(input, select)')];
+			// oxlint-disable-next-line typescript/consistent-type-assertions typescript/no-unsafe-type-assertion
 			const currentSetting = document.activeElement as HTMLInputElement | HTMLSelectElement | null;
 			const currentSettingIndex = settingElements.findIndex((element) => element === currentSetting);
 
@@ -118,15 +128,17 @@ export class SettingsScreen extends GameScreen {
 				return;
 			}
 
-			// eslint-disable-next-line default-case, @typescript-eslint/switch-exhaustiveness-check
+			// oxlint-disable-next-line default-case typescript/switch-exhaustiveness-check
 			switch (button) {
 				case 'a':
 					if (currentSetting.matches('[type="radio"]')) {
+						// oxlint-disable-next-line typescript/consistent-type-assertions typescript/no-unsafe-type-assertion
 						(currentSetting as HTMLInputElement).checked = true;
 						// updateSetting(currentSetting as HTMLInputElement);
 					}
 
 					if (currentSetting.matches('[type="checkbox"]')) {
+						// oxlint-disable-next-line typescript/consistent-type-assertions typescript/no-unsafe-type-assertion
 						(currentSetting as HTMLInputElement).checked = !(currentSetting as HTMLInputElement).checked;
 						// updateSetting(currentSetting as HTMLInputElement);
 					}
@@ -136,7 +148,7 @@ export class SettingsScreen extends GameScreen {
 					break;
 				case 'left':
 					if (currentSetting.matches('select')) {
-						const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+						const { options, selectedIndex } = currentSetting;
 						const newSelectedOption = [...options].at(selectedIndex - 1);
 
 						if (newSelectedOption) {
@@ -146,7 +158,7 @@ export class SettingsScreen extends GameScreen {
 					break;
 				case 'right':
 					if (currentSetting.matches('select')) {
-						const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+						const { options, selectedIndex } = currentSetting;
 						const newSelectedOption = [...options].at((selectedIndex + 1) % options.length);
 
 						if (newSelectedOption) {
@@ -177,6 +189,7 @@ export class SettingsScreen extends GameScreen {
 			}
 
 			const settingElements = [...document.querySelectorAll('#settings-screen :is(input, select)')];
+			// oxlint-disable-next-line typescript/consistent-type-assertions typescript/no-unsafe-type-assertion
 			const currentSetting = document.activeElement as HTMLInputElement | HTMLSelectElement | null;
 			const currentSettingIndex = settingElements.findIndex((element) => element === currentSetting);
 
@@ -184,11 +197,11 @@ export class SettingsScreen extends GameScreen {
 				return;
 			}
 
-			// eslint-disable-next-line default-case, @typescript-eslint/switch-exhaustiveness-check
+			// oxlint-disable-next-line default-case typescript/switch-exhaustiveness-check
 			switch (directionX) {
 				case 'left':
 					if (currentSetting.matches('select')) {
-						const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+						const { options, selectedIndex } = currentSetting;
 						const newSelectedOption = [...options].at(selectedIndex - 1);
 
 						if (newSelectedOption) {
@@ -198,7 +211,7 @@ export class SettingsScreen extends GameScreen {
 					break;
 				case 'right':
 					if (currentSetting.matches('select')) {
-						const { options, selectedIndex } = currentSetting as HTMLSelectElement;
+						const { options, selectedIndex } = currentSetting;
 						const newSelectedOption = [...options].at((selectedIndex + 1) % options.length);
 
 						if (newSelectedOption) {
@@ -238,13 +251,13 @@ export class SettingsScreen extends GameScreen {
 						<legend>Accessibility Settings</legend>
 						<p>
 							<label for="show-numbers">
-								<input type="checkbox" id="show-numbers" name="showNumbers" .checked=${this.#settings.showNumbers === 'true'} autofocus />
+								<input type="checkbox" id="show-numbers" name="showNumbers" .checked=${this.settings.showNumbers === 'true'} autofocus />
 								<span>Show numbers for each flask section</span>
 							</label>
 						</p>
 						<p>
 							<label for="show-color-names">
-								<input type="checkbox" id="show-color-names" name="showColors" .checked=${this.#settings.showColors === 'true'} />
+								<input type="checkbox" id="show-color-names" name="showColors" .checked=${this.settings.showColors === 'true'} />
 								<span>Show colour names on each flask</span>
 							</label>
 						</p>
@@ -252,19 +265,19 @@ export class SettingsScreen extends GameScreen {
 							<legend>High contrast colours</legend>
 							<p>
 								<label for="colorblind-mode">
-									<input type="radio" id="colorblind-mode" name="colorblindMode" value="none" .checked=${this.#settings.colorblindMode === 'none'} />
+									<input type="radio" id="colorblind-mode" name="colorblindMode" value="none" .checked=${this.settings.colorblindMode === 'none'} />
 									<span>Don't change colours</span>
 								</label>
 							</p>
 							<p>
 								<label for="colorblind-mode2">
-									<input type="radio" id="colorblind-mode2" name="colorblindMode" .checked=${this.#settings.colorblindMode === 'pattern'} />
+									<input type="radio" id="colorblind-mode2" name="colorblindMode" .checked=${this.settings.colorblindMode === 'pattern'} />
 									<span>Show different patterns for each colour</span>
 								</label>
 							</p>
 							<p>
 								<label for="colorblind-mode3">
-									<input type="radio" id="colorblind-mode3" name="colorblindMode" .checked=${this.#settings.colorblindMode === 'shades'} />
+									<input type="radio" id="colorblind-mode3" name="colorblindMode" .checked=${this.settings.colorblindMode === 'shades'} />
 									<span>Show different shades of grey for each colour</span>
 								</label>
 							</p>
@@ -275,13 +288,13 @@ export class SettingsScreen extends GameScreen {
 						<legend>Audio Settings</legend>
 						<p>
 							<label for="play-music">
-								<input type="checkbox" id="play-music" name="playMusic" .checked=${this.#settings.playMusic === 'true'} />
+								<input type="checkbox" id="play-music" name="playMusic" .checked=${this.settings.playMusic === 'true'} />
 								<span>Play game music</span>
 							</label>
 						</p>
 						<p>
 							<label for="play-sound-effects">
-								<input type="checkbox" id="play-sound-effects" name="playSoundEffects" .checked=${this.#settings.playSoundEffects === 'true'} />
+								<input type="checkbox" id="play-sound-effects" name="playSoundEffects" .checked=${this.settings.playSoundEffects === 'true'} />
 								<span>Play sound effects</span>
 							</label>
 						</p>
@@ -293,8 +306,8 @@ export class SettingsScreen extends GameScreen {
 							<label for="game-language">
 								<span>Game Language</span>
 								<select id="game-language" name="language">
-									<option value="en-CA" .selected=${this.#settings.language === 'en-CA'}>Canadian English</option>
-									<option value="pt-BR" .selected=${this.#settings.language === 'en-CA'}>Brazilian Portuguese</option>
+									<option value="en-CA" .selected=${this.settings.language === 'en-CA'}>Canadian English</option>
+									<option value="pt-BR" .selected=${this.settings.language === 'en-CA'}>Brazilian Portuguese</option>
 								</select>
 							</label>
 						</p>
@@ -306,11 +319,11 @@ export class SettingsScreen extends GameScreen {
 							<label for="game-controller-mapping">
 								<span>Controller Mapping</span>
 								<select id="game-controller-mapping" name="controllerMapping">
-									<option value="xbox" .selected=${this.#settings.controllerMapping === 'xbox'}>Xbox</option>
-									<option value="dualshock" .selected=${this.#settings.controllerMapping === 'dualshock'}>DualShock</option>
-									<!-- <option value="joycon-l" .selected=${this.#settings.controllerMapping === 'joycon-l'}>Joy-Con - Left only</option> -->
-									<!-- <option value="joycon-r" .selected=${this.#settings.controllerMapping === 'joycon-r'}>Joy-Con - Right only</option> -->
-									<!-- <option value="joycon-lr" .selected=${this.#settings.controllerMapping === 'joycon-lr'}>Joy-Con - Left + Right</option> -->
+									<option value="xbox" .selected=${this.settings.controllerMapping === 'xbox'}>Xbox</option>
+									<option value="dualshock" .selected=${this.settings.controllerMapping === 'dualshock'}>DualShock</option>
+									<!-- <option value="joycon-l" .selected=${this.settings.controllerMapping === 'joycon-l'}>Joy-Con - Left only</option> -->
+									<!-- <option value="joycon-r" .selected=${this.settings.controllerMapping === 'joycon-r'}>Joy-Con - Right only</option> -->
+									<!-- <option value="joycon-lr" .selected=${this.settings.controllerMapping === 'joycon-lr'}>Joy-Con - Left + Right</option> -->
 								</select>
 							</label>
 						</p>

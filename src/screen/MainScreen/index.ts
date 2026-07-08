@@ -11,16 +11,16 @@ export class MainScreen extends LitElement {
 	static override styles = unsafeCSS(styles);
 
 	@state()
-	accessor #levelState: Level | undefined = undefined;
+	private levelState: Level | undefined = undefined;
 
 	@query('flask-status')
-	accessor flaskStatus: FlaskStatus | null = null;
+	flaskStatus: FlaskStatus | null = null;
 
 	@query('liquid-flask[selected]')
-	accessor selectedFlask: LiquidFlask | null = null;
+	selectedFlask: LiquidFlask | null = null;
 
 	@queryAll('liquid-flask')
-	accessor flasks!: NodeListOf<LiquidFlask>;
+	flasks!: NodeListOf<LiquidFlask>;
 
 	constructor() {
 		super();
@@ -45,7 +45,7 @@ export class MainScreen extends LitElement {
 
 		loadLevel(getCurrentLevel());
 
-		this.#levelState = getGameState();
+		this.levelState = getGameState();
 	}
 
 	#resetLevel() {
@@ -53,7 +53,7 @@ export class MainScreen extends LitElement {
 	}
 
 	#checkGameOver() {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		// oxlint-disable-next-line typescript/no-non-null-assertion
 		const gameOverScreen = document.querySelector('game-over-screen')!;
 		const isGameOver = gameOverScreen.isGameOver();
 
@@ -64,12 +64,12 @@ export class MainScreen extends LitElement {
 	}
 
 	override render() {
-		const flasks = this.#levelState?.flasks
+		const flasks = this.levelState?.flasks
 			.map((flask, index) =>
 				html`
 					<liquid-flask
 						index="${index}"
-						.flaskSize="${this.#levelState?.flaskSize ?? 0}"
+						.flaskSize="${this.levelState?.flaskSize ?? 0}"
 						.flaskData="${flask}"
 					></liquid-flask>
 			`

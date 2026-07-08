@@ -4,13 +4,15 @@
 
 import { readFileSync } from 'node:fs';
 import type { ServerOptions } from 'node:https';
-import { defineConfig, type UserConfig } from 'vite';
+import { type UserConfig, defineConfig } from 'vite';
 
 const IS_DEBUG = false;
 
+// oxlint-disable-next-line import/no-default-export
 export default defineConfig(({ mode }) => {
 	let sslOptions: ServerOptions | undefined = undefined;
 
+	// oxlint-disable-next-line typescript/no-unnecessary-condition
 	if (mode !== 'production' || IS_DEBUG) {
 		sslOptions = {
 			cert: readFileSync('./certs/server.crt', 'utf-8'),
@@ -20,7 +22,7 @@ export default defineConfig(({ mode }) => {
 
 	const config: UserConfig = {
 		plugins: [],
-		esbuild: { target: 'esnext' },
+		oxc: { target: 'esnext' },
 		base: '/',
 		envPrefix: 'APP_',
 		envDir: '../',

@@ -11,7 +11,7 @@ if (!document.querySelector('#icon-defs')) {
 @customElement('svg-icon')
 export class SvgIcon extends LitElement {
 	@property({ reflect: true, type: String })
-	accessor icon = '';
+	icon = '';
 
 	constructor() {
 		super();

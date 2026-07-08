@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
+// oxlint-disable no-magic-numbers
 
-import { html, LitElement, svg, type TemplateResult, unsafeCSS } from 'lit';
+import { type TemplateResult, html, LitElement, svg, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { LiquidColor } from '../../data/levels.js';
 import styles from './styles.css?raw';
@@ -15,36 +15,34 @@ declare global {
 export class LiquidFlask extends LitElement {
 	static override styles = unsafeCSS(styles);
 
-	/* eslint-disable @typescript-eslint/naming-convention */
-	static #FLASK_WIDTH = 120;
+	private static FLASK_WIDTH = 120;
 
-	static #PADDING_X = 10;
-	static #PADDING_Y = 10;
+	private static PADDING_X = 10;
+	private static PADDING_Y = 10;
 
-	static #CAP_WIDTH = LiquidFlask.#FLASK_WIDTH - (this.#PADDING_X * 2);
-	static #CAP_HEIGHT = LiquidFlask.#FLASK_WIDTH / 3;
+	private static CAP_WIDTH = LiquidFlask.FLASK_WIDTH - (LiquidFlask.PADDING_X * 2);
+	private static CAP_HEIGHT = LiquidFlask.FLASK_WIDTH / 3;
 
-	static #SECTION_HEIGHT = LiquidFlask.#CAP_HEIGHT * 2;
-	static #SECTION_WIDTH = LiquidFlask.#SECTION_HEIGHT - LiquidFlask.#PADDING_X;
+	private static SECTION_HEIGHT = LiquidFlask.CAP_HEIGHT * 2;
+	private static SECTION_WIDTH = LiquidFlask.SECTION_HEIGHT - LiquidFlask.PADDING_X;
 
-	static #SECTION_X = (LiquidFlask.#FLASK_WIDTH - LiquidFlask.#SECTION_WIDTH) / 2;
-	static #SECTION_DIFFERENCE_Y = (LiquidFlask.#CAP_HEIGHT / 2) - LiquidFlask.#PADDING_Y;
+	private static SECTION_X = (LiquidFlask.FLASK_WIDTH - LiquidFlask.SECTION_WIDTH) / 2;
+	private static SECTION_DIFFERENCE_Y = (LiquidFlask.CAP_HEIGHT / 2) - LiquidFlask.PADDING_Y;
 
-	static #MARKINGS_AMOUNT = 3;
-	static #MARKINGS_X = 40;
-	/* eslint-enable @typescript-eslint/naming-convention */
+	private static MARKINGS_AMOUNT = 3;
+	private static MARKINGS_X = 40;
 
 	@property({ reflect: true, type: Number })
-	accessor index = -1;
+	index = -1;
 
 	@property({ reflect: true, type: Number })
-	accessor flaskSize = -1;
+	flaskSize = -1;
 
 	@property({ reflect: true, type: Boolean })
-	accessor selected = false;
+	selected = false;
 
 	@property({ attribute: false, type: Array })
-	accessor flaskData: LiquidColor[] = [];
+	flaskData: LiquidColor[] = [];
 
 	constructor(flaskData?: LiquidColor[]) {
 		super();
@@ -95,9 +93,8 @@ export class LiquidFlask extends LitElement {
 			// The same flask is selected, deselect it
 			this.selected = false;
 		} else {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			// oxlint-disable-next-line typescript/no-non-null-assertion
 			const mainScreen = document.querySelector('main-screen')!;
-			// eslint-disable-next-line @typescript-eslint/prefer-destructuring
 			const selectedFlask = mainScreen.selectedFlask;
 
 			if (!selectedFlask) {
@@ -119,49 +116,49 @@ export class LiquidFlask extends LitElement {
 	}
 
 	get #svgHeight() {
-		const sectionsHeight = this.flaskSize * LiquidFlask.#SECTION_HEIGHT;
-		const capAddedHeight = LiquidFlask.#CAP_HEIGHT / 2;
-		const totalPadding = LiquidFlask.#PADDING_Y * 2;
+		const sectionsHeight = this.flaskSize * LiquidFlask.SECTION_HEIGHT;
+		const capAddedHeight = LiquidFlask.CAP_HEIGHT / 2;
+		const totalPadding = LiquidFlask.PADDING_Y * 2;
 
 		return sectionsHeight + capAddedHeight + totalPadding;
 	}
 
 	get #flaskBorder() {
-		const startingPoint = `m${LiquidFlask.#SECTION_X + LiquidFlask.#SECTION_WIDTH},${(LiquidFlask.#CAP_HEIGHT / 2) + LiquidFlask.#PADDING_Y}`;
+		const startingPoint = `m${LiquidFlask.SECTION_X + LiquidFlask.SECTION_WIDTH},${(LiquidFlask.CAP_HEIGHT / 2) + LiquidFlask.PADDING_Y}`;
 		const sectionLines = `
-			m${-LiquidFlask.#SECTION_WIDTH},0
-			v${LiquidFlask.#SECTION_HEIGHT}
-			m${LiquidFlask.#SECTION_WIDTH},${-LiquidFlask.#SECTION_HEIGHT}
-			v${LiquidFlask.#SECTION_HEIGHT}
+			m${-LiquidFlask.SECTION_WIDTH},0
+			v${LiquidFlask.SECTION_HEIGHT}
+			m${LiquidFlask.SECTION_WIDTH},${-LiquidFlask.SECTION_HEIGHT}
+			v${LiquidFlask.SECTION_HEIGHT}
 		`;
 		const bottomRound = `
-			m${-LiquidFlask.#SECTION_WIDTH},0
-			v${LiquidFlask.#SECTION_HEIGHT / 2}
-			m${LiquidFlask.#SECTION_WIDTH},${-(LiquidFlask.#SECTION_HEIGHT / 2)}
-			v${LiquidFlask.#SECTION_HEIGHT / 2}
-			m${-LiquidFlask.#SECTION_WIDTH},0
-			a${LiquidFlask.#SECTION_HEIGHT / 2},${LiquidFlask.#SECTION_WIDTH / 2},90,0,0,${LiquidFlask.#SECTION_WIDTH},0
+			m${-LiquidFlask.SECTION_WIDTH},0
+			v${LiquidFlask.SECTION_HEIGHT / 2}
+			m${LiquidFlask.SECTION_WIDTH},${-(LiquidFlask.SECTION_HEIGHT / 2)}
+			v${LiquidFlask.SECTION_HEIGHT / 2}
+			m${-LiquidFlask.SECTION_WIDTH},0
+			a${LiquidFlask.SECTION_HEIGHT / 2},${LiquidFlask.SECTION_WIDTH / 2},90,0,0,${LiquidFlask.SECTION_WIDTH},0
 		`;
 
 		return `${startingPoint} ${new Array(this.flaskSize - 1).fill(sectionLines).join(' ')} ${bottomRound}`;
 	}
 
 	get #flaskMask() {
-		const startingPoint = `m${LiquidFlask.#SECTION_X},${(LiquidFlask.#CAP_HEIGHT / 2) + LiquidFlask.#PADDING_Y}`;
-		const lineDown = `v${LiquidFlask.#SECTION_HEIGHT * (this.flaskSize - 0.5)}`;
-		const bottomRound = `a${LiquidFlask.#SECTION_HEIGHT / 2},${LiquidFlask.#SECTION_WIDTH / 2},90,0,0,${LiquidFlask.#SECTION_WIDTH},0`;
-		const lineUp = `v${-LiquidFlask.#SECTION_HEIGHT * (this.flaskSize - 0.5)}`;
+		const startingPoint = `m${LiquidFlask.SECTION_X},${(LiquidFlask.CAP_HEIGHT / 2) + LiquidFlask.PADDING_Y}`;
+		const lineDown = `v${LiquidFlask.SECTION_HEIGHT * (this.flaskSize - 0.5)}`;
+		const bottomRound = `a${LiquidFlask.SECTION_HEIGHT / 2},${LiquidFlask.SECTION_WIDTH / 2},90,0,0,${LiquidFlask.SECTION_WIDTH},0`;
+		const lineUp = `v${-LiquidFlask.SECTION_HEIGHT * (this.flaskSize - 0.5)}`;
 
 		return `${startingPoint} ${lineDown} ${bottomRound} ${lineUp} z`;
 	}
 
 	get #flaskMarkings() {
-		const step = LiquidFlask.#SECTION_HEIGHT / (LiquidFlask.#MARKINGS_AMOUNT);
-		const lineSize = LiquidFlask.#SECTION_WIDTH / 6;
-		const smallLines = new Array(LiquidFlask.#MARKINGS_AMOUNT).fill(`m${-lineSize},${step} h${lineSize}`).join(' ');
+		const step = LiquidFlask.SECTION_HEIGHT / (LiquidFlask.MARKINGS_AMOUNT);
+		const lineSize = LiquidFlask.SECTION_WIDTH / 6;
+		const smallLines = new Array(LiquidFlask.MARKINGS_AMOUNT).fill(`m${-lineSize},${step} h${lineSize}`).join(' ');
 		const allLines = new Array(this.flaskSize).fill(`m${-lineSize},0 ${smallLines} h${lineSize}`).join();
 
-		return `m${LiquidFlask.#MARKINGS_X + (lineSize * 2)},${step + 3} ${allLines}`;
+		return `m${LiquidFlask.MARKINGS_X + (lineSize * 2)},${step + 3} ${allLines}`;
 	}
 
 	override render() {
@@ -175,20 +172,20 @@ export class LiquidFlask extends LitElement {
 				flasklist.push(html`<li>${color}</li>`);
 			}
 
-			const sectionY = this.#svgHeight - (LiquidFlask.#SECTION_HEIGHT * (index + 1)) - LiquidFlask.#SECTION_DIFFERENCE_Y;
-			const textY = sectionY + LiquidFlask.#SECTION_HEIGHT;
+			const sectionY = this.#svgHeight - (LiquidFlask.SECTION_HEIGHT * (index + 1)) - LiquidFlask.SECTION_DIFFERENCE_Y;
+			const textY = sectionY + LiquidFlask.SECTION_HEIGHT;
 
 			// TODO: fix index number
 			flaskGraphics.push(svg`
 				<g class="liquid-color" data-color="${color ?? ''}">
 					<rect
-						x="${LiquidFlask.#SECTION_X}"
+						x="${LiquidFlask.SECTION_X}"
 						y="${sectionY}"
-						width="${LiquidFlask.#SECTION_WIDTH}"
-						height="${LiquidFlask.#SECTION_HEIGHT}"
+						width="${LiquidFlask.SECTION_WIDTH}"
+						height="${LiquidFlask.SECTION_HEIGHT}"
 					/>
 					<text
-						x="${LiquidFlask.#MARKINGS_X}"
+						x="${LiquidFlask.MARKINGS_X}"
 						y="${textY}"
 					>
 						<tspan class="color-index" dy="-0.5rem">${this.flaskSize - index}</tspan>
@@ -265,12 +262,12 @@ export class LiquidFlask extends LitElement {
 
 				<rect
 					id="flask-cap"
-					x="${LiquidFlask.#PADDING_X}"
-					y="${LiquidFlask.#PADDING_Y}"
-					width="${LiquidFlask.#CAP_WIDTH}"
-					height="${LiquidFlask.#CAP_HEIGHT}"
-					rx="${LiquidFlask.#CAP_HEIGHT / 2}"
-					ry="${LiquidFlask.#CAP_HEIGHT / 2}"
+					x="${LiquidFlask.PADDING_X}"
+					y="${LiquidFlask.PADDING_Y}"
+					width="${LiquidFlask.CAP_WIDTH}"
+					height="${LiquidFlask.CAP_HEIGHT}"
+					rx="${LiquidFlask.CAP_HEIGHT / 2}"
+					ry="${LiquidFlask.CAP_HEIGHT / 2}"
 					fill="none"
 					stroke="white"
 					stroke-width="5"

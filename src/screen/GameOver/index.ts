@@ -27,7 +27,11 @@ export class GameOverScreen extends GameScreen {
 	}
 
 	#handleNextLevel(evt: MouseEvent) {
-		const target = evt.target as HTMLButtonElement;
+		const target = evt.target;
+
+		if (!(target instanceof HTMLButtonElement)) {
+			return;
+		}
 
 		if (target.ariaDisabled) {
 			return;

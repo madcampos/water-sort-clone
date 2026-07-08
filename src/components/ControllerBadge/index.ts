@@ -1,11 +1,11 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { BUTTON_MAP, type GamepadButtonNames, GamepadHandler } from '../../js/gamepad.ts';
+import { type GamepadButtonNames, BUTTON_MAP, GamepadHandler } from '../../js/gamepad.ts';
 
 @customElement('controller-badge')
 export class ControllerBadge extends LitElement {
 	@property()
-	accessor icon: GamepadButtonNames | undefined = undefined;
+	icon: GamepadButtonNames | undefined = undefined;
 
 	override render() {
 		let iconName = '';

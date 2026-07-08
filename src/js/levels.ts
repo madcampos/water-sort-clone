@@ -14,7 +14,7 @@ export function setGameState(newState: Level) {
 }
 
 export function getMaxLevel() {
-	return Number.parseInt(localStorage.getItem('maxLevel') ?? '0');
+	return Number.parseInt(localStorage.getItem('maxLevel') ?? '0', 10);
 }
 
 export function setMaxLevel(level: number) {
@@ -22,7 +22,7 @@ export function setMaxLevel(level: number) {
 }
 
 export function getCurrentLevel() {
-	return Number.parseInt(localStorage.getItem('currentLevel') ?? '0');
+	return Number.parseInt(localStorage.getItem('currentLevel') ?? '0', 10);
 }
 
 export function setCurrentLevel(level: number) {
@@ -44,5 +44,6 @@ export function enableNextLevel() {
 export function loadLevel(index: number) {
 	localStorage.setItem('currentLevel', index.toString());
 
+	// oxlint-disable-next-line typescript/consistent-type-assertions typescript/no-unsafe-type-assertion
 	setGameState(structuredClone(availableLevels[index]) as Level);
 }
