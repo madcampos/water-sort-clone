@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { GameScreen } from '../../components/GameScreen/index.ts';
+import { GameScreen } from '../../components/GameScreen/GameScreen.ts';
 import { availableLevels, getMaxLevel } from '../../js/levels.ts';
 
 @customElement('level-select-screen')

@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { GameScreen } from '../../components/GameScreen/index.ts';
+import { GameScreen } from '../../components/GameScreen/GameScreen.ts';
 
 @customElement('help-screen')
 export class HelpScreen extends GameScreen {
@@ -14,7 +14,7 @@ export class HelpScreen extends GameScreen {
 					<button type="button" @click="${() => this.close()}">
 						<span class="visually-hidden">Close Help</span>
 
-						<svg-icon icon="close"></svg-icon>
+						<iconify-icon icon="mdi:close"></iconify-icon>
 					</button>
 				</header>
 				<div>

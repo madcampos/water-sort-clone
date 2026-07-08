@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { GameScreen } from '../../components/GameScreen/index.ts';
+import { GameScreen } from '../../components/GameScreen/GameScreen.ts';
 
 @customElement('title-screen')
 export class TitleScreen extends GameScreen {

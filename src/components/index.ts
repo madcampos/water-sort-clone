@@ -1,4 +1,19 @@
-import './ControllerBadge/index.ts';
-import './Flask/index.ts';
-import './FlaskStatus/index.ts';
-import './SvgIcon/index.ts';
+import type { IconifyIconHTMLElement } from 'iconify-icon';
+
+import type { ControllerBadge } from './ControllerBadge/ControllerBadge.ts';
+import type { LiquidFlask } from './Flask/Flask.ts';
+import type { FlaskStatus } from './FlaskStatus/FlaskStatus.ts';
+
+import './ControllerBadge/ControllerBadge.ts';
+import './Flask/Flask.ts';
+import './FlaskStatus/FlaskStatus.ts';
+
+declare global {
+	interface HTMLElementTagNameMap {
+		'iconify-icon': IconifyIconHTMLElement;
+
+		'controller-badge': ControllerBadge;
+		'liquid-flask': LiquidFlask;
+		'flask-status': FlaskStatus;
+	}
+}

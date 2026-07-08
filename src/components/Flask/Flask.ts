@@ -3,7 +3,7 @@
 import { type TemplateResult, html, LitElement, svg, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { LiquidColor } from '../../data/levels.js';
-import styles from './styles.css?raw';
+import styles from './flask.css?raw';
 
 declare global {
 	interface DocumentEventMap {

@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { GameScreen } from '../../components/GameScreen/index.ts';
+import { GameScreen } from '../../components/GameScreen/GameScreen.ts';
 import { type GamepadTypes, GamepadHandler } from '../../js/gamepad.ts';
 import settingsStyle from './settings.css?raw';
 
@@ -242,7 +242,7 @@ export class SettingsScreen extends GameScreen {
 					<button type="button" @click="${() => this.close()}">
 						<span class="visually-hidden">Close Settings</span>
 
-						<svg-icon icon="close"></svg-icon>
+						<iconify-icon icon="mdi:close"></iconify-icon>
 					</button>
 				</header>
 
