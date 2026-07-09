@@ -17,7 +17,7 @@ interface SettingsObject {
 @customElement('settings-screen')
 export class SettingsScreen extends GameScreen {
 	@state()
-	private settings: SettingsObject = {
+	private accessor settings: SettingsObject = {
 		showNumbers: 'false',
 		showColors: 'false',
 		colorblindMode: 'none',

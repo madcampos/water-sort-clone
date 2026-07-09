@@ -5,7 +5,7 @@ import { type GamepadButtonNames, BUTTON_MAP, GamepadHandler } from '../../js/ga
 @customElement('controller-badge')
 export class ControllerBadge extends LitElement {
 	@property()
-	icon: GamepadButtonNames | undefined = undefined;
+	accessor icon: GamepadButtonNames | undefined = undefined;
 
 	protected override createRenderRoot() {
 		return this;

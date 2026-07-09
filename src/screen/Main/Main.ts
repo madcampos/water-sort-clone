@@ -1,26 +1,23 @@
-import { html, LitElement, unsafeCSS } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, query, queryAll, state } from 'lit/decorators.js';
 import type { LiquidFlask } from '../../components/Flask/Flask.ts';
 import type { FlaskStatus } from '../../components/FlaskStatus/FlaskStatus.ts';
 import type { Level } from '../../data/levels.js';
 import { enableNextLevel, getCurrentLevel, getGameState, loadLevel, setCurrentLevel } from '../../js/levels.ts';
-import styles from './styles.css?raw';
 
 @customElement('main-screen')
 export class MainScreen extends LitElement {
-	static override styles = unsafeCSS(styles);
-
 	@state()
-	private levelState: Level | undefined = undefined;
+	private accessor levelState: Level | undefined = undefined;
 
 	@query('flask-status')
-	flaskStatus: FlaskStatus | null = null;
+	accessor flaskStatus: FlaskStatus | null = null;
 
 	@query('liquid-flask[selected]')
-	selectedFlask: LiquidFlask | null = null;
+	accessor selectedFlask: LiquidFlask | null = null;
 
 	@queryAll('liquid-flask')
-	flasks!: NodeListOf<LiquidFlask>;
+	accessor flasks!: NodeListOf<LiquidFlask>;
 
 	constructor() {
 		super();

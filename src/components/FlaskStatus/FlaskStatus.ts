@@ -6,7 +6,7 @@ type AvailableFlaskStatus = 'deselected' | 'failedToPour' | 'pour' | 'reset' | '
 @customElement('flask-status')
 export class FlaskStatus extends LitElement {
 	@state()
-	private currentStatus = 'Select a flask.';
+	private accessor currentStatus = 'Select a flask.';
 
 	protected override createRenderRoot() {
 		return this;

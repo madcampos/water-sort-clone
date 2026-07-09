@@ -42,16 +42,16 @@ export class LiquidFlask extends LitElement {
 	private static MARKINGS_X = 40;
 
 	@property({ reflect: true, type: Number })
-	index = -1;
+	accessor index = -1;
 
 	@property({ reflect: true, type: Number })
-	flaskSize = -1;
+	accessor flaskSize = -1;
 
 	@property({ reflect: true, type: Boolean })
-	selected = false;
+	accessor selected = false;
 
 	@property({ attribute: false, type: Array })
-	flaskData: LiquidColor[] = [];
+	accessor flaskData: LiquidColor[] = [];
 
 	constructor(flaskData?: LiquidColor[]) {
 		super();
