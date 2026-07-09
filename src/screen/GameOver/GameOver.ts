@@ -5,6 +5,10 @@ import { getCurrentLevel, getMaxLevel } from '../../js/levels.ts';
 
 @customElement('game-over-screen')
 export class GameOverScreen extends GameScreen {
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	isGameOver() {
 		const flasksWithColors = [...(document.querySelector('main-screen')?.flasks ?? [])].filter((flask) => flask.length);
 		const colorFlasks = [];

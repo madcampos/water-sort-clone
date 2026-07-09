@@ -1,14 +1,16 @@
 @layer components {
-	:host {
+	liquid-flask {
+		display: contents;
+
 		#flask {
 			display: grid;
-			grid-template-rows: auto;
-			grid-template-columns: auto;
-			grid-template-areas: 'flask';
+			grid-template-rows: 1fr;
+			grid-template-columns: 1fr;
 			place-items: center;
+			inline-size: fit-content;
 
 			& > * {
-				grid-area: 1 / -1 / 1 / -1;
+				grid-area: 1 / 1;
 				margin: 0;
 				padding: 0;
 				width: 100%;

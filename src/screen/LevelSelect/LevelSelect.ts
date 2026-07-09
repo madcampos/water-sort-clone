@@ -5,6 +5,10 @@ import { availableLevels, getMaxLevel } from '../../js/levels.ts';
 
 @customElement('level-select-screen')
 export class LevelSelect extends GameScreen {
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	#handleLevelSelect(evt: MouseEvent) {
 		const target = evt.target;
 

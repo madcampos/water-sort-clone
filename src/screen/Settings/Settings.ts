@@ -27,6 +27,10 @@ export class SettingsScreen extends GameScreen {
 		controllerMapping: 'xbox'
 	};
 
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	constructor() {
 		super();
 

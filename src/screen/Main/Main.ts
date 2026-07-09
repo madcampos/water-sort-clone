@@ -19,6 +19,10 @@ export class MainScreen extends LitElement {
 	@queryAll('liquid-flask')
 	accessor flasks!: NodeListOf<LiquidFlask>;
 
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	constructor() {
 		super();
 

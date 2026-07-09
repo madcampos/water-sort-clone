@@ -30,10 +30,6 @@ declare global {
 }
 
 export class GameScreen extends LitElement {
-	protected override createRenderRoot() {
-		return this;
-	}
-
 	open() {
 		this.querySelector('dialog')?.showModal();
 		document.dispatchEvent(new ScreenOpenEvent(this));

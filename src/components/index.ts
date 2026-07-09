@@ -1,4 +1,5 @@
 import type { IconifyIconHTMLElement } from 'iconify-icon';
+import 'iconify-icon';
 
 import type { ControllerBadge } from './ControllerBadge/ControllerBadge.ts';
 import type { LiquidFlask } from './Flask/Flask.ts';

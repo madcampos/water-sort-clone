@@ -6,6 +6,10 @@ import { GameScreen } from '../../components/GameScreen/GameScreen.ts';
 export class HelpScreen extends GameScreen {
 	// TODO: add interactive bits
 
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	override render() {
 		return html`
 			<dialog>

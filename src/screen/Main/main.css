@@ -1,5 +1,5 @@
 @layer screens {
-	game-screen {
+	main-screen {
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;

@@ -4,6 +4,10 @@ import { GameScreen } from '../../components/GameScreen/GameScreen.ts';
 
 @customElement('title-screen')
 export class TitleScreen extends GameScreen {
+	protected override createRenderRoot() {
+		return this;
+	}
+
 	#handlePlay() {
 		document.querySelector('main-screen')?.loadLevel('current');
 		this.close();
