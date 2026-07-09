@@ -39,7 +39,8 @@ export default defineConfig(({ mode }) => {
 		build: {
 			target: 'esnext',
 			emptyOutDir: true,
-			outDir: '../dist'
+			outDir: '../dist',
+			minify: false
 		},
 		optimizeDeps: { esbuildOptions: { target: 'esnext' } },
 		preview: {

@@ -16,7 +16,9 @@
 		"format": "dprint fmt",
 		"prepreview": "pnpm run build",
 		"preview": "vite preview --port 4000",
-		"build": "vite build"
+		"build": "vite build",
+		"predeploy": "pnpm run build",
+		"deploy": "wrangler deploy --minify"
 	},
 	"license": "MIT",
 	"devDependencies": {
